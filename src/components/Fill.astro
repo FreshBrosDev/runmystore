@@ -1,0 +1,10 @@
+---
+// Renders a legal detail, or a highlighted [placeholder] while it is still unset.
+interface Props {
+  value: string;
+  label: string;
+  mailto?: boolean;
+}
+const { value, label, mailto = false } = Astro.props;
+---
+{value ? mailto ? <a href={`mailto:${value}`}>{value}</a> : <Fragment>{value}</Fragment> : <span class="ph">[{label}]</span>}

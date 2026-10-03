@@ -1,0 +1,124 @@
+---
+// The wholesale pipeline as a sequence. Order matters here, so it is numbered.
+import { site } from '../data/site';
+
+const steps = [
+  {
+    tag: 'Capture',
+    title: 'Wholesale form',
+    body: 'A buyer applies on your site. The form qualifies them — business type, license, volume, state — before anyone picks up the phone.',
+  },
+  {
+    tag: 'Work',
+    title: 'Close CRM pipeline',
+    body: 'The lead lands in Close with an owner, a sequence and a next step. Calls, texts and emails are logged. Nothing lives in a thread.',
+  },
+  {
+    tag: 'Order',
+    title: 'menu.yourbrand.com',
+    body: 'Approved buyers get your custom menu: live stock, their tier pricing, and ordering without a rep typing up a quote.',
+  },
+  {
+    tag: 'Repeat',
+    title: 'Reorders & updates',
+    body: 'Menu and pricing updates go out by email and SMS. Invoices sync to QuickBooks. The account reorders on its own.',
+  },
+];
+---
+
+<ol class="flow" role="list">
+  {
+    steps.map((s, i) => (
+      <li class="reveal" style={`transition-delay:${i * 80}ms`}>
+        <span class="n num">{String(i + 1).padStart(2, '0')}</span>
+        <span class="tag">{s.tag}</span>
+        <h3>{s.title}</h3>
+        <p>{s.body}</p>
+      </li>
+    ))
+  }
+</ol>
+<p class="demo">
+  See one running in production:{' '}
+  <a class="textlink" href={site.liveDemo.href} rel="noopener">{site.liveDemo.label} ↗</a>
+</p>
+
+<style>
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    border: 1px solid var(--ink-3);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  li {
+    position: relative;
+    padding: 30px 26px 34px;
+    background: var(--ink-2);
+  }
+  li + li {
+    border-left: 1px solid var(--ink-3);
+  }
+  /* chevron joining each step to the next */
+  li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 38px;
+    right: -9px;
+    width: 16px;
+    height: 16px;
+    background: var(--ink-2);
+    border-top: 1px solid var(--ink-3);
+    border-right: 1px solid var(--ink-3);
+    transform: rotate(45deg);
+  }
+  .n {
+    display: block;
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+  .tag {
+    display: block;
+    margin: 18px 0 6px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+  p {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--muted-dark);
+  }
+  .demo {
+    margin-top: 28px;
+    color: #d5dddc;
+  }
+  @media (max-width: 900px) {
+    .flow {
+      grid-template-columns: 1fr 1fr;
+    }
+    li:nth-child(3) {
+      border-left: 0;
+    }
+    li:nth-child(n + 3) {
+      border-top: 1px solid var(--ink-3);
+    }
+    li::after {
+      display: none;
+    }
+  }
+  @media (max-width: 560px) {
+    .flow {
+      grid-template-columns: 1fr;
+    }
+    li + li {
+      border-left: 0;
+      border-top: 1px solid var(--ink-3);
+    }
+  }
+</style>

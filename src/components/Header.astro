@@ -1,0 +1,166 @@
+---
+import Logo from './Logo.astro';
+import { nav, offer } from '../data/site';
+
+interface Props {
+  dark?: boolean;
+}
+const path = Astro.url.pathname;
+---
+
+<header class="site-header dark">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="RunMyStore home"><Logo light height={28} /></a>
+
+    <nav class="links" aria-label="Main">
+      {
+        nav.map((n) => (
+          <a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>
+            {n.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a class="btn sm cta" href="/apply/">{offer.ctaShort}</a>
+
+    <button class="toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+      <span class="sr-only">Menu</span>
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </div>
+
+  <nav id="mobile-nav" class="mobile" aria-label="Mobile" hidden>
+    <div class="wrap">
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a class="btn" href="/apply/">{offer.cta}</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.site-header .toggle');
+  const panel = document.getElementById('mobile-nav');
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    if (panel) panel.hidden = open;
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--ink) 88%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--ink-3);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 72px;
+  }
+  .brand {
+    display: block;
+    margin-right: auto;
+  }
+  .links {
+    display: flex;
+    gap: 30px;
+  }
+  .links a {
+    position: relative;
+    padding: 6px 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #d5dddc;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 3px;
+    background: var(--teal);
+    transform: skewX(var(--skew)) scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .links a:hover,
+  .links a[aria-current] {
+    color: #fff;
+  }
+  .links a:hover::after,
+  .links a[aria-current]::after {
+    transform: skewX(var(--skew)) scaleX(1);
+  }
+  .toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .bars {
+    display: grid;
+    gap: 5px;
+    width: 24px;
+    margin: auto;
+    transform: skewX(var(--skew));
+  }
+  .bars i {
+    height: 3px;
+    background: #fff;
+    transition: width 0.2s;
+  }
+  .bars i:nth-child(2) {
+    width: 80%;
+  }
+  .bars i:nth-child(3) {
+    width: 60%;
+    background: var(--teal-bright);
+  }
+  .toggle[aria-expanded='true'] .bars i {
+    width: 100%;
+  }
+  .mobile {
+    border-top: 1px solid var(--ink-3);
+    padding: 12px 0 28px;
+  }
+  .mobile a:not(.btn) {
+    display: block;
+    padding: 14px 0;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-3);
+  }
+  .mobile .btn {
+    margin-top: 24px;
+    width: 100%;
+  }
+  @media (max-width: 900px) {
+    .links,
+    .cta {
+      display: none;
+    }
+    .toggle {
+      display: block;
+    }
+  }
+  @media (min-width: 901px) {
+    .mobile {
+      display: none;
+    }
+  }
+</style>

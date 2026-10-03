@@ -1,0 +1,58 @@
+---
+import Stripes from './Stripes.astro';
+import { offer, site } from '../data/site';
+
+interface Props {
+  title?: string;
+  body?: string;
+}
+const {
+  title = 'See your stack running before you pay for it.',
+  body = 'Twenty minutes tells us both whether it’s a fit. If it is, we start building.',
+} = Astro.props;
+---
+
+<section class="dark band">
+  <div class="wrap inner">
+    <Stripes class="lg" />
+    <div>
+      <h2>{title}</h2>
+      <p class="lede">{body}</p>
+      <div class="actions">
+        <a class="btn" href="/apply/">{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="textlink" href={site.whatsapp} rel="noopener">Or message us on WhatsApp</a>
+      </div>
+      <p class="fineprint">{offer.fineprint} {site.cohort}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .band {
+    padding-block: clamp(72px, 9vw, 120px);
+    overflow: hidden;
+  }
+  .inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+  }
+  h2 {
+    max-width: 17ch;
+  }
+  .lede {
+    margin-top: 20px;
+  }
+  .actions {
+    margin-top: 36px;
+  }
+  .fineprint {
+    margin-top: 22px;
+  }
+  @media (max-width: 760px) {
+    .inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

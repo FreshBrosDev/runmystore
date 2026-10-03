@@ -1,0 +1,161 @@
+---
+// Hero visual: the 30-day build, week by week. Shows the offer instead of a fake dashboard.
+import { buildWeeks, offer } from '../data/site';
+---
+
+<div class="board" role="img" aria-label="The free 30-day build: storefront in week one, wholesale pipeline in week two, email and SEO in week three, fulfillment and reporting in week four.">
+  <div class="top">
+    <span class="label">Your free build</span>
+    <span class="days"><b>{offer.days}</b> days</span>
+  </div>
+
+  <ol role="list">
+    {
+      buildWeeks.map((w, i) => (
+        <li style={`--i:${i}`}>
+          <span class="wk">{w.week}</span>
+          <span class="what">
+            <strong>{w.title}</strong>
+            <small>{w.detail}</small>
+          </span>
+          <span class="meter" aria-hidden="true">
+            <i />
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="bottom">
+    <div>
+      <span class="k">Cost of the build</span>
+      <span class="v">{offer.price}</span>
+    </div>
+    <div>
+      <span class="k">Day 31</span>
+      <span class="then">Keep only what you need, on a monthly retainer.</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .board {
+    background: var(--ink-2);
+    border: 1px solid var(--ink-3);
+    border-top: 5px solid var(--teal);
+    border-radius: 6px 6px var(--radius) var(--radius);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+  }
+  .top,
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    padding: 20px 26px;
+  }
+  .label,
+  .k {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+  }
+  .days {
+    font-size: 0.9rem;
+    color: var(--muted-dark);
+  }
+  .days b {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  ol {
+    margin: 0;
+    border-block: 1px solid var(--ink-3);
+  }
+  li {
+    display: grid;
+    grid-template-columns: 64px 1fr 72px;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 26px;
+  }
+  li + li {
+    border-top: 1px solid var(--ink-3);
+  }
+  .wk {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted-dark);
+  }
+  .what strong {
+    display: block;
+    font-family: var(--display);
+    font-weight: 700;
+    font-stretch: 105%;
+    font-size: 1.02rem;
+    line-height: 1.25;
+  }
+  .what small {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--muted-dark);
+  }
+  .meter {
+    height: 8px;
+    background: var(--ink-3);
+    transform: skewX(var(--skew));
+    overflow: hidden;
+  }
+  .meter i {
+    display: block;
+    height: 100%;
+    background: var(--teal);
+    transform-origin: left;
+    animation: fill 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(0.5s + var(--i) * 0.35s);
+  }
+  @keyframes fill {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  .bottom {
+    align-items: flex-start;
+  }
+  .bottom > div {
+    display: grid;
+    gap: 4px;
+  }
+  .bottom > div:last-child {
+    max-width: 22ch;
+  }
+  .v {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-stretch: 112%;
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  .then {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: #d5dddc;
+  }
+  @media (max-width: 480px) {
+    li {
+      grid-template-columns: 56px 1fr;
+    }
+    .meter {
+      display: none;
+    }
+  }
+</style>

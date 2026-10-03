@@ -1,0 +1,399 @@
+---
+import Base from '../layouts/Base.astro';
+import Stripes from '../components/Stripes.astro';
+import { offer, departments, site } from '../data/site';
+
+const revenue = ['Pre-revenue', 'Under $25k / mo', '$25k–$50k / mo', '$50k–$150k / mo', '$150k–$500k / mo', '$500k+ / mo'];
+const next = [
+  { t: 'We read it', d: 'A person, not a bot. Usually within one business day.' },
+  { t: '20-minute fit call', d: 'We find out if we can move your numbers. If not, we’ll say so.' },
+  { t: `Your free ${offer.days}-day build starts`, d: 'Once you’ve invited us into your accounts. No card, no contract.' },
+];
+---
+
+<Base
+  title="Apply for a free 30-day build"
+  description="Tell us about your brand. If it’s a fit, RunMyStore builds your entire commerce stack free in 30 days."
+>
+  <section class="dark top">
+    <div class="wrap grid2">
+      <div class="intro">
+        <p class="eyebrow"><Stripes /> Apply</p>
+        <h1>Start your free {offer.days}-day build.</h1>
+        <p class="lede">Two minutes. Tell us what you sell and where it’s stuck.</p>
+
+        <ol class="next" role="list">
+          {
+            next.map((n, i) => (
+              <li>
+                <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{n.t}</strong>
+                  <p>{n.d}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="fineprint">
+          {site.cohort} Prefer to talk? <a class="textlink" href={site.whatsapp} rel="noopener">Message us on WhatsApp</a>.
+        </p>
+      </div>
+
+      <div class="panel">
+        <form id="apply" data-endpoint={site.leadEndpoint} data-whatsapp={site.whatsapp} novalidate>
+          <div class="two">
+            <label>
+              <span>Your name</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              <span>Work email</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+          </div>
+          <div class="two">
+            <label>
+              <span>Brand website</span>
+              <input name="website" type="text" inputmode="url" placeholder="yourbrand.com" required />
+            </label>
+            <label>
+              <span>Phone <em>(optional)</em></span>
+              <input name="phone" type="tel" autocomplete="tel" />
+            </label>
+          </div>
+          <label>
+            <span>What do you sell?</span>
+            <input name="category" type="text" placeholder="e.g. hemp flower, CBD, supplements" required />
+          </label>
+          <div class="two">
+            <label>
+              <span>Monthly revenue</span>
+              <select name="revenue" required>
+                <option value="" disabled selected>Select a range</option>
+                {revenue.map((r) => <option>{r}</option>)}
+              </select>
+            </label>
+            <label>
+              <span>How do you sell today?</span>
+              <select name="channel" required>
+                <option value="" disabled selected>Select one</option>
+                <option>Direct to consumer</option>
+                <option>Wholesale</option>
+                <option>Both</option>
+              </select>
+            </label>
+          </div>
+
+          <fieldset>
+            <legend>What do you need run for you?</legend>
+            <div class="chips">
+              {
+                departments.map((d) => (
+                  <label class="chip">
+                    <input type="checkbox" name="need" value={d.id} />
+                    <span>{d.name}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <label>
+            <span>What’s the biggest bottleneck right now?</span>
+            <textarea name="bottleneck" rows="4"></textarea>
+          </label>
+
+          <!-- honeypot -->
+          <label class="hp" aria-hidden="true">
+            Company fax <input name="fax" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+
+          <p class="error" id="apply-error" role="alert" hidden></p>
+          <button class="btn" type="submit">Send application <span class="arrow" aria-hidden="true">→</span></button>
+          <p class="fineprint">
+            We’ll only use this to reply to you. No list, no spam. See our
+            <a class="textlink" href="/privacy/">Privacy Policy</a> and <a class="textlink" href="/terms/">Terms</a>.
+          </p>
+        </form>
+
+        <div class="done" id="apply-done" hidden tabindex="-1">
+          <Stripes class="lg" />
+          <h2>Got it.</h2>
+          <p class="lede" id="done-text">We’ll read it and come back to you within one business day to set up the fit call.</p>
+          <a class="textlink" href="/proof/">While you wait: see the Fresh Bros numbers →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('apply') as HTMLFormElement | null;
+  const done = document.getElementById('apply-done');
+  const doneText = document.getElementById('done-text');
+  const err = document.getElementById('apply-error');
+
+  // Prefill departments from /apply/?need=store,wholesale
+  const need = new URLSearchParams(location.search).get('need');
+  if (form && need) {
+    const want = new Set(need.split(','));
+    form.querySelectorAll<HTMLInputElement>('input[name="need"]').forEach((b) => (b.checked = want.has(b.value)));
+  }
+
+  function fail(msg: string) {
+    if (!err) return;
+    err.textContent = msg;
+    err.hidden = false;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (err) err.hidden = true;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const fd = new FormData(form);
+    if (fd.get('fax')) return; // bot
+    const data = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      website: fd.get('website'),
+      phone: fd.get('phone'),
+      category: fd.get('category'),
+      revenue: fd.get('revenue'),
+      channel: fd.get('channel'),
+      need: fd.getAll('need'),
+      bottleneck: fd.get('bottleneck'),
+      source: 'runmystore.com/apply',
+    };
+
+    const endpoint = form.dataset.endpoint;
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (submit) submit.disabled = true;
+
+    try {
+      if (endpoint) {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+      } else {
+        // No endpoint configured yet: hand the answers to WhatsApp so no lead is lost.
+        const lines = [
+          'Free 30-day build application',
+          `Name: ${data.name}`,
+          `Email: ${data.email}`,
+          `Site: ${data.website}`,
+          data.phone ? `Phone: ${data.phone}` : '',
+          `Sells: ${data.category}`,
+          `Revenue: ${data.revenue}`,
+          `Channel: ${data.channel}`,
+          data.need.length ? `Needs: ${data.need.join(', ')}` : '',
+          data.bottleneck ? `Bottleneck: ${data.bottleneck}` : '',
+        ].filter(Boolean);
+        window.open(`${form.dataset.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+        if (doneText) doneText.textContent = 'WhatsApp just opened with your answers filled in — hit send and we’ll take it from there.';
+      }
+      form.hidden = true;
+      if (done) {
+        done.hidden = false;
+        done.focus();
+      }
+    } catch {
+      fail('That didn’t send. Try again, or message us on WhatsApp and we’ll pick it up there.');
+      if (submit) submit.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .top {
+    padding-block: clamp(48px, 7vw, 96px) clamp(72px, 9vw, 120px);
+  }
+  .grid2 {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: start;
+    gap: clamp(36px, 6vw, 88px);
+  }
+  h1 {
+    margin-top: 24px;
+    font-size: clamp(2.3rem, 4.6vw, 3.6rem);
+  }
+  .intro .lede {
+    margin-top: 20px;
+  }
+  .next {
+    display: grid;
+    gap: 0;
+    margin: 44px 0 28px;
+    border-top: 1px solid var(--ink-3);
+  }
+  .next li {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--ink-3);
+  }
+  .next .num {
+    font-size: 1.2rem;
+  }
+  .next strong {
+    font-family: var(--display);
+    font-weight: 700;
+  }
+  .next p {
+    margin-top: 2px;
+    font-size: 0.95rem;
+    color: var(--muted-dark);
+  }
+
+  .panel {
+    padding: clamp(24px, 3.4vw, 44px);
+    background: var(--paper);
+    color: var(--text);
+    border-top: 6px solid var(--teal);
+    border-radius: 6px 6px var(--radius) var(--radius);
+  }
+  form {
+    display: grid;
+    gap: 20px;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  label > span,
+  legend {
+    display: block;
+    margin-bottom: 8px;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  label em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  select,
+  textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--text);
+    background: var(--mist);
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    transition:
+      border-color 0.15s,
+      background 0.15s;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--teal);
+  }
+  ::placeholder {
+    color: #8b9896;
+  }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+  }
+  .chip span {
+    display: block;
+    margin: 0;
+    padding: 10px 16px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    background: var(--mist);
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip input:checked + span {
+    background: var(--teal-deep);
+    color: #fff;
+  }
+  .chip input:focus-visible + span {
+    border-color: var(--teal);
+    outline: 3px solid var(--teal-wash);
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+  .error {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    color: #8c1d18;
+    background: #fdecea;
+    border-radius: 10px;
+  }
+  /* Panel is light even though the section is dark. */
+  .panel .btn {
+    justify-self: start;
+    color: #fff;
+  }
+  .panel .btn::before {
+    background: var(--teal-deep);
+  }
+  .panel .btn:hover::before {
+    background: var(--teal);
+  }
+  .panel .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .panel .fineprint {
+    color: var(--muted);
+  }
+  .panel .textlink {
+    color: var(--teal-deep);
+  }
+  .done {
+    display: grid;
+    gap: 22px;
+    padding: 32px 0;
+    outline: none;
+  }
+  .done .lede {
+    color: var(--muted);
+  }
+  @media (max-width: 900px) {
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .two {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

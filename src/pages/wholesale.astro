@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import Stripes from '../components/Stripes.astro';
+import PipelineFlow from '../components/PipelineFlow.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, offer } from '../data/site';
+
+const menuFeatures = [
+  { title: 'Live stock', body: 'Reps and buyers see what’s actually on the shelf. No quoting product you sold yesterday.' },
+  { title: 'Tier pricing', body: 'One pricing sheet is the source of truth. Each buyer sees their tier, nobody else’s.' },
+  { title: 'COAs and lab results', body: 'The paperwork buyers ask for sits next to the product, not in someone’s inbox.' },
+  { title: 'Order without a rep', body: 'Approved accounts build an order and submit it. Your rep confirms instead of transcribing.' },
+  { title: 'Reorder in two clicks', body: 'Last order, saved. The repeat account is the whole point of wholesale.' },
+  { title: 'Your brand, your subdomain', body: 'It lives at menu.yourbrand.com and looks like you. The buyer never sees us.' },
+];
+
+const crm = [
+  'Every wholesale application lands as a lead with an owner',
+  'Statuses that match how you actually sell, not a template',
+  'Email and SMS sequences for new, quiet and lapsed accounts',
+  'Calls, texts and emails logged in one timeline',
+  'Smart views: who to call today, who hasn’t reordered',
+  'Quotes and invoices tied to the lead and synced to QuickBooks',
+];
+---
+
+<Base
+  title="Wholesale pipeline: form, Close CRM and a custom menu"
+  description="RunMyStore builds the full wholesale flow for alternative brands: a qualifying wholesale form, a Close CRM pipeline your reps work, and a custom ordering menu at menu.yourbrand.com."
+>
+  <section class="dark pagehero">
+    <div class="wrap">
+      <p class="eyebrow"><Stripes /> Wholesale pipeline</p>
+      <h1>Get wholesale <span class="accent">out of the group chat.</span></h1>
+      <p class="lede">
+        A form that qualifies the buyer. A Close CRM pipeline your reps actually work. A custom ordering menu on your own
+        subdomain. We build all three, wired together, and it’s a custom build every time.
+      </p>
+      <div class="actions">
+        <a class="btn" href="/apply/?need=wholesale">{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn ghost" href={site.liveDemo.href} rel="noopener">Open a live menu ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark flowsec">
+    <div class="wrap">
+      <div class="head reveal">
+        <h2>Four steps, one system.</h2>
+        <p class="lede">The relationship stays with your reps. We formalize the close without killing the touch.</p>
+      </div>
+      <PipelineFlow />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> menu.yourbrand.com</p>
+        <h2>The ordering menu. <span class="accent">Always custom.</span></h2>
+        <p class="lede">
+          Not a plugin with your logo on it. We build the menu around how you sell — your tiers, your minimums, your
+          paperwork.
+        </p>
+      </div>
+      <div class="grid g3">
+        {
+          menuFeatures.map((f, i) => (
+            <article class="card rail reveal" style={`transition-delay:${(i % 3) * 70}ms`}>
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section mist">
+    <div class="wrap crm">
+      <div class="reveal">
+        <p class="eyebrow"><Stripes /> Close CRM</p>
+        <h2>The pipeline your reps will actually use.</h2>
+        <p class="lede">
+          We set up Close so the next step is always obvious. Your reps keep their relationships and their own channels —
+          the CRM just makes sure nothing falls through.
+        </p>
+      </div>
+      <ul class="checks card reveal">
+        {crm.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap demo reveal">
+      <div>
+        <p class="eyebrow"><Stripes /> Live in production</p>
+        <h2>Don’t take our word for it. Use one.</h2>
+        <p class="lede">Not a mockup — a working wholesale ordering system we built and run. Click in.</p>
+      </div>
+      <a class="btn" href={site.liveDemo.href} rel="noopener">{site.liveDemo.label} <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <CtaBand title="Your wholesale pipeline, live inside 30 days." />
+</Base>
+
+<style>
+  .flowsec {
+    padding-top: 0;
+  }
+  .crm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+  }
+  .crm h2,
+  .demo h2 {
+    margin-top: 20px;
+  }
+  .crm .lede,
+  .demo .lede {
+    margin-top: 20px;
+  }
+  .crm .checks {
+    padding: 36px;
+    gap: 16px;
+    font-weight: 500;
+  }
+  .demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: clamp(32px, 5vw, 64px);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--teal);
+    border-radius: 6px var(--radius) var(--radius) 6px;
+  }
+  @media (max-width: 800px) {
+    .crm {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

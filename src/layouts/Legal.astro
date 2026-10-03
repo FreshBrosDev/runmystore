@@ -1,0 +1,239 @@
+---
+import Base from './Base.astro';
+import Stripes from '../components/Stripes.astro';
+import { legal } from '../data/legal';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  /** The honest one-paragraph version, shown above the full text. */
+  summary: string[];
+  toc: { id: string; label: string }[];
+}
+const { title, description, eyebrow, heading, summary, toc } = Astro.props;
+
+const updated = new Date(`${legal.updated}T12:00:00Z`).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+const missing = [
+  !legal.entity && 'legal entity',
+  !legal.email && 'contact email',
+  !legal.address && 'mailing address',
+  !legal.state && 'governing state',
+].filter(Boolean);
+
+if (import.meta.env.PROD && !legal.ready) {
+  console.warn(`\n[legal] ${Astro.url.pathname} is still a DRAFT (noindex). Complete src/data/legal.ts and set ready: true.\n`);
+}
+---
+
+<Base title={title} description={description} noindex={!legal.ready}>
+  <section class="dark pagehero">
+    <div class="wrap">
+      <p class="eyebrow"><Stripes /> {eyebrow}</p>
+      <h1>{heading}</h1>
+      <p class="fineprint updated">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap">
+      {
+        !legal.ready && (
+          <div class="draft" role="note">
+            <strong>Draft — not yet in force.</strong> Pending legal review
+            {missing.length > 0 && <> and these details: {missing.join(', ')}</>}. This page is hidden from search
+            engines until it is finalized.
+          </div>
+        )
+      }
+
+      <div class="layout">
+        <nav class="toc" aria-label="On this page">
+          <h2>On this page</h2>
+          <ol role="list">
+            {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
+          </ol>
+        </nav>
+
+        <article class="prose">
+          <div class="short">
+            <h2>The short version</h2>
+            <ul>{summary.map((s) => <li>{s}</li>)}</ul>
+            <p class="note">This summary is here to help. The full text below is what applies.</p>
+          </div>
+          <slot />
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagehero h1 {
+    margin-top: 22px;
+    max-width: 20ch;
+  }
+  .updated {
+    margin-top: 22px;
+  }
+  .draft {
+    margin-bottom: 40px;
+    padding: 18px 22px;
+    font-size: 0.97rem;
+    color: #5c3c00;
+    background: #fff4d6;
+    border-left: 5px solid #e0a100;
+    border-radius: 4px 10px 10px 4px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(32px, 6vw, 88px);
+  }
+  .toc {
+    position: sticky;
+    top: 104px;
+    max-height: calc(100vh - 128px);
+    overflow: auto;
+  }
+  .toc h2 {
+    margin-bottom: 14px;
+    font-style: normal;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+  }
+  .toc ol {
+    margin: 0;
+    border-left: 2px solid var(--line);
+    counter-reset: toc;
+  }
+  .toc a {
+    display: block;
+    margin-left: -2px;
+    padding: 6px 0 6px 16px;
+    border-left: 2px solid transparent;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    color: var(--text);
+    border-left-color: var(--teal);
+  }
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .toc {
+      position: static;
+      max-height: none;
+    }
+  }
+</style>
+
+<style is:global>
+  .prose {
+    max-width: 72ch;
+    font-size: 1.03rem;
+    line-height: 1.7;
+  }
+  .prose section {
+    padding-top: 12px;
+  }
+  .prose h2 {
+    margin: 44px 0 14px;
+    font-style: normal;
+    font-stretch: 105%;
+    font-weight: 700;
+    font-size: 1.55rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .prose h3 {
+    margin: 28px 0 8px;
+    font-size: 1.12rem;
+  }
+  .prose p,
+  .prose ul,
+  .prose ol {
+    margin: 0 0 16px;
+    color: #2c3637;
+  }
+  .prose ul,
+  .prose ol {
+    padding-left: 22px;
+  }
+  .prose li {
+    margin-bottom: 8px;
+  }
+  .prose li::marker {
+    color: var(--teal-deep);
+  }
+  .prose a {
+    font-weight: 600;
+    color: var(--teal-deep);
+    text-underline-offset: 3px;
+  }
+  .prose strong {
+    color: var(--text);
+  }
+  .prose .short {
+    padding: 28px 30px 22px;
+    background: var(--teal-wash);
+    border-left: 5px solid var(--teal);
+    border-radius: 6px var(--radius) var(--radius) 6px;
+  }
+  .prose .short h2 {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+  .prose .short ul {
+    margin-bottom: 12px;
+  }
+  .prose .note {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .prose .ph {
+    padding: 1px 6px;
+    font-size: 0.92em;
+    color: #5c3c00;
+    background: #fff4d6;
+    border-radius: 4px;
+  }
+  .prose table {
+    width: 100%;
+    margin: 0 0 20px;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  .prose th,
+  .prose td {
+    padding: 12px 14px 12px 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  .prose th {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .prose .tablewrap {
+    overflow-x: auto;
+  }
+</style>

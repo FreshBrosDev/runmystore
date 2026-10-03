@@ -1,0 +1,102 @@
+---
+import Logo from './Logo.astro';
+import { nav, site, departments } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="dark">
+  <div class="wrap top">
+    <div class="about">
+      <Logo light height={34} />
+      <p class="tag display">{site.tagline}</p>
+      <p class="fineprint">{site.cohort}</p>
+    </div>
+
+    <nav aria-label="Footer: the stack">
+      <h4>The stack</h4>
+      {departments.map((d) => <a href={`/services/#${d.id}`}>{d.name}</a>)}
+    </nav>
+
+    <nav aria-label="Footer: company">
+      <h4>RunMyStore</h4>
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/apply/">Apply</a>
+      <a href={site.whatsapp} rel="noopener">WhatsApp us</a>
+    </nav>
+  </div>
+
+  <div class="wrap base">
+    <span>© {year} RunMyStore. You own the brand.</span>
+    <span class="legal">
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 4px solid var(--teal);
+  }
+  .top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 48px;
+    padding-block: 72px 56px;
+  }
+  .tag {
+    margin-top: 24px;
+    font-size: 1.5rem;
+    max-width: 14ch;
+  }
+  .about .fineprint {
+    margin-top: 14px;
+  }
+  h4 {
+    margin-bottom: 16px;
+    font-family: var(--display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+  }
+  nav a {
+    display: block;
+    padding: 5px 0;
+    color: #c9d3d2;
+    text-decoration: none;
+    font-size: 0.97rem;
+  }
+  nav a:hover {
+    color: #fff;
+  }
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 24px;
+    border-top: 1px solid var(--ink-3);
+    font-size: 0.88rem;
+    color: var(--muted-dark);
+  }
+  .legal {
+    display: flex;
+    gap: 20px;
+  }
+  .legal a {
+    text-decoration: none;
+  }
+  .legal a:hover {
+    color: #fff;
+  }
+  @media (max-width: 760px) {
+    .top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .about {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

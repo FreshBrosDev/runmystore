@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://runmystore.com/sitemap-index.xml

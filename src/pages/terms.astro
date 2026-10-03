@@ -1,0 +1,268 @@
+---
+import Legal from '../layouts/Legal.astro';
+import Fill from '../components/Fill.astro';
+import { legal } from '../data/legal';
+import { site, offer } from '../data/site';
+
+const toc = [
+  { id: 'agreement', label: '1. These terms' },
+  { id: 'site-vs-services', label: '2. The site is not the contract' },
+  { id: 'trial', label: `3. The free ${offer.days}-day build` },
+  { id: 'retainers', label: '4. Retainers and pricing' },
+  { id: 'results', label: '5. Results and proof' },
+  { id: 'not', label: '6. What we are not' },
+  { id: 'compliance', label: '7. Your products, your compliance' },
+  { id: 'fulfillment', label: '8. Fulfillment' },
+  { id: 'eligibility', label: '9. Who can use this site' },
+  { id: 'submissions', label: '10. What you send us' },
+  { id: 'use', label: '11. Acceptable use' },
+  { id: 'ip', label: '12. Intellectual property' },
+  { id: 'third-party', label: '13. Third-party tools and links' },
+  { id: 'disclaimer', label: '14. Disclaimers' },
+  { id: 'liability', label: '15. Limit of liability' },
+  { id: 'law', label: '16. Governing law' },
+  { id: 'general', label: '17. General' },
+  { id: 'contact', label: '18. Contact' },
+];
+
+const summary = [
+  'This website explains what we do. It is not a quote or a contract — the work itself always runs under a written agreement you sign.',
+  `The free ${offer.days}-day build really is free for our work. You pay your own software, ad and inventory costs, and you can walk away at the end.`,
+  'The numbers on our Proof page are real results for one brand. They are not a promise of yours.',
+  'You stay the owner, the seller and the merchant of record. Whether your products are legal to sell and ship is your responsibility.',
+  'What is in your own accounts stays yours, whatever happens.',
+];
+---
+
+<Legal
+  title="Terms of Use"
+  description="The terms for using runmystore.com, including how the free 30-day build, retainers, fulfillment and results claims work."
+  eyebrow="Terms"
+  heading="Terms of Use"
+  summary={summary}
+  toc={toc}
+>
+  <section id="agreement">
+    <h2>1. These terms</h2>
+    <p>
+      This website is operated by <Fill value={legal.entity} label="legal entity name" />, doing business as{' '}
+      {site.name} (“{site.name}”, “we”, “us”). By using the site or submitting an application you agree to these terms
+      and to our <a href="/privacy/">Privacy Policy</a>. If you don’t agree, please don’t use the site. If you use it on
+      behalf of a company, you confirm you are authorized to do so, and “you” means that company.
+    </p>
+  </section>
+
+  <section id="site-vs-services">
+    <h2>2. The site is not the contract</h2>
+    <p>
+      Everything here describes our services in general terms. It is not an offer capable of acceptance, a quote, or a
+      commitment to take you on. We accept a limited number of brands and may decline any application, for any lawful
+      reason, without explanation.
+    </p>
+    <p>
+      All work — including the free {offer.days}-day build — is carried out under a written agreement signed by both
+      sides (a “Services Agreement”). It sets the scope, timing, fees, ownership, confidentiality and data-protection
+      terms for your engagement. <strong>If anything on this site conflicts with your signed Services Agreement, the
+      Services Agreement wins.</strong>
+    </p>
+  </section>
+
+  <section id="trial">
+    <h2>3. The free {offer.days}-day build</h2>
+    <p>We want this offer to be exactly what it sounds like. These are the terms it runs on:</p>
+    <ul>
+      <li><strong>By application.</strong> It starts with a fit call. We offer a build only where we believe we can make a real difference, which generally means a product that already sells, working or fixable payment processing, and one person with authority to decide.</li>
+      <li><strong>A short agreement first.</strong> Before work begins, both sides sign a Services Agreement covering the trial. Nothing in it obliges you to continue past day {offer.days}.</li>
+      <li><strong>When the clock starts.</strong> The {offer.days} days begin when you have granted the access we need, not on the date of the call. Delays in access or approvals on your side may limit what can be finished inside the window.</li>
+      <li><strong>What is free.</strong> Our own work during those {offer.days} days: strategy, setup, configuration and build. We do not ask for a card, and there is no automatic conversion to a paid plan.</li>
+      <li><strong>What is not.</strong> Third-party costs are yours, and are paid by you directly to the provider: software subscriptions, domains and hosting, payment processing fees, advertising spend, inventory, packaging and postage. We will tell you about a cost before you incur it.</li>
+      <li><strong>Scope.</strong> “Your entire stack” means the departments described on this site, configured to a working state for your business. The exact scope for your build is the one written in your Services Agreement.</li>
+      <li><strong>Day {offer.days + 1}.</strong> We review what is live with you and, if you want to continue, agree a monthly retainer for the parts you want us to keep running. If you don’t, the engagement simply ends. There is no fee, penalty or clawback for stopping.</li>
+      <li><strong>Either side can stop early.</strong> You can end the trial at any time by telling us in writing. We can end it if access isn’t provided, if information you gave us was materially inaccurate, or if continuing would require us to do something unlawful.</li>
+      <li><strong>What you keep if you walk away.</strong> Everything in accounts you own stays yours: your domain, store, content published to it, customer and subscriber lists, CRM records and data. Systems hosted on our infrastructure, and our own templates, frameworks and tooling, are handed over when a retainer begins or wound down if one doesn’t, as your Services Agreement describes. We remove our access and return or delete your data either way.</li>
+    </ul>
+  </section>
+
+  <section id="retainers">
+    <h2>4. Retainers and pricing</h2>
+    <p>
+      We don’t publish a price list because scope differs from brand to brand. Retainer fees, what they cover, the
+      term, and the notice needed to change or end them are agreed in writing in your Services Agreement. Nothing on
+      this site, including the retainer builder on the {offer.name} page, is a quote. Any performance-based fee is only
+      ever charged on the basis and attribution method set out in that agreement.
+    </p>
+  </section>
+
+  <section id="results">
+    <h2>5. Results and proof</h2>
+    <p>
+      The figures on this site are actual results for the brand named, over the period stated, drawn from that
+      brand’s own store, email and analytics data. We publish named metrics rather than anonymous testimonials so you
+      can weigh them properly.
+    </p>
+    <p>
+      They are not typical, and they are not a forecast or guarantee of what you will achieve. Your results depend on
+      things we don’t control: your product, pricing, margins, stock, capital, market, the law in your category, and
+      decisions by platforms, payment processors, carriers and search engines. <strong>We do not underwrite revenue
+      targets.</strong> Timeframes on this site are estimates.
+    </p>
+  </section>
+
+  <section id="not">
+    <h2>6. What we are not</h2>
+    <p>You own the brand; we operate the systems behind it. That means we are not:</p>
+    <ul>
+      <li>the seller of your products, or the merchant of record for any sale;</li>
+      <li>the owner of your inventory, which you fund and hold title to;</li>
+      <li>your payment processor, bank or lender, and we do not fund advertising spend or stock;</li>
+      <li>your lawyer, accountant, tax adviser or compliance officer;</li>
+      <li>your partner, employee, agent or joint venturer. We are an independent contractor.</li>
+    </ul>
+    <p>
+      Anything we say about regulation, payment processing, advertising policies or shipping rules is operational
+      experience shared in good faith. It is not legal, tax or regulatory advice, and you should not rely on it as
+      such.
+    </p>
+  </section>
+
+  <section id="compliance">
+    <h2>7. Your products, your compliance</h2>
+    <p>
+      We work with brands in regulated and restricted categories, and we build with those constraints in mind. The
+      legal responsibility for the products remains with you. You are responsible for:
+    </p>
+    <ul>
+      <li>whether each product is lawful to make, market, sell and ship in every place you sell it;</li>
+      <li>licenses, registrations, permits and tax obligations;</li>
+      <li>the accuracy of product claims, labels, ingredients, lab results and certificates of analysis that you supply;</li>
+      <li>age-restriction and identity requirements that apply to your sales, and the rules of your payment processor, platforms and carriers;</li>
+      <li>telling us promptly when a rule that affects your products changes.</li>
+    </ul>
+    <p>
+      We may decline or stop any task that we reasonably believe would break the law, a platform’s or carrier’s rules,
+      or our own standards — for example unsupported health claims, marketing directed at minors, or shipping a product
+      to a place it cannot lawfully go.
+    </p>
+  </section>
+
+  <section id="fulfillment">
+    <h2>8. Fulfillment</h2>
+    <p>
+      Where we store and ship your products, the detailed terms — receiving, storage, service levels, packaging, age
+      and signature requirements, returns, insurance, risk of loss and claims — are in your Services Agreement. In
+      every case: you keep title to your inventory; shipments are subject to the carrier’s own terms and restrictions;
+      and we will not ship a product to a destination where we understand it cannot lawfully be delivered.
+    </p>
+  </section>
+
+  <section id="eligibility">
+    <h2>9. Who can use this site</h2>
+    <p>
+      The site and our services are for businesses. You must be at least 18, and able to enter a binding contract for
+      the business you represent.
+    </p>
+  </section>
+
+  <section id="submissions">
+    <h2>10. What you send us</h2>
+    <p>
+      You confirm that what you submit is accurate and that you have the right to share it. We treat the business
+      information in your application — revenue, channels, problems you describe — as confidential. We use it only to
+      assess fit and talk to you, and share it only as the <a href="/privacy/">Privacy Policy</a> describes. We will
+      never name you as an applicant or client, or publish your figures, without your written permission. Please
+      don’t send passwords, card numbers or other people’s personal data through the form.
+    </p>
+  </section>
+
+  <section id="use">
+    <h2>11. Acceptable use</h2>
+    <p>Please don’t:</p>
+    <ul>
+      <li>submit false applications, or applications on behalf of someone who hasn’t agreed to it;</li>
+      <li>probe, scan or disrupt the site, or try to get around its security;</li>
+      <li>scrape or harvest the site with automated tools beyond what ordinary search engines do;</li>
+      <li>use the site to send spam or anything unlawful, defamatory or infringing;</li>
+      <li>copy the site to pass yourself off as us.</li>
+    </ul>
+  </section>
+
+  <section id="ip">
+    <h2>12. Intellectual property</h2>
+    <p>
+      The site, its design, text and graphics, and the {site.name} and RMS names and logo belong to us or our
+      licensors. You may view and share pages for your own business evaluation. You may not reproduce the site for
+      commercial use without our written permission.
+    </p>
+    <p>
+      Fresh Bros is referenced with permission. Other names mentioned — including Shopify, WooCommerce, Close,
+      Klaviyo, QuickBooks, WhatsApp, Amazon, Meta and Google — are trademarks of their owners, used only to describe
+      the tools and platforms involved. Mentioning them does not imply their endorsement, partnership or sponsorship.
+    </p>
+    <p>Who owns what we build for you is set out in your Services Agreement, not here.</p>
+  </section>
+
+  <section id="third-party">
+    <h2>13. Third-party tools and links</h2>
+    <p>
+      The site links to services we don’t control, including WhatsApp, a live demonstration system and client
+      websites. Their own terms and privacy policies apply, and we are not responsible for their content or
+      availability. The third-party software used in a client’s stack is licensed to the client by its provider,
+      under that provider’s terms.
+    </p>
+  </section>
+
+  <section id="disclaimer">
+    <h2>14. Disclaimers</h2>
+    <p>
+      We work to keep this site accurate and available, but we provide it “as is” and “as available”. To the fullest
+      extent the law allows, we disclaim all warranties about the site, express or implied, including
+      merchantability, fitness for a particular purpose and non-infringement. We don’t warrant that the site will be
+      uninterrupted or error-free. Warranties about our services are only those written in your Services Agreement.
+    </p>
+  </section>
+
+  <section id="liability">
+    <h2>15. Limit of liability</h2>
+    <p>
+      To the fullest extent the law allows, we are not liable for indirect, incidental, special, consequential or
+      punitive damages, or for lost profits, revenue, data or goodwill, arising from your use of this site. Our total
+      liability for any claim arising from your use of the site is limited to US $100.
+    </p>
+    <p>
+      This section is about the website only. Liability for services we perform is governed by your Services
+      Agreement. Nothing in these terms limits liability that cannot lawfully be limited, including for fraud or for
+      death or personal injury caused by negligence.
+    </p>
+  </section>
+
+  <section id="law">
+    <h2>16. Governing law</h2>
+    <p>
+      These terms are governed by the laws of the State of <Fill value={legal.state} label="governing state" />,
+      without regard to its conflict-of-law rules. The state and federal courts located there have exclusive
+      jurisdiction over disputes about this site, and you and we consent to that. Before starting a claim, each side
+      agrees to give the other written notice and 30 days to try to resolve it informally. If you are a consumer
+      protected by mandatory laws where you live, this does not take those protections away.
+    </p>
+  </section>
+
+  <section id="general">
+    <h2>17. General</h2>
+    <ul>
+      <li><strong>Changes.</strong> We may update these terms. The date at the top shows the latest version, and changes apply from when they are posted. They never change a Services Agreement you have signed.</li>
+      <li><strong>Severability.</strong> If a court finds part of these terms unenforceable, the rest stays in effect.</li>
+      <li><strong>No waiver.</strong> If we don’t enforce a term straight away, we haven’t given it up.</li>
+      <li><strong>Whole agreement.</strong> These terms and the Privacy Policy are the whole agreement between us about the website.</li>
+      <li><strong>Assignment.</strong> You may not transfer your rights under these terms without our consent. We may transfer ours to a successor of the business.</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>18. Contact</h2>
+    <p>
+      <Fill value={legal.entity} label="legal entity name" /><br />
+      <Fill value={legal.address} label="mailing address" /><br />
+      <Fill value={legal.email} label="legal contact email" mailto />
+    </p>
+  </section>
+</Legal>

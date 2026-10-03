@@ -1,0 +1,18 @@
+---
+interface Props {
+  /** Use the white-lettered variant on dark backgrounds. */
+  light?: boolean;
+  height?: number;
+}
+const { light = false, height = 30 } = Astro.props;
+// Source art is 989 x 190.
+const width = Math.round((height * 989) / 190);
+---
+
+<img
+  src={light ? '/brand/rms-logo-light.png' : '/brand/rms-logo.png'}
+  alt="RunMyStore"
+  width={width}
+  height={height}
+  decoding="async"
+/>

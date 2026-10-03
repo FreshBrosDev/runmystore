@@ -1,0 +1,322 @@
+---
+import Legal from '../layouts/Legal.astro';
+import Fill from '../components/Fill.astro';
+import { legal } from '../data/legal';
+import { site } from '../data/site';
+
+const toc = [
+  { id: 'who', label: '1. Who we are, and our two roles' },
+  { id: 'collect', label: '2. What we collect on this site' },
+  { id: 'use', label: '3. How we use it' },
+  { id: 'never', label: '4. What we don’t do' },
+  { id: 'share', label: '5. Who we share it with' },
+  { id: 'clients', label: '6. Data we handle for our clients' },
+  { id: 'fulfillment', label: '7. Fulfillment and shipping data' },
+  { id: 'ai', label: '8. AI assistants' },
+  { id: 'messages', label: '9. Calls, texts and email' },
+  { id: 'retention', label: '10. How long we keep it' },
+  { id: 'security', label: '11. How we protect it' },
+  { id: 'rights', label: '12. Your rights' },
+  { id: 'transfers', label: '13. International transfers' },
+  { id: 'children', label: '14. Children' },
+  { id: 'changes', label: '15. Changes to this policy' },
+  { id: 'contact', label: '16. Contact' },
+];
+
+const summary = [
+  'We collect what you type into our application form, plus the basic server logs every website keeps.',
+  'We use it to reply to you and to run our business. We don’t sell it, and we don’t put you on a marketing list without asking.',
+  'This site sets no advertising or analytics cookies.',
+  'When we run a store for a client, their customers’ data belongs to the client. We handle it only on their instructions.',
+  'You can ask us what we hold about you, and ask us to correct or delete it.',
+];
+---
+
+<Legal
+  title="Privacy Policy"
+  description="How RunMyStore collects, uses and protects personal information — on this website, and when we run a store, wholesale pipeline or fulfillment for a client."
+  eyebrow="Privacy"
+  heading="Privacy Policy"
+  summary={summary}
+  toc={toc}
+>
+  <section id="who">
+    <h2>1. Who we are, and our two roles</h2>
+    <p>
+      This policy is from <Fill value={legal.entity} label="legal entity name" />, which operates as {site.name}{' '}
+      (“{site.name}”, “we”, “us”). We build and run ecommerce operations for other brands: storefronts, search and
+      content, email and SMS, wholesale pipelines, fulfillment and reporting.
+    </p>
+    <p>That work puts us in two different positions, and the rules are different for each:</p>
+    <ul>
+      <li>
+        <strong>Our own website and business.</strong> When you visit {site.url.replace('https://', '')}, apply for a
+        build, or talk to us as a prospective or current client, we decide how your information is used. We are the
+        “controller” (or “business”) for that information. Sections 2 to 5 and 9 to 16 cover this.
+      </li>
+      <li>
+        <strong>Work we do for clients.</strong> When we operate a client’s store, mailing list, CRM or fulfillment,
+        we handle their customers’ information on the client’s behalf and on their instructions. The client is the
+        controller; we are their “processor” (or “service provider”). Sections 6 to 8 cover this.
+      </li>
+    </ul>
+    <p>
+      If you bought from, or applied for a wholesale account with, a brand we work for, that brand’s privacy policy is
+      the one that applies to you. See section 6 for how to make a request.
+    </p>
+  </section>
+
+  <section id="collect">
+    <h2>2. What we collect on this site</h2>
+    <h3>Information you give us</h3>
+    <p>When you submit the application form we collect:</p>
+    <ul>
+      <li>your name, work email and, if you choose to give it, phone number;</li>
+      <li>your brand’s website and what it sells;</li>
+      <li>a monthly revenue range and how you sell today (direct, wholesale or both);</li>
+      <li>which services you’re interested in, and anything you write about your current bottleneck.</li>
+    </ul>
+    <p>
+      If you contact us by WhatsApp, email or phone instead, we receive whatever you send, along with your number or
+      address. WhatsApp is operated by Meta, and its own privacy policy applies to your use of it.
+    </p>
+    <p>
+      Once you become a client we also hold the business records any supplier holds: contracts, invoices, billing
+      contacts and our working correspondence with your team.
+    </p>
+    <h3>Information collected automatically</h3>
+    <p>
+      Like every website, the servers that deliver this site record standard technical logs: IP address, browser and
+      device type, the pages requested and when. We use these to keep the site secure and working. We do not use them
+      to build a profile of you.
+    </p>
+    <h3>Cookies and tracking</h3>
+    <p>
+      This site does not set advertising cookies, does not use analytics or session-recording scripts, and does not
+      load third-party trackers. Our fonts are served from our own domain rather than a third-party font service. If
+      we ever add analytics, we will update this policy first and, where the law requires it, ask for your consent
+      before anything is set.
+    </p>
+    <h3>What we ask you not to send</h3>
+    <p>
+      We never ask for passwords, payment card numbers, government ID numbers or health information through this site.
+      Please don’t send them. Access to client systems is always granted by invitation, never by sharing a password.
+    </p>
+  </section>
+
+  <section id="use">
+    <h2>3. How we use it</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Purpose</th><th>Legal basis (where GDPR / UK GDPR applies)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Reviewing your application, replying, and arranging a fit call</td>
+            <td>Steps taken at your request before entering a contract</td>
+          </tr>
+          <tr>
+            <td>Delivering services, invoicing and supporting you as a client</td>
+            <td>Performance of our contract with you</td>
+          </tr>
+          <tr>
+            <td>Keeping the site secure, preventing spam and abuse</td>
+            <td>Our legitimate interest in a safe, working website</td>
+          </tr>
+          <tr>
+            <td>Keeping financial and tax records</td>
+            <td>Legal obligation</td>
+          </tr>
+          <tr>
+            <td>Sending you marketing, if you have opted in</td>
+            <td>Your consent, which you can withdraw at any time</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>We do not make decisions about you using solely automated processing that has legal or similarly significant effects.</p>
+  </section>
+
+  <section id="never">
+    <h2>4. What we don’t do</h2>
+    <ul>
+      <li>We do not sell personal information, and we have not done so in the past 12 months.</li>
+      <li>We do not share personal information for cross-context behavioral advertising.</li>
+      <li>We do not add you to a marketing list because you applied. An application gets a reply, not a campaign.</li>
+      <li>We do not buy contact lists about you, and we do not use your application to enrich or resell a profile of you.</li>
+      <li>We do not use one client’s data for the benefit of another client.</li>
+    </ul>
+  </section>
+
+  <section id="share">
+    <h2>5. Who we share it with</h2>
+    <p>We share personal information only with:</p>
+    <ul>
+      <li>
+        <strong>Service providers that run our own business</strong> — website hosting, our CRM (where your
+        application is stored), the automation service that delivers the form to the CRM, email, messaging, scheduling,
+        e-signature and accounting software. They may use the information only to provide their service to us.
+      </li>
+      <li><strong>Professional advisers</strong> — lawyers, accountants and insurers, under a duty of confidentiality.</li>
+      <li>
+        <strong>Authorities</strong> — where we are legally required to, or where it is necessary to protect someone’s
+        rights or safety. We will tell you when we are allowed to.
+      </li>
+      <li>
+        <strong>A successor</strong> — if the business is sold or merged, information may transfer to the new owner,
+        who must continue to honor this policy.
+      </li>
+    </ul>
+    <p>You can ask us for the current list of providers that handle your information.</p>
+  </section>
+
+  <section id="clients">
+    <h2>6. Data we handle for our clients</h2>
+    <p>
+      Running a client’s commerce stack means working inside their systems. Depending on the engagement that can
+      include:
+    </p>
+    <ul>
+      <li>store customer and order records (names, contact details, order history, shipping addresses);</li>
+      <li>email and SMS subscriber lists, including consent status and engagement history;</li>
+      <li>wholesale applicants and accounts held in the client’s CRM: business name, contact people, license or resale details supplied on the wholesale form, quotes, orders and the record of calls, texts and emails;</li>
+      <li>accounting and inventory records connected to those orders;</li>
+      <li>the result of age or identity checks the client is required to perform. We do not ask to receive or keep copies of ID documents.</li>
+    </ul>
+    <p>For all of this, the following always applies:</p>
+    <ul>
+      <li><strong>The client owns it.</strong> Customer lists, order data and wholesale accounts are the client’s, during the engagement and after it.</li>
+      <li><strong>We act on instructions.</strong> We use client data only to deliver the services in our written agreement with that client, and for no purpose of our own.</li>
+      <li><strong>Access by invitation.</strong> We work through named user accounts the client grants and can revoke. We do not take shared passwords. We ask for the least access the work needs.</li>
+      <li><strong>Payment data stays with the processor.</strong> Card details are handled by the client’s payment processor. We are not the merchant of record and do not store card numbers.</li>
+      <li><strong>Subprocessors.</strong> The tools in a client’s stack (their store platform, CRM, email service and so on) are usually the client’s own accounts. Where we bring a tool of ours, we tell the client first.</li>
+      <li><strong>At the end.</strong> When an engagement ends — including a free 30-day build that does not continue — we remove our access, and return or delete client data in our possession as the agreement directs.</li>
+      <li><strong>Incidents.</strong> If we become aware of a security incident affecting client data in our care, we notify that client without undue delay so they can meet their own obligations.</li>
+    </ul>
+    <p>
+      We sign a data processing agreement with any client who needs one. <strong>If you are a customer of one of our
+      clients</strong> and want to access, correct or delete your information, contact that brand directly. If you
+      send the request to us, we will pass it to them and help them respond.
+    </p>
+  </section>
+
+  <section id="fulfillment">
+    <h2>7. Fulfillment and shipping data</h2>
+    <p>
+      Where we store and ship a client’s products, we receive the information needed to get an order to the door:
+      recipient name, delivery address, phone or email for delivery updates, order contents, and any age or signature
+      requirement on the shipment.
+    </p>
+    <ul>
+      <li>We use it to pick, pack, ship and track the order, to handle returns and delivery problems, and to keep the shipping records the law and carriers require.</li>
+      <li>We share it with the carrier delivering the parcel and the shipping software that produces the label. Carriers handle it under their own privacy policies.</li>
+      <li>We do not contact recipients for marketing, and we do not reuse a client’s shipping data for any other client or for ourselves.</li>
+      <li>Packing and shipping records are kept only as long as the client agreement, carrier claims windows and applicable record-keeping rules require.</li>
+    </ul>
+  </section>
+
+  <section id="ai">
+    <h2>8. AI assistants</h2>
+    <p>
+      Some engagements include assistants that answer questions from a client’s own business data — inventory,
+      pricing, menus, orders and CRM records.
+    </p>
+    <ul>
+      <li>An assistant built for a client works from that client’s data and is available to that client’s team. It is not shared with, or used to inform work for, any other client.</li>
+      <li>We do not use client data to train models of our own.</li>
+      <li>These assistants run on third-party AI services. We choose business-grade services and settings under which the provider does not use the content to train its general models, and we tell the client which provider is used.</li>
+      <li>Assistants are a tool for the client’s staff. They are not used to make automated decisions about individual consumers.</li>
+    </ul>
+  </section>
+
+  <section id="messages">
+    <h2>9. Calls, texts and email</h2>
+    <p>
+      If you give us a phone number, we may call or message you about your application or your account. We do not send
+      marketing texts unless you have separately and expressly opted in. You can reply STOP to any text to end
+      messages, and every marketing email we send includes an unsubscribe link. Message and data rates may apply. We
+      do not share mobile opt-in data or consent with third parties for their marketing.
+    </p>
+  </section>
+
+  <section id="retention">
+    <h2>10. How long we keep it</h2>
+    <ul>
+      <li><strong>Applications that don’t become an engagement:</strong> up to {legal.retentionMonths} months after our last contact, then deleted — or sooner if you ask.</li>
+      <li><strong>Client business records:</strong> for the life of the engagement and as long afterwards as tax, accounting and legal rules require (typically up to seven years for financial records).</li>
+      <li><strong>Client data we process:</strong> only for the engagement, then returned or deleted as described in section 6.</li>
+      <li><strong>Server logs:</strong> for a short period set by our hosting provider, generally no more than 90 days.</li>
+    </ul>
+  </section>
+
+  <section id="security">
+    <h2>11. How we protect it</h2>
+    <p>
+      We use measures appropriate to a business of our size and the data involved: encrypted connections to this site,
+      named accounts with multi-factor authentication where the tool supports it, least-privilege access, prompt
+      removal of access when someone leaves a project, and confidentiality obligations for everyone who works with us.
+      No system is perfectly secure, and we won’t pretend otherwise. If a breach affects your information, we will
+      notify you and the relevant authorities as the law requires.
+    </p>
+  </section>
+
+  <section id="rights">
+    <h2>12. Your rights</h2>
+    <p>Depending on where you live, you may have the right to:</p>
+    <ul>
+      <li>know what personal information we hold about you and get a copy of it;</li>
+      <li>have inaccurate information corrected;</li>
+      <li>have your information deleted;</li>
+      <li>object to or restrict certain uses, and withdraw consent you have given;</li>
+      <li>receive your information in a portable format;</li>
+      <li>opt out of the sale or sharing of personal information and of targeted advertising — though we do neither;</li>
+      <li>appeal a decision we make about your request, and complain to your data protection authority or state attorney general.</li>
+    </ul>
+    <p>
+      To make a request, email <Fill value={legal.email} label="privacy contact email" mailto />. We will confirm it is
+      really you before acting, which may mean asking you to reply from the address we hold. We respond within 30 days
+      (or 45 where state law allows), and we’ll tell you if we need longer. We will never treat you differently for
+      exercising these rights. An authorized agent can make a request for you with written permission.
+    </p>
+    <p>
+      We honor these rights for everyone as far as we reasonably can, not only where a law such as the GDPR, UK GDPR,
+      or a US state privacy law such as the CCPA compels it.
+    </p>
+  </section>
+
+  <section id="transfers">
+    <h2>13. International transfers</h2>
+    <p>
+      We are based in the United States and our service providers are mainly located there. If you contact us from
+      elsewhere, your information will be processed in the US, where privacy laws may differ from yours. Where the law
+      requires a safeguard for that transfer, such as standard contractual clauses, we rely on one.
+    </p>
+  </section>
+
+  <section id="children">
+    <h2>14. Children</h2>
+    <p>
+      This site is for businesses. It is not directed to anyone under 18, and we do not knowingly collect information
+      from them. If you believe a minor has sent us information, contact us and we will delete it.
+    </p>
+  </section>
+
+  <section id="changes">
+    <h2>15. Changes to this policy</h2>
+    <p>
+      If we change how we handle personal information, we will update this page and the date at the top before the
+      change takes effect. If a change is significant and we have your contact details, we will tell you directly.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>16. Contact</h2>
+    <p>
+      <Fill value={legal.entity} label="legal entity name" /><br />
+      <Fill value={legal.address} label="mailing address" /><br />
+      <Fill value={legal.email} label="privacy contact email" mailto />
+    </p>
+    <p>See also our <a href="/terms/">Terms of Use</a>.</p>
+  </section>
+</Legal>

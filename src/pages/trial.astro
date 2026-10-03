@@ -1,0 +1,364 @@
+---
+import Base from '../layouts/Base.astro';
+import Stripes from '../components/Stripes.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { offer, buildWeeks, departments, faqs, site } from '../data/site';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const free = [
+  'All build work across the six departments',
+  'Strategy, setup and configuration',
+  'Wholesale form, Close CRM pipeline and your custom menu',
+  'Email and SMS flows, SEO foundation and first content',
+  'A named success manager and a review call at day 30',
+];
+const yours = [
+  'Your own software subscriptions (Shopify, Close, Klaviyo…)',
+  'Domains, hosting and payment processing fees',
+  'Any ad spend you choose to run',
+  'Your inventory and shipping costs',
+];
+---
+
+<Base
+  title="Free 30-day build: your entire stack, then a retainer for what you need"
+  description="RunMyStore builds your entire commerce stack free in 30 days. On day 31 you keep only the departments you need on a monthly retainer — or walk away."
+  schema={[faqSchema]}
+>
+  <section class="dark pagehero">
+    <div class="wrap">
+      <p class="eyebrow"><Stripes /> {offer.name}</p>
+      <h1>We build it first. <span class="accent">You decide after.</span></h1>
+      <p class="lede">
+        For {offer.days} days we build your entire stack and it costs you {offer.price}. On day 31 we agree a monthly
+        retainer for the parts you want us to keep running — and nothing for the parts you don’t.
+      </p>
+      <div class="actions">
+        <a class="btn" href="/apply/">{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
+        <span class="fineprint">{site.cohort}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> The {offer.days} days</p>
+        <h2>Week by week.</h2>
+        <p class="lede">It starts with a 20-minute fit call. If we’re a match, the clock starts when you’ve invited us into your accounts.</p>
+      </div>
+      <ol class="weeks" role="list">
+        {
+          buildWeeks.map((w, i) => (
+            <li class="reveal" style={`transition-delay:${i * 80}ms`}>
+              <span class="wk">{w.week}</span>
+              <h3>{w.title}</h3>
+              <p>{w.detail}</p>
+            </li>
+          ))
+        }
+        <li class="reveal day31" style="transition-delay:320ms">
+          <span class="wk">Day 31</span>
+          <h3>Review & retainer</h3>
+          <p>We look at what’s live and what it’s doing. You pick what stays.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Free vs yours -->
+  <section class="section mist">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> Straight terms</p>
+        <h2>What’s free, and what isn’t.</h2>
+      </div>
+      <div class="grid g2">
+        <div class="card reveal">
+          <h3>Free for {offer.days} days <span class="num">{offer.price}</span></h3>
+          <ul class="checks">{free.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="card reveal">
+          <h3>You cover, as you would anyway</h3>
+          <ul class="checks no">{yours.map((x) => <li>{x}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Retainer builder -->
+  <section class="section dark" id="retainer">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> Day 31</p>
+        <h2>Pay for what you need. <span class="accent">Skip what you don’t.</span></h2>
+        <p class="lede">
+          There’s no fixed price menu, because no two brands need the same thing. Pick the departments you’d want us to
+          keep running and bring that to the fit call — we’ll price it to your setup.
+        </p>
+      </div>
+
+      <form class="builder reveal" id="builder">
+        <fieldset>
+          <legend class="sr-only">Departments you want run for you</legend>
+          {
+            departments.map((d) => (
+              <label class="opt">
+                <input type="checkbox" name="need" value={d.id} checked />
+                <span class="box" aria-hidden="true" />
+                <span class="txt">
+                  <strong>{d.name}</strong>
+                  <small>{d.line}</small>
+                </span>
+              </label>
+            ))
+          }
+        </fieldset>
+        <aside class="summary" aria-live="polite">
+          <span class="label">Your retainer would cover</span>
+          <div class="count"><b id="b-count">6</b> of 6 departments</div>
+          <p id="b-text">The full stack, run as one system.</p>
+          <a class="btn" id="b-cta" href="/apply/">Start with this <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="fineprint">All six still get built during the free {offer.days} days.</span>
+        </aside>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> Questions we get</p>
+        <h2>The fine print, in plain English.</h2>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<script>
+  const form = document.getElementById('builder') as HTMLFormElement | null;
+  const count = document.getElementById('b-count');
+  const text = document.getElementById('b-text');
+  const cta = document.getElementById('b-cta') as HTMLAnchorElement | null;
+
+  function update() {
+    if (!form || !count || !text || !cta) return;
+    const boxes = [...form.querySelectorAll<HTMLInputElement>('input[name="need"]')];
+    const on = boxes.filter((b) => b.checked);
+    const names = on.map((b) => b.closest('label')?.querySelector('strong')?.textContent ?? '');
+    count.textContent = String(on.length);
+    if (on.length === boxes.length) text.textContent = 'The full stack, run as one system.';
+    else if (on.length === 0) text.textContent = 'Nothing yet — pick at least one department.';
+    else text.textContent = names.join(' · ');
+    const q = on.length && on.length < boxes.length ? `?need=${on.map((b) => b.value).join(',')}` : '';
+    cta.href = `/apply/${q}`;
+    cta.toggleAttribute('aria-disabled', on.length === 0);
+  }
+  form?.addEventListener('change', update);
+  update();
+</script>
+
+<style>
+  .weeks {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 0;
+    border-top: 4px solid var(--ink);
+  }
+  .weeks li {
+    padding: 28px 24px 8px 0;
+  }
+  .weeks li + li {
+    padding-left: 24px;
+    border-left: 1px solid var(--line);
+  }
+  .wk {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--teal-deep);
+  }
+  .weeks p {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .day31 {
+    background: var(--teal-wash);
+    padding-right: 24px !important;
+    padding-bottom: 28px !important;
+  }
+  @media (max-width: 960px) {
+    .weeks {
+      grid-template-columns: 1fr;
+    }
+    .weeks li,
+    .weeks li + li {
+      padding: 24px 0;
+      border-left: 0;
+    }
+    .weeks li + li {
+      border-top: 1px solid var(--line);
+    }
+    .day31 {
+      padding-inline: 20px !important;
+    }
+  }
+
+  .card h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    min-height: 2.2rem;
+    margin-bottom: 24px;
+  }
+  .card h3 .num {
+    font-size: 1.8rem;
+  }
+  .card .checks {
+    gap: 14px;
+    font-weight: 500;
+  }
+
+  .builder {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    align-items: start;
+    gap: 24px;
+  }
+  fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .opt {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: var(--ink-2);
+    border: 1px solid var(--ink-3);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      opacity 0.2s;
+  }
+  .opt:hover {
+    border-color: var(--teal);
+  }
+  .opt input {
+    position: absolute;
+    opacity: 0;
+  }
+  .box {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+    border: 2px solid var(--ink-3);
+    border-radius: 5px;
+    transform: skewX(var(--skew));
+    transition:
+      background 0.15s,
+      border-color 0.15s;
+  }
+  .opt input:checked + .box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .opt input:focus-visible + .box {
+    outline: 3px solid var(--teal-bright);
+    outline-offset: 3px;
+  }
+  .opt:has(input:not(:checked)) {
+    opacity: 0.55;
+  }
+  .txt strong {
+    display: block;
+    font-family: var(--display);
+    font-weight: 700;
+    font-stretch: 105%;
+    line-height: 1.25;
+  }
+  .txt small {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: var(--muted-dark);
+  }
+  .summary {
+    position: sticky;
+    top: 100px;
+    display: grid;
+    gap: 14px;
+    padding: 30px;
+    background: var(--ink-2);
+    border: 1px solid var(--ink-3);
+    border-top: 5px solid var(--teal);
+    border-radius: 6px 6px var(--radius) var(--radius);
+  }
+  .summary .label {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+  }
+  .count {
+    color: var(--muted-dark);
+  }
+  .count b {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 3.2rem;
+    line-height: 1;
+    color: #fff;
+    margin-right: 6px;
+  }
+  .summary p {
+    min-height: 3.2em;
+    color: #d5dddc;
+  }
+  .summary .btn[aria-disabled] {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+  @media (max-width: 900px) {
+    .builder {
+      grid-template-columns: 1fr;
+    }
+    .summary {
+      position: static;
+    }
+  }
+  @media (max-width: 560px) {
+    fieldset {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

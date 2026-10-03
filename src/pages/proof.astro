@@ -1,0 +1,661 @@
+---
+import Base from '../layouts/Base.astro';
+import Stripes from '../components/Stripes.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { proof, site } from '../data/site';
+import '@fontsource-variable/instrument-sans';
+
+const press = [
+  { file: 'press-01.svg', name: 'Forbes' },
+  { file: 'press-02.svg', name: 'mg Magazine' },
+  { file: 'press-03.svg', name: 'Herb' },
+  { file: 'press-vice.svg', name: 'Vice' },
+  { file: 'press-05.svg', name: 'Discover' },
+  { file: 'press-04.svg', name: 'Press feature' },
+];
+
+const max = Math.max(...proof.monthly.map((m) => m.sales));
+const fmtK = (n: number) => `$${Math.round(n / 1000)}k`;
+
+const hard = [
+  { title: 'Processor instability', body: 'Payment processors drop hemp merchants without warning. Checkout needs a path and a backup.' },
+  { title: 'Ad bans', body: 'No Meta. No Google Ads. Growth had to come from channels nobody could switch off.' },
+  { title: 'Shipping limits', body: 'Carrier rules, packaging, age and signature requirements — different by product and by state.' },
+  { title: 'State-by-state compliance', body: 'What’s legal to sell and ship changes at the border, and changes again next quarter.' },
+];
+
+const moves = [
+  { dept: 'Storefront & checkout', body: 'Site redesign launched November 2025. Q4 closed at a 3.6% conversion rate on 52,658 sessions.' },
+  { dept: 'Traffic & authority', body: 'Non-brand search: topic map, authority content, outreach and links. Search authority 34.3 → 43.0 in eight months.' },
+  { dept: 'Email & SMS list', body: 'Lifecycle flows switched on, then the list grown into them. Menu and pricing updates go out to wholesale buyers the same way.' },
+  { dept: 'Wholesale pipeline', body: 'Wholesale form into Close into a live ordering menu — running today at menu.freshbros.com.' },
+  { dept: 'Fulfillment', body: '5,110 parcels out the door in the same six months, with compliant packaging and tracking tied to the order.' },
+  { dept: 'Reporting', body: 'Woo, QuickBooks, ShipStation and reviews in one place — which is why every number on this page has a source.' },
+];
+
+const strains = [
+  { name: 'Indica', color: '#752157', feel: 'Eggplant · deep relaxation' },
+  { name: 'Hybrid', color: '#61b80e', feel: 'Green · balanced and grounded' },
+  { name: 'Sativa', color: '#ffa400', feel: 'Orange · vibrant and uplifting' },
+];
+
+const sources = [
+  'Sales, orders, AOV and monthly figures: WooCommerce Analytics export, Mar 9 – Sep 9, 2026 (approved monthly rollup). September is partial, through Sep 9.',
+  'Repeat rate: Woo customer export, buyers with two or more orders ÷ buyers with one or more (2,565 ÷ 7,204).',
+  'Reviews: Klaviyo Reviews API, published reviews as of Sep 19, 2026 — 3,089 published, 2,792 verified, 4.75 average.',
+  'Parcels: ShipStation shipments export, Fresh Bros store, live labels, same window.',
+  'Conversion and Q4 2025 figures: Organic Growth Report (Woo + GA4). Authority score: same report, May 2025 → Jan 2026.',
+];
+---
+
+<Base
+  title="Proof: Fresh Bros, $908k in six months in hemp"
+  description="Sourced results from Fresh Bros, the hemp brand the RunMyStore stack was built on: $908k net sales in six months, +56% monthly revenue, 35.6% repeat rate, 4.75 stars across 3,089 reviews."
+>
+  <!-- Hero: RMS dark + Fresh Bros brand panel -->
+  <section class="dark hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><Stripes /> Proof · {proof.brand}</p>
+        <h1>Built in the hardest category <span class="accent">in ecommerce.</span></h1>
+        <p class="lede">
+          We didn’t learn this on client money. The stack was forged running {proof.brand} — a hemp brand with no ad
+          accounts, nervous processors and fifty sets of shipping rules. That’s why it’s easier everywhere else.
+        </p>
+        <p class="rule">
+          Every number on this page comes from an export or a screenshot in the Fresh Bros proof vault. Nothing is
+          rounded up, and the marketing claims on freshbros.com that we couldn’t verify aren’t here.
+        </p>
+      </div>
+
+      <aside class="fb brandcard" aria-label="Fresh Bros">
+        <img class="photo" src="/fb/fb-top-shelf.webp" width="768" height="550" alt="The Fresh Bros produce truck, stocked with bagged flower alongside limes, oranges and eggplant" loading="eager" />
+        <div class="brandbar">
+          <img src="/fb/fb-icon-270.png" width="54" height="54" alt="" />
+          <div>
+            <img class="wordmark" src="/fb/fb-wordmark-white.png" width="150" height="31" alt="Fresh Bros" />
+            <span class="tag">{proof.tagline}</span>
+          </div>
+          <a class="visit" href={proof.href} rel="noopener">freshbros.com ↗</a>
+        </div>
+        <ul class="press" role="list" aria-label="Fresh Bros in the press">
+          {press.map((p) => <li><img src={`/fb/${p.file}`} alt={p.name} height="22" loading="lazy" /></li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Headline stats -->
+  <section class="dark strip">
+    <div class="wrap">
+      <div class="grid g4">
+        {
+          proof.headline.map((s) => (
+            <div class="stat">
+              <div class="value">{s.value}</div>
+              <div class="label">{s.label}</div>
+              <div class="note">{s.note}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Monthly climb -->
+  <section class="section">
+    <div class="wrap climb">
+      <div class="reveal">
+        <p class="eyebrow"><Stripes /> Six months, month by month</p>
+        <h2>No new ad channel. <span class="accent">Just a machine that works.</span></h2>
+        <p class="lede">
+          March to July, monthly revenue climbed 56% and orders climbed 62% — on search, email, wholesale and a
+          checkout that completes. Not on unlocking a new place to spend money.
+        </p>
+        <dl class="mini">
+          <div><dt>Orders</dt><dd>4,999</dd></div>
+          <div><dt>Net sales</dt><dd>$908,398</dd></div>
+          <div><dt>Avg. order</dt><dd>$181.72</dd></div>
+        </dl>
+      </div>
+
+      <figure class="fb chart reveal">
+        <figcaption>
+          <span>Net sales by month</span>
+          <span class="win">{proof.window}</span>
+        </figcaption>
+        <div class="bars" role="img" aria-label={`Monthly net sales: ${proof.monthly.map((m) => `${m.m} ${fmtK(m.sales)}`).join(', ')}`}>
+          {
+            proof.monthly.map((m, i) => (
+              <div class:list={['col', { peak: m.sales === max, partial: m.m.endsWith('*') }]} style={`--h:${(m.sales / max) * 100}%; --i:${i}`}>
+                <b>{fmtK(m.sales)}</b>
+                <i />
+                <span>{m.m}</span>
+              </div>
+            ))
+          }
+        </div>
+        <p class="foot">* September is partial, through Sep 9. Source: WooCommerce Analytics export, approved monthly rollup.</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- The category -->
+  <section class="section mist">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> What the category throws at you</p>
+        <h2>Four problems most agencies have never had.</h2>
+      </div>
+      <div class="grid g4">
+        {
+          hard.map((h, i) => (
+            <article class="card rail reveal" style={`transition-delay:${i * 70}ms`}>
+              <h3>{h.title}</h3>
+              <p>{h.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- What we installed -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> What we installed</p>
+        <h2>The same six departments you’d get.</h2>
+      </div>
+      <dl class="moves">
+        {
+          moves.map((m) => (
+            <div class="reveal">
+              <dt>{m.dept}</dt>
+              <dd>{m.body}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <div class="grid g4 more">
+        {
+          proof.more.map((s) => (
+            <div class="stat sm">
+              <div class="value">{s.value}</div>
+              <div class="label">{s.label}</div>
+              <div class="note">{s.note}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand system -->
+  <section class="fb brandsys">
+    <div class="wrap bs-grid">
+      <div class="reveal">
+        <p class="eyebrow">You own the brand</p>
+        <h2>We run the store. <span>The brand stays theirs.</span></h2>
+        <p>
+          Fresh Bros is built on a grocery-store idea: you’re drawn to produce by color and scent before you think
+          about it, and a bag of flower should work the same way. Every strain type has a color and a story, and every
+          drop ships in the signature milk crate.
+        </p>
+        <p>
+          Our job was never to redesign that. It was to build the storefront, the menu, the flows and the fulfillment
+          that let it sell — and to stay invisible to the customer.
+        </p>
+        <ul class="strains" role="list">
+          {
+            strains.map((s) => (
+              <li>
+                <i style={`background:${s.color}`} />
+                <b>{s.name}</b>
+                <span>{s.feel}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <img class="boxes reveal" src="/fb/fb-quality.webp" width="544" height="639" alt="A stack of Fresh Bros boxes in Sativa orange, Indica eggplant and Hybrid green, held in a sunflower field" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> 4.75★ across 3,089 published reviews</p>
+        <h2>What their customers say.</h2>
+        <p class="lede">Pulled from the review platform, not written for a deck. 2,792 of the 3,089 are verified purchases.</p>
+      </div>
+      <div class="grid g3">
+        {
+          proof.reviews.map((r, i) => (
+            <blockquote class="card review reveal" style={`transition-delay:${i * 70}ms`}>
+              <span class="stars" aria-label="5 stars">★★★★★</span>
+              <strong>{r.title}</strong>
+              <p>“{r.quote}”</p>
+              <cite>{r.who}</cite>
+            </blockquote>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Live system + sources -->
+  <section class="section mist">
+    <div class="wrap">
+      <div class="demo reveal">
+        <div>
+          <p class="eyebrow"><Stripes /> Live in production</p>
+          <h2>Don’t take our word for it. Use one.</h2>
+          <p class="lede">Not a mockup — the wholesale ordering system we built and run for Fresh Bros. Click in.</p>
+        </div>
+        <a class="btn" href={site.liveDemo.href} rel="noopener">{site.liveDemo.label} <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <details class="sources reveal">
+        <summary>Where these numbers come from</summary>
+        <ul>{sources.map((s) => <li>{s}</li>)}</ul>
+        <p>More results as our current cohort completes. We publish named metrics, not vague testimonials.</p>
+      </details>
+    </div>
+  </section>
+
+  <CtaBand title="Your numbers next. Start with a free build." />
+</Base>
+
+<style>
+  /* Fresh Bros brand tokens, scoped to the panels that borrow them. */
+  .fb {
+    --fb-green: #143c18;
+    --fb-lime: #61b80e;
+    --fb-sage: #89a87b;
+    --fb-ink: #122417;
+    --fb-body: 'Instrument Sans Variable', var(--body);
+  }
+
+  .hero {
+    padding-block: clamp(56px, 8vw, 104px) clamp(48px, 6vw, 80px);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(36px, 6vw, 80px);
+  }
+  .hero h1 {
+    margin-top: 22px;
+  }
+  .hero .lede {
+    margin-top: 24px;
+  }
+  .rule {
+    margin-top: 22px;
+    padding-left: 18px;
+    border-left: 3px solid var(--teal);
+    font-size: 0.95rem;
+    color: var(--muted-dark);
+    max-width: 56ch;
+  }
+
+  /* Brand card */
+  .brandcard {
+    font-family: var(--fb-body);
+    background: var(--fb-green);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+  }
+  .brandcard .photo {
+    width: 100%;
+    aspect-ratio: 768 / 550;
+    object-fit: cover;
+  }
+  .brandbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+  }
+  .brandbar .wordmark {
+    height: 26px;
+    width: auto;
+  }
+  .brandbar .tag {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fb-lime);
+  }
+  .visit {
+    margin-left: auto;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .visit:hover {
+    color: var(--fb-lime);
+  }
+  .press {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 26px;
+    padding: 14px 22px 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .press img {
+    height: 20px;
+    width: auto;
+    opacity: 0.85;
+  }
+
+  .strip {
+    padding-block: 0 clamp(64px, 8vw, 104px);
+  }
+  .strip .wrap {
+    padding-top: clamp(40px, 5vw, 64px);
+    border-top: 1px solid var(--ink-3);
+  }
+  .strip .grid {
+    gap: 36px 28px;
+  }
+
+  /* Climb */
+  .climb {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 80px);
+  }
+  .climb h2 {
+    margin-top: 20px;
+  }
+  .climb .lede {
+    margin-top: 20px;
+  }
+  .mini {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .mini dt {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mini dd {
+    margin-top: 4px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+  .chart {
+    font-family: var(--fb-body);
+    padding: 26px 28px 22px;
+    background: var(--fb-green);
+    color: #fff;
+    border-radius: var(--radius);
+  }
+  .chart figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-weight: 600;
+  }
+  .chart .win {
+    font-weight: 500;
+    color: var(--fb-sage);
+  }
+  .bars {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    height: 260px;
+    margin-top: 28px;
+    align-items: end;
+  }
+  .col {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    text-align: center;
+  }
+  .col b {
+    align-self: end;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding-bottom: 6px;
+  }
+  .col i {
+    display: block;
+    align-self: end;
+    height: var(--h);
+    background: var(--fb-sage);
+    border-radius: 4px 4px 0 0;
+    transform-origin: bottom;
+    animation: grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 70ms);
+  }
+  .col.peak i {
+    background: var(--fb-lime);
+  }
+  .col.partial i {
+    background: repeating-linear-gradient(-45deg, var(--fb-sage) 0 6px, transparent 6px 10px);
+  }
+  .col span {
+    padding-top: 10px;
+    font-size: 0.85rem;
+    color: var(--fb-sage);
+  }
+  @keyframes grow {
+    from {
+      transform: scaleY(0);
+    }
+  }
+  .chart .foot {
+    margin-top: 18px;
+    font-size: 0.8rem;
+    color: var(--fb-sage);
+  }
+
+  /* Moves + more stats */
+  .moves {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 0 48px;
+    margin: 0;
+  }
+  .moves > div {
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+  }
+  dt {
+    font-family: var(--display);
+    font-weight: 700;
+    font-stretch: 105%;
+    font-size: 1.12rem;
+  }
+  dd {
+    margin-top: 6px;
+    color: var(--muted);
+  }
+  .more {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 4px solid var(--ink);
+  }
+  .stat.sm .value {
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  }
+
+  /* Brand system */
+  .brandsys {
+    font-family: var(--fb-body);
+    padding-block: clamp(64px, 8vw, 104px);
+    background: var(--fb-green);
+    color: #fff;
+  }
+  .bs-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+  }
+  .brandsys .eyebrow {
+    color: var(--fb-lime);
+  }
+  .brandsys h2 {
+    margin-top: 20px;
+  }
+  .brandsys h2 span {
+    color: var(--fb-lime);
+  }
+  .brandsys p {
+    margin-top: 18px;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: #d9e4d6;
+    max-width: 58ch;
+  }
+  .strains {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 32px;
+  }
+  .strains li {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+  }
+  .strains i {
+    display: block;
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+  }
+  .strains b {
+    display: block;
+    margin-top: 12px;
+    font-size: 1.05rem;
+  }
+  .strains span {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.85rem;
+    color: var(--fb-sage);
+  }
+  .boxes {
+    width: 100%;
+    border-radius: var(--radius);
+    object-fit: cover;
+  }
+
+  /* Reviews */
+  .review {
+    margin: 0;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+  .stars {
+    color: #f5a623;
+    letter-spacing: 2px;
+  }
+  .review strong {
+    font-family: var(--display);
+    font-weight: 700;
+    font-stretch: 105%;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+  .review p {
+    margin: 0;
+  }
+  .review cite {
+    font-style: normal;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+  }
+
+  /* Demo + sources */
+  .demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: clamp(32px, 5vw, 64px);
+    background: var(--paper);
+    border-left: 6px solid var(--teal);
+    border-radius: 6px var(--radius) var(--radius) 6px;
+  }
+  .demo h2 {
+    margin-top: 20px;
+  }
+  .demo .lede {
+    margin-top: 16px;
+  }
+  .sources {
+    margin-top: 28px;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .sources summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .sources ul {
+    margin: 14px 0 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+  }
+  .sources p {
+    margin-top: 14px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .climb,
+    .bs-grid {
+      grid-template-columns: 1fr;
+    }
+    .boxes {
+      max-width: 440px;
+    }
+  }
+  @media (max-width: 560px) {
+    .bars {
+      height: 200px;
+      gap: 6px;
+    }
+    .col b {
+      font-size: 0.68rem;
+    }
+    .strains {
+      grid-template-columns: 1fr;
+    }
+    .mini {
+      flex-wrap: wrap;
+      gap: 16px 28px;
+    }
+  }
+</style>
