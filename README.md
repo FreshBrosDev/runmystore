@@ -54,9 +54,16 @@ The privacy policy states facts about this site that must stay true. **Update th
 - start adding applicants to a marketing list (it says we don't);
 - change how long applications are kept (`retentionMonths` in `legal.ts`).
 
+## Working on it together
+
+The repo is https://github.com/adam3302127/runmystore (private). Clone it, `npm install`, `npm run dev`.
+Small copy fixes can go straight to `main`. Anything bigger goes on a branch and a pull request, so the other person
+can look at the preview URL before it merges. Every push and PR runs a build check (`.github/workflows/build.yml`).
+
 ## Deploy
 
-Any static host (Cloudflare Pages, Netlify, Vercel): build command `npm run build`, output directory `dist`.
+Cloudflare Pages, connected to this repo: build command `npm run build`, output directory `dist`, Node 22.
+Pushes to `main` go live; every PR gets its own preview URL.
 Set `PUBLIC_LEAD_ENDPOINT` in the host's environment variables. The sitemap is generated at `/sitemap-index.xml`.
 
 ## Adding a blog

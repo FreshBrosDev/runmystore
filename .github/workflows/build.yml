@@ -1,0 +1,18 @@
+# Builds the site on every push and pull request. If this fails, the change
+# doesn't deploy — Cloudflare Pages only publishes from a green build too.
+name: Build
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
