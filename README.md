@@ -100,6 +100,11 @@ adds the badge.
 **URLs** — see `.env.example`. `PUBLIC_BOOKING_URL` (fallback: WhatsApp), `PUBLIC_START_URL_*` per plan (fallback:
 mailto to `PUBLIC_CONTACT_EMAIL` with the plan in the subject), `PUBLIC_CONTACT_EMAIL` (fallback: hello@runmystore.com).
 
+**Deviation from the brief (Adam, 2026-10-04):** the brief's line "cancel and keep what we built" was dropped. The
+modules are a run service: when billing stops the assistant, flows and lead delivery switch off and our access is
+removed; the customer keeps their own data (customers, list, conversations). `guarantee` in `site.ts`, the "Can I
+cancel?" FAQ and Terms §3–4 say so.
+
 **Hard rules** from the brief that the code enforces by omission: no client names, case-study numbers, testimonials or
 revenue guarantees anywhere public; the AI vendor is never named; the word "unlimited" does not appear; caps are
 fair-use lines. The one disclosure line ("answered by an AI assistant trained on your business, with a human

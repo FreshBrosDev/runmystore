@@ -91,7 +91,7 @@ export const bundle: Plan = {
   recommended: true,
 };
 
-export const guarantee = 'No setup fee. Month to month. If it isn’t producing in 30 days, cancel and keep what we built.';
+export const guarantee = 'No setup fee. Month to month. Cancel any month: the assistant switches off, your customers and your list stay yours.';
 
 export const upperTier = {
   line: 'Doing more than $15k a month? You’re bigger than these plans.',
@@ -120,7 +120,7 @@ export const faqs2 = [
   },
   {
     q: 'Can I cancel?',
-    a: 'Any month, from your account. No contract, no setup fee. If it isn’t producing in the first 30 days, cancel and keep what we built: the trained assistant, the flows, and the list segments.',
+    a: 'Any month, from your account. No contract, no setup fee. The assistant, the flows, and lead delivery run while you’re subscribed and stop at the end of the month you’ve paid for; then we remove our access. Everything that’s yours stays yours: your customers, your list, every conversation, and anything already sent or published in your own tools.',
   },
   {
     q: 'What do you need from me to start?',
