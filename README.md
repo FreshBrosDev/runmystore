@@ -62,8 +62,10 @@ can look at the preview URL before it merges. Every push and PR runs a build che
 
 ## Deploy
 
-Cloudflare Pages, connected to this repo: build command `npm run build`, output directory `dist`, Node 22.
-Pushes to `main` go live; every PR gets its own preview URL.
+GitHub Pages, via `.github/workflows/deploy.yml`: every push to `main` builds and goes live at
+https://adam3302127.github.io/runmystore/. Because that URL has a sub-path, the workflow runs `scripts/relativize.mjs`
+after the build to make internal links relative. **When runmystore.com is attached as the custom domain** (repo
+Settings → Pages → Custom domain, plus a CNAME at the registrar), delete that step — the site is then served from `/`.
 Set `PUBLIC_LEAD_ENDPOINT` in the host's environment variables. The sitemap is generated at `/sitemap-index.xml`.
 
 ## Adding a blog
