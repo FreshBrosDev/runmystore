@@ -24,7 +24,7 @@ const who = [
   schema={[faqSchema]}
 >
   <!-- 1. Hero -->
-  <section class="hero">
+  <section class="dark hero">
     <div class="wrap">
       <p class="eyebrow"><Stripes /> RunMyStore</p>
       <h1>You own the brand. <span class="accent">We run the store.</span></h1>
@@ -41,7 +41,7 @@ const who = [
   </section>
 
   <!-- 2. Who it's for -->
-  <section class="section tight mist">
+  <section class="section tight">
     <div class="wrap">
       <p class="eyebrow"><Stripes /> Who it’s for</p>
       <ul class="who" role="list">
@@ -51,7 +51,7 @@ const who = [
   </section>
 
   <!-- 3. Modules + 4. Bundle -->
-  <section class="section" id="modules">
+  <section class="section mist" id="modules">
     <div class="wrap">
       <div class="head reveal">
         <p class="eyebrow"><Stripes /> The modules</p>
@@ -124,17 +124,21 @@ const who = [
 <style>
   .hero {
     padding-block: clamp(56px, 9vw, 120px) clamp(48px, 7vw, 88px);
+    background: radial-gradient(900px 500px at 85% 0%, rgba(13, 115, 119, 0.22), transparent 60%), var(--ink);
   }
+  /* Teal on charcoal is 3.1:1: fine for display-size headings, never for body text. */
   .hero h1 {
     margin-top: 22px;
     max-width: 14ch;
   }
   .hero h1 .accent {
     display: block;
+    color: var(--teal);
   }
   .hero .lede {
     margin-top: 24px;
     max-width: 48ch;
+    color: var(--muted-dark);
   }
   .hero .actions {
     margin-top: 36px;

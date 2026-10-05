@@ -3,9 +3,9 @@ import Logo from './Logo.astro';
 import { nav, bookingUrl, upperTier } from '../data/site';
 ---
 
-<header class="site-header">
+<header class="site-header dark">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="RunMyStore home"><Logo height={28} /></a>
+    <a class="brand" href="/" aria-label="RunMyStore home"><Logo light height={28} /></a>
 
     <nav class="links" aria-label="Main">
       {nav.map((n) => <a href={n.href}>{n.label}</a>)}
@@ -44,10 +44,10 @@ import { nav, bookingUrl, upperTier } from '../data/site';
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(26, 26, 26, 0.92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--ink-3);
   }
   .bar {
     display: flex;
@@ -68,7 +68,7 @@ import { nav, bookingUrl, upperTier } from '../data/site';
     padding: 6px 0;
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text);
+    color: #fff;
     text-decoration: none;
   }
   .links a::after {
@@ -107,7 +107,7 @@ import { nav, bookingUrl, upperTier } from '../data/site';
   }
   .bars i {
     height: 3px;
-    background: var(--ink);
+    background: #fff;
     transition: width 0.2s;
   }
   .bars i:nth-child(2) {
@@ -121,9 +121,8 @@ import { nav, bookingUrl, upperTier } from '../data/site';
     width: 100%;
   }
   .mobile {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--ink-3);
     padding: 12px 0 28px;
-    background: #fff;
   }
   .mobile a:not(.btn) {
     display: block;
@@ -132,7 +131,7 @@ import { nav, bookingUrl, upperTier } from '../data/site';
     font-weight: 700;
     font-size: 1.2rem;
     text-decoration: none;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--ink-3);
   }
   .mobile .btn {
     margin-top: 16px;

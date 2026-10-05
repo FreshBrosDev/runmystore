@@ -348,7 +348,8 @@ h3 {
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
-.mist .card {
+.mist .card,
+.mist .plan {
   border-color: transparent;
 }
 .dark .card {
