@@ -1,15 +1,12 @@
 ---
 import Stripes from './Stripes.astro';
-import { offer, site } from '../data/site';
+import { bookingUrl, guarantee } from '../data/site';
 
 interface Props {
   title?: string;
   body?: string;
 }
-const {
-  title = 'See your stack running before you pay for it.',
-  body = 'Twenty minutes tells us both whether it’s a fit. If it is, we start building.',
-} = Astro.props;
+const { title = 'Start with one module.', body = 'Or book a call and we’ll tell you which one to start with.' } = Astro.props;
 ---
 
 <section class="dark band">
@@ -19,17 +16,17 @@ const {
       <h2>{title}</h2>
       <p class="lede">{body}</p>
       <div class="actions">
-        <a class="btn" href="/apply/">{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
-        <a class="textlink" href={site.whatsapp} rel="noopener">Or message us on WhatsApp</a>
+        <a class="btn" href="/#modules">Start with one <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
       </div>
-      <p class="fineprint">{offer.fineprint} {site.cohort}</p>
+      <p class="fineprint">{guarantee}</p>
     </div>
   </div>
 </section>
 
 <style>
   .band {
-    padding-block: clamp(72px, 9vw, 120px);
+    padding-block: clamp(64px, 9vw, 112px);
     overflow: hidden;
   }
   .inner {
@@ -45,7 +42,7 @@ const {
     margin-top: 20px;
   }
   .actions {
-    margin-top: 36px;
+    margin-top: 32px;
   }
   .fineprint {
     margin-top: 22px;

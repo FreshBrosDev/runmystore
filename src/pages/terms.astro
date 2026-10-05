@@ -2,13 +2,13 @@
 import Legal from '../layouts/Legal.astro';
 import Fill from '../components/Fill.astro';
 import { legal } from '../data/legal';
-import { site, offer } from '../data/site';
+import { site, contactEmail } from '../data/site';
 
 const toc = [
   { id: 'agreement', label: '1. These terms' },
   { id: 'site-vs-services', label: '2. The site is not the contract' },
-  { id: 'trial', label: `3. The free ${offer.days}-day build` },
-  { id: 'retainers', label: '4. Retainers and pricing' },
+  { id: 'trial', label: '3. Modules, billing and cancelling' },
+  { id: 'retainers', label: '4. The 30-day line' },
   { id: 'results', label: '5. Results and proof' },
   { id: 'not', label: '6. What we are not' },
   { id: 'compliance', label: '7. Your products, your compliance' },
@@ -26,9 +26,9 @@ const toc = [
 ];
 
 const summary = [
-  'This website explains what we do. It is not a quote or a contract — the work itself always runs under a written agreement you sign.',
-  `The free ${offer.days}-day build really is free for our work. You pay your own software, ad and inventory costs, and you can walk away at the end.`,
-  'The numbers on our Proof page are real results for one brand. They are not a promise of yours.',
+  'The modules are month to month. You pay for a month, we run it, and you can cancel any month from your account.',
+  'If it isn’t producing in the first 30 days, cancel and keep what we built.',
+  'We publish no case-study numbers, testimonials or revenue promises. What you see on the site is the offer, not a forecast of your results.',
   'You stay the owner, the seller and the merchant of record. Whether your products are legal to sell and ship is your responsibility.',
   'What is in your own accounts stays yours, whatever happens.',
 ];
@@ -36,7 +36,7 @@ const summary = [
 
 <Legal
   title="Terms of Use"
-  description="The terms for using runmystore.com, including how the free 30-day build, retainers, fulfillment and results claims work."
+  description="The terms for using runmystore.com, including how the monthly modules, billing, cancelling and the 30-day line work."
   eyebrow="Terms"
   heading="Terms of Use"
   summary={summary}
@@ -60,51 +60,46 @@ const summary = [
       reason, without explanation.
     </p>
     <p>
-      All work — including the free {offer.days}-day build — is carried out under a written agreement signed by both
-      sides (a “Services Agreement”). It sets the scope, timing, fees, ownership, confidentiality and data-protection
-      terms for your engagement. <strong>If anything on this site conflicts with your signed Services Agreement, the
-      Services Agreement wins.</strong>
+      The monthly modules run under these terms plus the order you place when you start one. Larger or custom
+      engagements run under a written agreement signed by both sides (a “Services Agreement”), which sets scope,
+      timing, fees, ownership, confidentiality and data-protection terms. <strong>If anything on this site conflicts
+      with a signed Services Agreement, the Services Agreement wins.</strong>
     </p>
   </section>
 
   <section id="trial">
-    <h2>3. The free {offer.days}-day build</h2>
-    <p>We want this offer to be exactly what it sounds like. These are the terms it runs on:</p>
+    <h2>3. Modules, billing and cancelling</h2>
+    <p>Customer Service, Retention, Lead Engine and the Run the Store bundle are monthly subscriptions. These are the terms they run on:</p>
     <ul>
-      <li><strong>By application.</strong> It starts with a fit call. We offer a build only where we believe we can make a real difference, which generally means a product that already sells, working or fixable payment processing, and one person with authority to decide.</li>
-      <li><strong>A short agreement first.</strong> Before work begins, both sides sign a Services Agreement covering the trial. Nothing in it obliges you to continue past day {offer.days}.</li>
-      <li><strong>When the clock starts.</strong> The {offer.days} days begin when you have granted the access we need, not on the date of the call. Delays in access or approvals on your side may limit what can be finished inside the window.</li>
-      <li><strong>What is free.</strong> Our own work during those {offer.days} days: strategy, setup, configuration and build. We do not ask for a card, and there is no automatic conversion to a paid plan.</li>
-      <li><strong>What is not.</strong> Third-party costs are yours, and are paid by you directly to the provider: software subscriptions, domains and hosting, payment processing fees, advertising spend, inventory, packaging and postage. We will tell you about a cost before you incur it.</li>
-      <li><strong>Scope.</strong> “Your entire stack” means the departments described on this site, configured to a working state for your business. The exact scope for your build is the one written in your Services Agreement.</li>
-      <li><strong>Day {offer.days + 1}.</strong> We review what is live with you and, if you want to continue, agree a monthly retainer for the parts you want us to keep running. If you don’t, the engagement simply ends. There is no fee, penalty or clawback for stopping.</li>
-      <li><strong>Either side can stop early.</strong> You can end the trial at any time by telling us in writing. We can end it if access isn’t provided, if information you gave us was materially inaccurate, or if continuing would require us to do something unlawful.</li>
-      <li><strong>What you keep if you walk away.</strong> Everything in accounts you own stays yours: your domain, store, content published to it, customer and subscriber lists, CRM records and data. Systems hosted on our infrastructure, and our own templates, frameworks and tooling, are handed over when a retainer begins or wound down if one doesn’t, as your Services Agreement describes. We remove our access and return or delete your data either way.</li>
+      <li><strong>Price and billing.</strong> The price shown on the site at the time you start, billed monthly in advance to the payment method you provide. There is no setup fee. Prices can change for future months with at least 30 days’ notice; a change never applies to a month you have already paid for.</li>
+      <li><strong>What a module is.</strong> A system we install, train on your business and run for you, as described on the site. Customer Service uses an AI assistant trained on your business, with a human escalation path to you. We tell you this because your customers are talking to it.</li>
+      <li><strong>Fair use.</strong> Each module is sized for a store of roughly the size the site describes — about 300 customer conversations a month, up to 150 qualified leads a month, and a list you already own. If your volume runs well past that we will tell you and agree what happens next; we won’t silently stop or silently charge more.</li>
+      <li><strong>When the clock starts.</strong> We aim to have a module live within 14 days of payment and access. Delays in access, approvals or materials on your side extend that; it is a target, not a guarantee.</li>
+      <li><strong>Your part.</strong> Access to your store, inbox and list by invitation (never passwords), your policies, and prompt answers when the assistant hands something to you. You remain responsible for what your business tells its customers; we run the system, you own the decisions.</li>
+      <li><strong>Cancelling.</strong> Any month, from your account or by emailing us. Cancellation takes effect at the end of the month you have paid for, and we remove our access then. Beyond section 4, fees already paid are not refunded unless the law where you live requires it.</li>
+      <li><strong>What you keep.</strong> Everything in accounts you own stays yours: your customers, your list, every conversation, the content and flows published into your own tools. Our own templates, prompts, frameworks and tooling stay ours and are licensed to you for as long as a module runs.</li>
+      <li><strong>Ending from our side.</strong> We can end a module with 30 days’ notice, or sooner if access isn’t provided, information you gave us was materially inaccurate, or continuing would require us to do something unlawful. If we end it, you are not charged for months we don’t deliver.</li>
     </ul>
   </section>
 
   <section id="retainers">
-    <h2>4. Retainers and pricing</h2>
+    <h2>4. The 30-day line</h2>
     <p>
-      We don’t publish a price list because scope differs from brand to brand. Retainer fees, what they cover, the
-      term, and the notice needed to change or end them are agreed in writing in your Services Agreement. Nothing on
-      this site, including the retainer builder on the {offer.name} page, is a quote. Any performance-based fee is only
-      ever charged on the basis and attribution method set out in that agreement.
+      If a module isn’t producing in its first 30 days, cancel and keep what we built: the trained assistant’s
+      knowledge, the flows and the list segments stay in your accounts, and we stop billing from the next month.
+      “Producing” means doing the job described on the site — answering conversations, reaching customers,
+      delivering leads — not a particular revenue result. This is a commitment about our work, not a guarantee of
+      yours. See section 5.
     </p>
   </section>
 
   <section id="results">
     <h2>5. Results and proof</h2>
     <p>
-      The figures on this site are actual results for the brand named, over the period stated, drawn from that
-      brand’s own store, email and analytics data. We publish named metrics rather than anonymous testimonials so you
-      can weigh them properly.
-    </p>
-    <p>
-      They are not typical, and they are not a forecast or guarantee of what you will achieve. Your results depend on
-      things we don’t control: your product, pricing, margins, stock, capital, market, the law in your category, and
-      decisions by platforms, payment processors, carriers and search engines. <strong>We do not underwrite revenue
-      targets.</strong> Timeframes on this site are estimates.
+      We don’t publish case studies, client names, testimonials or revenue figures on this site, and we don’t
+      make revenue promises. Any outcome depends on things we don’t control: your product, pricing, margins,
+      stock, market, and decisions by platforms, payment processors, carriers and search engines. <strong>We do
+      not underwrite revenue targets.</strong> Timeframes on this site are targets.
     </p>
   </section>
 
@@ -179,7 +174,7 @@ const summary = [
     <p>Please don’t:</p>
     <ul>
       <li>submit false applications, or applications on behalf of someone who hasn’t agreed to it;</li>
-      <li>probe, scan or disrupt the site, or try to get around its security;</li>
+      <li>probe, scan or interfere with the site, or try to get around its security;</li>
       <li>scrape or harvest the site with automated tools beyond what ordinary search engines do;</li>
       <li>use the site to send spam or anything unlawful, defamatory or infringing;</li>
       <li>copy the site to pass yourself off as us.</li>
@@ -194,9 +189,8 @@ const summary = [
       commercial use without our written permission.
     </p>
     <p>
-      Fresh Bros is referenced with permission. Other names mentioned — including Shopify, WooCommerce, Close,
-      Klaviyo, QuickBooks, WhatsApp, Amazon, Meta and Google — are trademarks of their owners, used only to describe
-      the tools and platforms involved. Mentioning them does not imply their endorsement, partnership or sponsorship.
+      Other names mentioned on the site are trademarks of their owners, used only to describe the tools and platforms
+      involved. Mentioning them does not imply their endorsement, partnership or sponsorship.
     </p>
     <p>Who owns what we build for you is set out in your Services Agreement, not here.</p>
   </section>

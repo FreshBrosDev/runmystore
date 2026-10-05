@@ -4,19 +4,20 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  --ink: #0d1112;
-  --ink-2: #161c1d;
-  --ink-3: #263032;
+  /* Locked palette: charcoal, teal, gray, white. */
+  --ink: #1a1a1a;
+  --ink-2: #242424;
+  --ink-3: #333333;
   --paper: #ffffff;
-  --mist: #f2f5f5;
-  --line: #dde4e4;
-  --teal: #139b97; /* logo stripes */
-  --teal-deep: #0c6d70; /* teal text on light */
-  --teal-bright: #3ccdc6; /* teal text on dark */
-  --teal-wash: #e4f1f0;
-  --text: #141a1b;
-  --muted: #55625f;
-  --muted-dark: #9fadab;
+  --mist: #f4f4f4;
+  --line: #e2e2e2;
+  --teal: #0d7377; /* 5.6:1 on white. On charcoal it is 3.1:1 — decorative or large display text only. */
+  --teal-deep: #0d7377;
+  --teal-bright: #ffffff; /* on dark backgrounds, "accent" text is white, not teal */
+  --teal-wash: #e7f1f1;
+  --text: #1a1a1a;
+  --muted: #5c5c5c;
+  --muted-dark: rgba(255, 255, 255, 0.72);
 
   --display: 'Archivo Variable', 'Arial Narrow', system-ui, sans-serif;
   --body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -308,8 +309,7 @@ h3 {
   color: #fff;
 }
 .btn.sm {
-  padding: 12px 20px;
-  font-size: 0.92rem;
+  padding: 12px 20px; /* text stays 16px: white on teal is only used at 16px and up */
 }
 .textlink {
   font-weight: 600;

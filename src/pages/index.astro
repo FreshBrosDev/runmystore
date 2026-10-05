@@ -1,367 +1,234 @@
 ---
 import Base from '../layouts/Base.astro';
 import Stripes from '../components/Stripes.astro';
-import BuildBoard from '../components/BuildBoard.astro';
-import PipelineFlow from '../components/PipelineFlow.astro';
+import PlanCard from '../components/PlanCard.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
-import { site, offer, proof, departments, notThis, faqs } from '../data/site';
+import { site, modules, bundle, guarantee, upperTier, howItWorks, faqs2, bookingUrl } from '../data/site';
 
-const homeFaqs = faqs.slice(0, 5);
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: homeFaqs.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
+  mainEntity: faqs2.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 
-const blockers = [
-  { title: 'Amazon won’t list it', body: 'So the marketplace shortcut is closed. Your own store has to do all the selling.' },
-  { title: 'Meta and Google won’t run the ads', body: 'So traffic has to be earned — search, content, outreach and a list you own.' },
-  { title: 'Processors get nervous', body: 'So checkout needs a real path, and a backup, before a bad week becomes a dead month.' },
-  { title: 'Shipping changes state by state', body: 'So fulfillment has to know the rules: packaging, age, signature, where you can’t ship.' },
-];
-
-const steps = [
-  {
-    n: '01',
-    when: '20 minutes',
-    title: 'Fit call',
-    body: 'We find out whether we can move your numbers. If we can’t, we say so on the call.',
-  },
-  {
-    n: '02',
-    when: `${offer.days} days · ${offer.price}`,
-    title: 'We build your entire stack',
-    body: 'Storefront, traffic, email, wholesale pipeline, fulfillment, reporting. Built and switched on, free.',
-  },
-  {
-    n: '03',
-    when: 'Monthly',
-    title: 'Keep what you need',
-    body: 'We agree a retainer for the parts you want us to keep running. Skip the parts you don’t.',
-  },
+const who = [
+  'You’re already selling — roughly $3k to $15k a month — and the orders keep coming.',
+  'You answer every customer email yourself, and repeat buyers slip away because nobody followed up.',
+  'You know there are buyers you haven’t reached, and there’s no time to go find them.',
 ];
 ---
 
-<Base schema={[faqSchema]}>
-  <!-- Hero -->
-  <section class="dark hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="eyebrow"><Stripes /> Operators for brands Amazon won’t touch</p>
-        <h1>You own the brand. <span class="accent">We run the store.</span></h1>
-        <p class="lede">
-          Storefront, traffic, email, wholesale and fulfillment — built and run by one team. We build your entire stack
-          free in {offer.days} days. Keep us only if it works.
-        </p>
-        <div class="actions">
-          <a class="btn" href="/apply/">{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn ghost" href="/proof/">See the results</a>
-        </div>
-        <p class="fineprint">{offer.fineprint}</p>
-      </div>
-      <BuildBoard />
-    </div>
-  </section>
-
-  <!-- Proof strip -->
-  <section class="dark strip">
+<Base
+  description="Three systems that run your store while you run your brand: customer service, retention and lead generation, $500 a month each, month to month, live in 14 days."
+  schema={[faqSchema]}
+>
+  <!-- 1. Hero -->
+  <section class="hero">
     <div class="wrap">
-      <p class="strip-lead">
-        The stack was built running <a class="textlink" href={proof.href} rel="noopener">{proof.brand}</a> — hemp, one
-        of the hardest categories in ecommerce. Six months of sourced numbers, {proof.window}:
+      <p class="eyebrow"><Stripes /> RunMyStore</p>
+      <h1>You own the brand. <span class="accent">We run the store.</span></h1>
+      <p class="lede">
+        Three systems that run your store while you run your brand. Pick one or all three. $500 a month each. Live in
+        14 days.
       </p>
-      <div class="grid g4">
-        {
-          proof.headline.map((s) => (
-            <div class="stat">
-              <div class="value">{s.value}</div>
-              <div class="label">{s.label}</div>
-              <div class="note">{s.note}</div>
-            </div>
-          ))
-        }
+      <div class="actions">
+        <a class="btn" href="#modules">Start with one <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
       </div>
+      <p class="fineprint">{guarantee}</p>
     </div>
   </section>
 
-  <!-- Niche -->
-  <section class="section">
+  <!-- 2. Who it's for -->
+  <section class="section tight mist">
     <div class="wrap">
-      <div class="head reveal">
-        <p class="eyebrow"><Stripes /> Who this is for</p>
-        <h2>Selling what the big platforms won’t? <span class="accent">Then the usual playbook doesn’t work.</span></h2>
-        <p class="lede">
-          Alternative products play by different rules. Every shortcut a normal brand leans on is closed to you — which
-          is exactly where we learned to operate.
-        </p>
-      </div>
-      <div class="grid g4">
-        {
-          blockers.map((b, i) => (
-            <article class="card rail reveal" style={`transition-delay:${i * 70}ms`}>
-              <h3>{b.title}</h3>
-              <p>{b.body}</p>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- The stack -->
-  <section class="section mist" id="stack">
-    <div class="wrap">
-      <div class="head reveal">
-        <p class="eyebrow"><Stripes /> The stack</p>
-        <h2>Six departments. One team answers for the result.</h2>
-        <p class="lede">
-          Hire these separately and they blame each other when the numbers don’t move. We install them together and run
-          them as one system.
-        </p>
-      </div>
-      <div class="grid g3">
-        {
-          departments.map((d, i) => (
-            <a class="card dept reveal" href={`/services/#${d.id}`} style={`transition-delay:${(i % 3) * 70}ms`}>
-              <span class="num dn">{d.num}</span>
-              <h3>{d.name}</h3>
-              <p>{d.line}</p>
-              <span class="more">
-                What we install <span aria-hidden="true">→</span>
-              </span>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Wholesale spotlight -->
-  <section class="section dark">
-    <div class="wrap">
-      <div class="head reveal">
-        <p class="eyebrow"><Stripes /> Our specialty</p>
-        <h2>A wholesale pipeline that <span class="accent">closes without chasing.</span></h2>
-        <p class="lede">
-          Most brands run wholesale out of texts and a spreadsheet. We build the whole flow — form, Close CRM, and a
-          custom ordering menu on your own subdomain. It’s a custom build every time.
-        </p>
-      </div>
-      <PipelineFlow />
-      <div class="actions after">
-        <a class="btn ghost" href="/wholesale/">How the wholesale build works</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- How the trial works -->
-  <section class="section" id="how">
-    <div class="wrap">
-      <div class="head reveal">
-        <p class="eyebrow"><Stripes /> How it works</p>
-        <h2>Try the whole thing first. <span class="accent">Pay for what you keep.</span></h2>
-      </div>
-      <ol class="steps" role="list">
-        {
-          steps.map((s, i) => (
-            <li class="reveal" style={`transition-delay:${i * 90}ms`}>
-              <span class="num sn">{s.n}</span>
-              <span class="when">{s.when}</span>
-              <h3>{s.title}</h3>
-              <p>{s.body}</p>
-            </li>
-          ))
-        }
-      </ol>
-      <div class="actions after">
-        <a class="btn" href="/trial/">See exactly how the 30 days run <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scope honesty -->
-  <section class="section mist">
-    <div class="wrap scope">
-      <div class="reveal">
-        <p class="eyebrow"><Stripes /> Straight terms</p>
-        <h2>What we don’t do.</h2>
-        <p class="lede">Being clear about the limits is how we stay good inside them. You stay the owner. We’re the operator.</p>
-      </div>
-      <ul class="checks no card reveal">
-        {notThis.map((n) => <li>{n}</li>)}
+      <p class="eyebrow"><Stripes /> Who it’s for</p>
+      <ul class="who" role="list">
+        {who.map((w) => <li>{w}</li>)}
       </ul>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
+  <!-- 3. Modules + 4. Bundle -->
+  <section class="section" id="modules">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow"><Stripes /> Questions we get</p>
-        <h2>“Free” makes people suspicious. Fair.</h2>
+        <p class="eyebrow"><Stripes /> The modules</p>
+        <h2>Three systems. $500 a month each.</h2>
+        <p class="lede">Month to month. No setup fee. Each one is installed, trained on your business, and run for you.</p>
       </div>
-      <Faq items={homeFaqs} />
+      <div class="grid g3 plans">
+        {modules.map((m) => <PlanCard plan={m} />)}
+      </div>
+      <div class="bundle reveal">
+        <PlanCard plan={bundle} wide cta="Start with all three" />
+      </div>
+      <p class="upper">
+        {upperTier.line}
+        <a class="textlink" href={bookingUrl} rel="noopener">{upperTier.cta} →</a>
+      </p>
     </div>
   </section>
 
+  <!-- 5. How it works -->
+  <section class="section dark" id="how">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> How it works</p>
+        <h2>Live in 14 days.</h2>
+      </div>
+      <ol class="steps" role="list">
+        {
+          howItWorks.map((s, i) => (
+            <li class="reveal" style={`transition-delay:${i * 80}ms`}>
+              <span class="when">{s.when}</span>
+              <p>{s.what}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. What you get every month -->
+  <section class="section">
+    <div class="wrap monthly reveal">
+      <div>
+        <p class="eyebrow"><Stripes /> What you get every month</p>
+        <h2>A short daily summary. Nothing to log into.</h2>
+      </div>
+      <p class="lede">
+        Every day you get a short summary: the conversations handled and what was said, the customers reached and who
+        came back, the leads delivered and why they fit, and anything that needs you — a question the assistant
+        couldn’t answer, a refund to approve, a lead worth a call. Read it in two minutes and get on with your day.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section class="section mist" id="faq">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow"><Stripes /> Questions</p>
+        <h2>Straight answers.</h2>
+      </div>
+      <Faq items={faqs2} />
+    </div>
+  </section>
+
+  <!-- 8. Final CTA -->
   <CtaBand />
 </Base>
 
 <style>
   .hero {
-    padding-block: clamp(56px, 8vw, 104px) clamp(56px, 7vw, 96px);
-    background:
-      radial-gradient(900px 500px at 85% 0%, rgba(19, 155, 151, 0.16), transparent 60%),
-      var(--ink);
-  }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    align-items: center;
-    gap: clamp(40px, 6vw, 88px);
+    padding-block: clamp(56px, 9vw, 120px) clamp(48px, 7vw, 88px);
   }
   .hero h1 {
-    margin-top: 26px;
+    margin-top: 22px;
+    max-width: 14ch;
   }
   .hero h1 .accent {
     display: block;
   }
   .hero .lede {
-    margin-top: 26px;
-    color: #c6d0cf;
+    margin-top: 24px;
+    max-width: 48ch;
   }
   .hero .actions {
-    margin-top: 38px;
+    margin-top: 36px;
   }
   .hero .fineprint {
     margin-top: 22px;
   }
-  @media (max-width: 980px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-    }
-  }
 
-  .strip {
-    padding-block: 0 clamp(64px, 8vw, 104px);
-  }
-  .strip .wrap {
-    padding-top: clamp(40px, 5vw, 64px);
-    border-top: 1px solid var(--ink-3);
-  }
-  .strip-lead {
-    margin-bottom: 40px;
-    max-width: 60ch;
-    color: #c6d0cf;
-  }
-  .strip .grid {
-    gap: 36px 28px;
-  }
-
-  .dept {
+  .who {
     display: grid;
-    align-content: start;
-    gap: 0;
-    text-decoration: none;
-    transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
-  }
-  .dept:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 40px -24px rgba(13, 17, 18, 0.35);
-  }
-  .dn {
+    gap: 14px;
+    margin-top: 22px;
+    max-width: 62ch;
     font-size: 1.1rem;
-    margin-bottom: 36px;
+    line-height: 1.5;
   }
-  .more {
-    margin-top: 26px;
-    font-weight: 600;
-    font-size: 0.92rem;
-    color: var(--teal-deep);
+  .who li {
+    position: relative;
+    padding-left: 30px;
   }
-  .dept:hover .more span {
-    display: inline-block;
-    transform: translateX(4px);
-    transition: transform 0.2s;
+  .who li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.62em;
+    width: 16px;
+    height: 4px;
+    background: var(--teal);
+    transform: skewX(var(--skew));
   }
 
-  .after {
-    margin-top: 44px;
+  .plans {
+    align-items: stretch;
+  }
+  .bundle {
+    margin-top: 36px;
+  }
+  .upper {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .upper .textlink {
+    margin-left: 8px;
   }
 
   .steps {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    grid-template-columns: repeat(4, 1fr);
     margin: 0;
-    border-top: 4px solid var(--ink);
+    border-top: 1px solid var(--ink-3);
   }
   .steps li {
-    padding: 32px 32px 8px 0;
+    padding: 28px 28px 8px 0;
   }
   .steps li + li {
-    padding-left: 32px;
-    border-left: 1px solid var(--line);
-  }
-  .sn {
-    display: block;
-    font-size: 3.4rem;
-    line-height: 1;
+    padding-left: 28px;
+    border-left: 1px solid var(--ink-3);
   }
   .when {
     display: block;
-    margin: 22px 0 8px;
+    margin-bottom: 12px;
     font-family: var(--display);
-    font-weight: 700;
-    font-size: 0.76rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.4rem;
   }
   .steps p {
-    margin-top: 10px;
-    color: var(--muted);
+    color: var(--muted-dark);
   }
-  @media (max-width: 800px) {
+  @media (max-width: 860px) {
     .steps {
       grid-template-columns: 1fr;
     }
     .steps li,
     .steps li + li {
-      padding: 28px 0;
+      padding: 22px 0;
       border-left: 0;
-    }
-    .steps li + li {
-      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--ink-3);
     }
   }
 
-  .scope {
+  .monthly {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: clamp(32px, 6vw, 88px);
+    align-items: start;
+    gap: clamp(28px, 5vw, 72px);
   }
-  .scope h2 {
+  .monthly h2 {
     margin-top: 20px;
-  }
-  .scope .lede {
-    margin-top: 20px;
-  }
-  .scope .checks {
-    padding: 36px;
-    font-weight: 500;
-    gap: 16px;
   }
   @media (max-width: 800px) {
-    .scope {
+    .monthly {
       grid-template-columns: 1fr;
     }
   }

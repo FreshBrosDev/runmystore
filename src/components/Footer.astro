@@ -1,32 +1,22 @@
 ---
 import Logo from './Logo.astro';
-import { nav, site, departments } from '../data/site';
+import { site, contactEmail } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
 <footer class="dark">
   <div class="wrap top">
-    <div class="about">
-      <Logo light height={34} />
+    <div>
+      <Logo light height={30} />
       <p class="tag display">{site.tagline}</p>
-      <p class="fineprint">{site.cohort}</p>
     </div>
-
-    <nav aria-label="Footer: the stack">
-      <h4>The stack</h4>
-      {departments.map((d) => <a href={`/services/#${d.id}`}>{d.name}</a>)}
-    </nav>
-
-    <nav aria-label="Footer: company">
-      <h4>RunMyStore</h4>
-      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
-      <a href="/apply/">Apply</a>
-      <a href={site.whatsapp} rel="noopener">WhatsApp us</a>
-    </nav>
+    <div class="contact">
+      <span class="label">Contact</span>
+      <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+    </div>
   </div>
-
   <div class="wrap base">
-    <span>© {year} RunMyStore. You own the brand.</span>
+    <span>© {year} RunMyStore</span>
     <span class="legal">
       <a href="/privacy/">Privacy</a>
       <a href="/terms/">Terms</a>
@@ -39,44 +29,43 @@ const year = new Date().getFullYear();
     border-top: 4px solid var(--teal);
   }
   .top {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr;
-    gap: 48px;
-    padding-block: 72px 56px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    padding-block: 56px 40px;
   }
   .tag {
-    margin-top: 24px;
-    font-size: 1.5rem;
+    margin-top: 20px;
+    font-size: 1.4rem;
     max-width: 14ch;
   }
-  .about .fineprint {
-    margin-top: 14px;
+  .contact {
+    display: grid;
+    gap: 6px;
   }
-  h4 {
-    margin-bottom: 16px;
+  .label {
     font-family: var(--display);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--teal-bright);
+    color: var(--muted-dark);
   }
-  nav a {
-    display: block;
-    padding: 5px 0;
-    color: #c9d3d2;
+  .contact a {
+    font-weight: 600;
     text-decoration: none;
-    font-size: 0.97rem;
   }
-  nav a:hover {
-    color: #fff;
+  .contact a:hover {
+    text-decoration: underline;
   }
   .base {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px;
-    padding-block: 24px;
+    padding-block: 22px;
     border-top: 1px solid var(--ink-3);
     font-size: 0.88rem;
     color: var(--muted-dark);
@@ -90,13 +79,5 @@ const year = new Date().getFullYear();
   }
   .legal a:hover {
     color: #fff;
-  }
-  @media (max-width: 760px) {
-    .top {
-      grid-template-columns: 1fr 1fr;
-    }
-    .about {
-      grid-column: 1 / -1;
-    }
   }
 </style>

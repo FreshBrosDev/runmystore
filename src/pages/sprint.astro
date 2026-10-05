@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Stripes from '../components/Stripes.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
-import { offer, buildWeeks, departments, faqs, site } from '../data/site';
+import { offer, buildWeeks, departments, faqs, site, bookingUrl } from '../data/site';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -34,17 +34,18 @@ const yours = [
   title="Free 30-day build: your entire stack, then a retainer for what you need"
   description="RunMyStore builds your entire commerce stack free in 30 days. On day 31 you keep only the departments you need on a monthly retainer — or walk away."
   schema={[faqSchema]}
+  noindex
 >
   <section class="dark pagehero">
     <div class="wrap">
-      <p class="eyebrow"><Stripes /> {offer.name}</p>
+      <p class="eyebrow"><Stripes /> Previous offer · {offer.name}</p>
       <h1>We build it first. <span class="accent">You decide after.</span></h1>
       <p class="lede">
         For {offer.days} days we build your entire stack and it costs you {offer.price}. On day 31 we agree a monthly
         retainer for the parts you want us to keep running — and nothing for the parts you don’t.
       </p>
       <div class="actions">
-        <a class="btn" href="/apply/">{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn" href={bookingUrl}>{offer.cta} <span class="arrow" aria-hidden="true">→</span></a>
         <span class="fineprint">{site.cohort}</span>
       </div>
     </div>
@@ -129,7 +130,7 @@ const yours = [
           <span class="label">Your retainer would cover</span>
           <div class="count"><b id="b-count">6</b> of 6 departments</div>
           <p id="b-text">The full stack, run as one system.</p>
-          <a class="btn" id="b-cta" href="/apply/">Start with this <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn" id="b-cta" href={bookingUrl} data-booking={bookingUrl}>Start with this <span class="arrow" aria-hidden="true">→</span></a>
           <span class="fineprint">All six still get built during the free {offer.days} days.</span>
         </aside>
       </form>
@@ -165,8 +166,8 @@ const yours = [
     if (on.length === boxes.length) text.textContent = 'The full stack, run as one system.';
     else if (on.length === 0) text.textContent = 'Nothing yet — pick at least one department.';
     else text.textContent = names.join(' · ');
-    const q = on.length && on.length < boxes.length ? `?need=${on.map((b) => b.value).join(',')}` : '';
-    cta.href = `/apply/${q}`;
+    // Previous offer: the form it linked to is archived, so send people to the booking link.
+    cta.href = cta.dataset.booking ?? '/';
     cta.toggleAttribute('aria-disabled', on.length === 0);
   }
   form?.addEventListener('change', update);

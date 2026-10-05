@@ -1,0 +1,114 @@
+---
+// One pricing card. Used for the three modules and (with `wide`) the bundle.
+import type { Plan } from '../data/site';
+
+interface Props {
+  plan: Plan;
+  /** Button label. */
+  cta?: string;
+  /** Horizontal layout for the bundle card. */
+  wide?: boolean;
+}
+const { plan, cta = 'Start', wide = false } = Astro.props;
+---
+
+<article class:list={['plan', { wide, recommended: plan.recommended }]} id={plan.id}>
+  {plan.recommended && <span class="badge">Recommended</span>}
+  <div class="head">
+    <h3>{plan.name}</h3>
+    <p class="price"><b>{plan.price}</b><span>{plan.cadence}</span></p>
+  </div>
+  <div class="body">
+    <p class="desc">{plan.description}</p>
+    {plan.disclosure && <p class="disclosure">{plan.disclosure}</p>}
+    <p class="fair">{plan.fairUse}</p>
+  </div>
+  <a class="btn start" href={plan.startUrl}>{cta} <span class="arrow" aria-hidden="true">→</span></a>
+</article>
+
+<style>
+  .plan {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    padding: 28px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 5px solid var(--teal);
+    border-radius: 6px 6px var(--radius) var(--radius);
+  }
+  .recommended {
+    border-color: var(--ink);
+    border-top-color: var(--ink);
+  }
+  .badge {
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    padding: 5px 12px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--ink);
+    border-radius: 999px;
+  }
+  .head h3 {
+    font-size: 1.35rem;
+  }
+  .price {
+    margin-top: 8px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-stretch: 112%;
+    line-height: 1;
+  }
+  .price b {
+    font-size: 2.4rem;
+    letter-spacing: -0.02em;
+  }
+  .price span {
+    margin-left: 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .desc {
+    color: var(--text);
+  }
+  .disclosure {
+    margin-top: 12px;
+    padding-left: 14px;
+    border-left: 3px solid var(--teal);
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .fair {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .start {
+    justify-self: start;
+  }
+  .wide {
+    grid-template-columns: 1fr 1.4fr auto;
+    grid-template-rows: none;
+    align-items: center;
+    gap: 32px;
+    padding: 36px 32px;
+  }
+  .wide .price b {
+    font-size: 2.8rem;
+  }
+  @media (max-width: 860px) {
+    .wide {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

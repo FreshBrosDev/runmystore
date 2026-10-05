@@ -72,3 +72,39 @@ Set `PUBLIC_LEAD_ENDPOINT` in the host's environment variables. The sitemap is g
 
 Create `src/content/` with an Astro content collection and a `src/pages/blog/[slug].astro` route. Reuse `Base.astro`
 so posts inherit the SEO tags.
+
+## Offer v2 — modules
+
+The homepage sells three $500/month modules and a $1,250/month bundle (month to month, no setup fee, live in 14 days).
+The brief is saved verbatim in `docs/OFFER_v2_PROMPT.md`. The previous offer (free 30-day build) still ships at
+`/sprint`, unlinked from the nav and excluded from the sitemap; its sibling pages (services, wholesale, proof, apply)
+are kept in `src/archive/` and not built.
+
+**Homepage IA** (`src/pages/index.astro`, single page, mobile first): hero → who it's for → three module cards →
+Run the Store bundle → how it works (Day 1 / Days 2–10 / Day 14 / every month) → what you get every month → FAQ (6)
+→ final CTA → footer. Nav links are anchors: `#modules`, `#how`, `#faq`.
+
+**Copy and prices** live in `src/data/site.ts`: `modules`, `bundle`, `guarantee`, `upperTier`, `howItWorks`, `faqs2`.
+
+**Pricing component** — `src/components/PlanCard.astro`, used by the three modules and the bundle:
+
+| Prop | Type | Notes |
+| --- | --- | --- |
+| `plan` | `Plan` | `{ id, name, price, cadence, description, fairUse, disclosure?, startUrl, recommended? }` |
+| `cta` | `string` | Button label, default `Start` |
+| `wide` | `boolean` | Horizontal layout for the bundle |
+
+`fairUse` renders in small gray text; `disclosure` (Customer Service only) renders as a one-line note; `recommended`
+adds the badge.
+
+**URLs** — see `.env.example`. `PUBLIC_BOOKING_URL` (fallback: WhatsApp), `PUBLIC_START_URL_*` per plan (fallback:
+mailto to `PUBLIC_CONTACT_EMAIL` with the plan in the subject), `PUBLIC_CONTACT_EMAIL` (fallback: hello@runmystore.com).
+
+**Hard rules** from the brief that the code enforces by omission: no client names, case-study numbers, testimonials or
+revenue guarantees anywhere public; the AI vendor is never named; the word "unlimited" does not appear; caps are
+fair-use lines. The one disclosure line ("answered by an AI assistant trained on your business, with a human
+escalation path") appears on the Customer Service card and in the FAQ.
+
+**Palette** is locked in `src/styles/global.css`: charcoal `#1A1A1A`, teal `#0D7377`, gray `#5C5C5C`, white. Teal is
+5.6:1 on white (fine for text) but only 3.1:1 on charcoal, so on dark sections teal is used for stripes and rails,
+not body text.

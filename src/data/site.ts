@@ -18,10 +18,118 @@ export const site = {
 };
 
 export const nav = [
-  { label: 'The stack', href: '/services/' },
-  { label: 'Wholesale', href: '/wholesale/' },
-  { label: 'Proof', href: '/proof/' },
-  { label: 'Free 30-day build', href: '/trial/' },
+  { label: 'Modules', href: '/#modules' },
+  { label: 'How it works', href: '/#how' },
+  { label: 'FAQ', href: '/#faq' },
+];
+
+// ---------------------------------------------------------------------------
+// Offer v2 — modules. The live offer on the homepage. See README "Offer v2 — modules".
+// URLs come from env (see .env.example); every one has a working fallback.
+// ---------------------------------------------------------------------------
+export const contactEmail: string = import.meta.env.PUBLIC_CONTACT_EMAIL || 'hello@runmystore.com';
+export const bookingUrl: string = import.meta.env.PUBLIC_BOOKING_URL || site.whatsapp;
+const startUrl = (env: string | undefined, name: string) =>
+  env || `mailto:${contactEmail}?subject=${encodeURIComponent(`Start: ${name}`)}`;
+
+export type Plan = {
+  id: string;
+  name: string;
+  price: string;
+  cadence: string;
+  description: string;
+  fairUse: string;
+  disclosure?: string;
+  startUrl: string;
+  recommended?: boolean;
+};
+
+export const modules: Plan[] = [
+  {
+    id: 'customer-service',
+    name: 'Customer Service',
+    price: '$500',
+    cadence: '/mo',
+    description:
+      'An assistant trained on your products, policies, and voice answers your customers’ email and chat 24/7, in your name. Anything it can’t answer comes to you with the thread attached.',
+    fairUse: 'Built for stores handling up to about 300 customer conversations a month.',
+    disclosure:
+      'Your customers are answered by an AI assistant trained on your business, with a human escalation path.',
+    startUrl: startUrl(import.meta.env.PUBLIC_START_URL_CUSTOMER_SERVICE, 'Customer Service'),
+  },
+  {
+    id: 'retention',
+    name: 'Retention',
+    price: '$500',
+    cadence: '/mo',
+    description:
+      'Your customers hear from you before they drift. Reorder reminders, win-backs by last-order date, post-purchase follow-ups — on your list, in your voice.',
+    fairUse: 'Runs on the list you already own; we don’t buy or add contacts.',
+    startUrl: startUrl(import.meta.env.PUBLIC_START_URL_RETENTION, 'Retention'),
+  },
+  {
+    id: 'lead-engine',
+    name: 'Lead Engine',
+    price: '$500',
+    cadence: '/mo',
+    description:
+      'We find and qualify new buyers in your category and hand them to you ready to contact. Name, business, why they fit, and a first line you can send.',
+    fairUse: 'Up to 150 qualified leads a month.',
+    startUrl: startUrl(import.meta.env.PUBLIC_START_URL_LEAD_ENGINE, 'Lead Engine'),
+  },
+];
+
+export const bundle: Plan = {
+  id: 'run-the-store',
+  name: 'Run the Store',
+  price: '$1,250',
+  cadence: '/mo',
+  description:
+    'All three working together: new buyers in, every one answered, every one brought back. Each module feeds the next, so the whole runs better than the parts.',
+  fairUse: 'Same fair-use lines as the three modules.',
+  startUrl: startUrl(import.meta.env.PUBLIC_START_URL_BUNDLE, 'Run the Store'),
+  recommended: true,
+};
+
+export const guarantee = 'No setup fee. Month to month. If it isn’t producing in 30 days, cancel and keep what we built.';
+
+export const upperTier = {
+  line: 'Doing more than $15k a month? You’re bigger than these plans.',
+  cta: 'Book a call',
+};
+
+export const howItWorks = [
+  { when: 'Day 1', what: 'You pick a module, or all three, and pay for the first month.' },
+  { when: 'Days 2–10', what: 'We connect your store, inbox, and list, and train the assistant on your products, policies, and the way you write.' },
+  { when: 'Day 14', what: 'It’s live. From then on you get a short daily summary of what it did.' },
+  { when: 'Every month', what: 'You keep it or you cancel. No contract, no setup fee.' },
+];
+
+export const faqs2 = [
+  {
+    q: 'Is this AI?',
+    a: 'Yes. Customer Service is an AI assistant trained on your products, policies, and voice, with a human escalation path: anything it can’t answer, or anything that needs a decision, is handed to you with the full thread. Retention and Lead Engine use the same assistant to write and sort. You set the voice; we run it.',
+  },
+  {
+    q: 'Who owns my data and my list?',
+    a: 'You do. Your store, inbox, customer list, and every conversation stay in accounts you own. We work through access you grant and can revoke. Cancel and we remove our access. Nothing of yours is used for another customer.',
+  },
+  {
+    q: 'What if my customers ask something it can’t answer?',
+    a: 'It says so and hands off. The customer is told a person will follow up, you get the thread with what was asked, and once you’ve answered, the assistant knows for next time.',
+  },
+  {
+    q: 'Can I cancel?',
+    a: 'Any month, from your account. No contract, no setup fee. If it isn’t producing in the first 30 days, cancel and keep what we built: the trained assistant, the flows, and the list segments.',
+  },
+  {
+    q: 'What do you need from me to start?',
+    a: 'About an hour. Access to your store, support inbox, and email list — by invitation, never passwords. Your policies on shipping, returns, and anything you won’t say. And a handful of your own replies so the assistant sounds like you.',
+  },
+  {
+    q: 'I do more than $15k a month. Is this for me?',
+    a: 'Probably not these plans. At that size you’ll need more than 300 conversations and 150 leads a month, and usually a custom setup. Book a call and we’ll scope it.',
+  },
 ];
 
 // The offer. Terms marked CONFIRM are sensible defaults Adam should sign off on.

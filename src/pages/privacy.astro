@@ -24,7 +24,7 @@ const toc = [
 ];
 
 const summary = [
-  'We collect what you type into our application form, plus the basic server logs every website keeps.',
+  'We collect what you give us when you book a call, start a module or email us, plus the basic server logs every website keeps.',
   'We use it to reply to you and to run our business. We don’t sell it, and we don’t put you on a marketing list without asking.',
   'This site sets no advertising or analytics cookies.',
   'When we run a store for a client, their customers’ data belongs to the client. We handle it only on their instructions.',
@@ -69,12 +69,10 @@ const summary = [
   <section id="collect">
     <h2>2. What we collect on this site</h2>
     <h3>Information you give us</h3>
-    <p>When you submit the application form we collect:</p>
     <ul>
-      <li>your name, work email and, if you choose to give it, phone number;</li>
-      <li>your brand’s website and what it sells;</li>
-      <li>a monthly revenue range and how you sell today (direct, wholesale or both);</li>
-      <li>which services you’re interested in, and anything you write about your current bottleneck.</li>
+      <li><strong>Booking a call</strong> uses a third-party scheduling service, which collects your name, email and the time you pick under its own privacy policy, and passes the booking to us.</li>
+      <li><strong>Starting a module</strong> uses a third-party checkout. The payment provider handles your card details under its own policy; we receive your name, email, business name and what you bought — never your full card number.</li>
+      <li><strong>Emailing or messaging us</strong> gives us whatever you send, along with your address or number.</li>
     </ul>
     <p>
       If you contact us by WhatsApp, email or phone instead, we receive whatever you send, along with your number or
@@ -113,11 +111,11 @@ const summary = [
         </thead>
         <tbody>
           <tr>
-            <td>Reviewing your application, replying, and arranging a fit call</td>
+            <td>Replying to an enquiry and arranging a call</td>
             <td>Steps taken at your request before entering a contract</td>
           </tr>
           <tr>
-            <td>Delivering services, invoicing and supporting you as a client</td>
+            <td>Running the modules you subscribe to, billing and supporting you</td>
             <td>Performance of our contract with you</td>
           </tr>
           <tr>
@@ -143,8 +141,8 @@ const summary = [
     <ul>
       <li>We do not sell personal information, and we have not done so in the past 12 months.</li>
       <li>We do not share personal information for cross-context behavioral advertising.</li>
-      <li>We do not add you to a marketing list because you applied. An application gets a reply, not a campaign.</li>
-      <li>We do not buy contact lists about you, and we do not use your application to enrich or resell a profile of you.</li>
+      <li>We do not add you to a marketing list because you booked a call or emailed us. An enquiry gets a reply, not a campaign.</li>
+      <li>We do not use your enquiry to enrich or resell a profile of you.</li>
       <li>We do not use one client’s data for the benefit of another client.</li>
     </ul>
   </section>
@@ -154,9 +152,9 @@ const summary = [
     <p>We share personal information only with:</p>
     <ul>
       <li>
-        <strong>Service providers that run our own business</strong> — website hosting, our CRM (where your
-        application is stored), the automation service that delivers the form to the CRM, email, messaging, scheduling,
-        e-signature and accounting software. They may use the information only to provide their service to us.
+        <strong>Service providers that run our own business</strong> — website hosting, our CRM, the scheduling
+        service behind “Book a call”, the payment provider behind checkout, email, messaging, e-signature and
+        accounting software. They may use the information only to provide their service to us.
       </li>
       <li><strong>Professional advisers</strong> — lawyers, accountants and insurers, under a duty of confidentiality.</li>
       <li>
@@ -191,7 +189,7 @@ const summary = [
       <li><strong>Access by invitation.</strong> We work through named user accounts the client grants and can revoke. We do not take shared passwords. We ask for the least access the work needs.</li>
       <li><strong>Payment data stays with the processor.</strong> Card details are handled by the client’s payment processor. We are not the merchant of record and do not store card numbers.</li>
       <li><strong>Subprocessors.</strong> The tools in a client’s stack (their store platform, CRM, email service and so on) are usually the client’s own accounts. Where we bring a tool of ours, we tell the client first.</li>
-      <li><strong>At the end.</strong> When an engagement ends — including a free 30-day build that does not continue — we remove our access, and return or delete client data in our possession as the agreement directs.</li>
+      <li><strong>At the end.</strong> When a module or engagement ends — including one cancelled inside its first 30 days — we remove our access, and return or delete client data in our possession as the agreement directs.</li>
       <li><strong>Incidents.</strong> If we become aware of a security incident affecting client data in our care, we notify that client without undue delay so they can meet their own obligations.</li>
     </ul>
     <p>
@@ -219,8 +217,15 @@ const summary = [
   <section id="ai">
     <h2>8. AI assistants</h2>
     <p>
-      Some engagements include assistants that answer questions from a client’s own business data — inventory,
-      pricing, menus, orders and CRM records.
+      Our Customer Service module answers a client’s customer email and chat with an assistant trained on that
+      client’s products, policies and voice, with a human escalation path. Other modules use the same assistant to
+      write and sort. If you are a customer of one of our clients, your messages to that brand may be answered this way.
+    </p>
+    <p>
+      For Lead Engine we find businesses that fit a client’s category using public sources — company websites,
+      directories and business listings — and pass the business, a contact role and a reason for fit to the client.
+      We don’t scrape personal social-media profiles or buy consumer lists. If you were identified this way and
+      would rather not be, email us and we will remove you from future lists for every client.
     </p>
     <ul>
       <li>An assistant built for a client works from that client’s data and is available to that client’s team. It is not shared with, or used to inform work for, any other client.</li>
@@ -243,7 +248,7 @@ const summary = [
   <section id="retention">
     <h2>10. How long we keep it</h2>
     <ul>
-      <li><strong>Applications that don’t become an engagement:</strong> up to {legal.retentionMonths} months after our last contact, then deleted — or sooner if you ask.</li>
+      <li><strong>Enquiries that don’t become a subscription:</strong> up to {legal.retentionMonths} months after our last contact, then deleted — or sooner if you ask.</li>
       <li><strong>Client business records:</strong> for the life of the engagement and as long afterwards as tax, accounting and legal rules require (typically up to seven years for financial records).</li>
       <li><strong>Client data we process:</strong> only for the engagement, then returned or deleted as described in section 6.</li>
       <li><strong>Server logs:</strong> for a short period set by our hosting provider, generally no more than 90 days.</li>
