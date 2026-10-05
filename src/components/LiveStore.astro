@@ -103,7 +103,7 @@ const lanes = [
     if (!reduce) {
       let timer: number | undefined;
       const io = new IntersectionObserver(([en]) => {
-        if (en.isIntersecting && timer === undefined) timer = window.setInterval(step, 1900);
+        if (en.isIntersecting && timer === undefined) timer = window.setInterval(step, 5000);
         else if (!en.isIntersecting && timer !== undefined) { clearInterval(timer); timer = undefined; }
       });
       io.observe(root);
@@ -188,7 +188,7 @@ const lanes = [
     row-gap: 2px;
     padding: 10px 12px 10px 14px;
     border-left: 3px solid var(--teal);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.07);
     border-radius: 4px 8px 8px 4px;
   }
   .live .ev.ret { border-left-color: #fff; }
@@ -205,17 +205,19 @@ const lanes = [
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--muted-dark);
+    color: #fff;
   }
   .live .in {
     grid-area: in;
-    color: var(--muted-dark);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.86);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .live .out {
     grid-area: out;
+    font-weight: 600;
     color: #fff;
   }
   .live .tag {
@@ -242,9 +244,10 @@ const lanes = [
   }
   .live .tally dt {
     font-size: 0.7rem;
+    font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--muted-dark);
+    color: rgba(255, 255, 255, 0.86);
   }
   .live .tally dd {
     margin-top: 2px;
