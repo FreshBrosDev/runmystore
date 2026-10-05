@@ -4,6 +4,7 @@ import Stripes from '../components/Stripes.astro';
 import PlanCard from '../components/PlanCard.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
+import LiveStore from '../components/LiveStore.astro';
 import { site, modules, bundle, guarantee, upperTier, howItWorks, faqs2, bookingUrl } from '../data/site';
 
 const faqSchema = {
@@ -25,7 +26,8 @@ const who = [
 >
   <!-- 1. Hero -->
   <section class="dark hero">
-    <div class="wrap">
+    <div class="wrap hero-grid">
+      <div>
       <p class="eyebrow"><Stripes /> RunMyStore</p>
       <h1>You own the brand. <span class="accent">We run the store.</span></h1>
       <p class="lede">
@@ -37,6 +39,8 @@ const who = [
         <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
       </div>
       <p class="fineprint">{guarantee}</p>
+      </div>
+      <LiveStore />
     </div>
   </section>
 
@@ -127,6 +131,17 @@ const who = [
     background: radial-gradient(900px 500px at 85% 0%, rgba(13, 115, 119, 0.22), transparent 60%), var(--ink);
   }
   /* Teal on charcoal is 3.1:1: fine for display-size headings, never for body text. */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(40px, 6vw, 88px);
+  }
+  @media (max-width: 980px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
   .hero h1 {
     margin-top: 22px;
     max-width: 14ch;

@@ -1,0 +1,284 @@
+---
+// Hero visual: a simulated day of the three modules running. Events are fictional and
+// generic on purpose (the brief bans client names and case-study numbers) — the panel
+// says "simulated" and counts actions, never revenue.
+const lanes = [
+  { id: 'cs', label: 'Customer Service', short: 'Answers' },
+  { id: 'ret', label: 'Retention', short: 'Brought back' },
+  { id: 'lead', label: 'Lead Engine', short: 'Leads' },
+];
+---
+
+<div class="live" data-live>
+  <div class="top">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="title">Your store, running</span>
+    <span class="sim">Simulated day</span>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Filter the feed">
+    <button role="tab" aria-selected="true" data-lane="all">All three</button>
+    {lanes.map((l) => <button role="tab" aria-selected="false" data-lane={l.id}>{l.label}</button>)}
+  </div>
+
+  <ol class="feed" role="list" aria-live="polite" aria-relevant="additions" data-feed></ol>
+
+  <dl class="tally">
+    <div><dt>Answered</dt><dd data-count="cs">0</dd></div>
+    <div><dt>Brought back</dt><dd data-count="ret">0</dd></div>
+    <div><dt>Leads delivered</dt><dd data-count="lead">0</dd></div>
+    <div class="orders"><dt>Orders from it</dt><dd data-count="order">0</dd></div>
+  </dl>
+  <p class="note">Fictional activity, to show how the modules work together. Not a customer’s results.</p>
+</div>
+
+<script>
+  type Ev = { lane: 'cs' | 'ret' | 'lead'; who: string; in: string; out: string; tag?: 'order' | 'you' | 'upsell' | 'skip' };
+
+  const EVENTS: Ev[] = [
+    { lane: 'cs', who: 'Customer', in: '“Where’s my order?”', out: 'Shipped Tuesday. Tracking link sent.' },
+    { lane: 'lead', who: 'New lead', in: 'Boutique gym, 3 locations', out: 'Fits: buys in bulk. Ready to contact.' },
+    { lane: 'ret', who: 'Reorder reminder', in: '34 days since last order', out: 'Opened. Ordered again.', tag: 'order' },
+    { lane: 'cs', who: 'Customer', in: '“Do you ship to Canada?”', out: 'Yes — 5 to 8 days, duties included.' },
+    { lane: 'ret', who: 'Post-purchase follow-up', in: 'Day 7 after first order', out: 'Added the bundle.', tag: 'upsell' },
+    { lane: 'lead', who: 'New lead', in: 'Wedding planner', out: 'Fits: repeat gifting. Ready to contact.' },
+    { lane: 'cs', who: 'Customer', in: '“Can I swap the size?”', out: 'Done. Exchange label on its way.' },
+    { lane: 'cs', who: 'Customer', in: '“Refund on a $240 order?”', out: 'Over your limit. Sent to you with the thread.', tag: 'you' },
+    { lane: 'ret', who: 'Win-back', in: '90 days quiet', out: 'Came back. Ordered.', tag: 'order' },
+    { lane: 'lead', who: 'Lead checked', in: 'Reseller marketplace', out: 'Not a fit. Skipped.', tag: 'skip' },
+    { lane: 'cs', who: 'Customer', in: '“Is this one vegan?”', out: 'Yes. Ingredient list attached.' },
+    { lane: 'lead', who: 'New lead', in: 'Corporate gifting buyer', out: 'Fits: 50+ units a quarter. Ready to contact.' },
+    { lane: 'ret', who: 'Reorder reminder', in: '28 days since last order', out: 'Ordered again.', tag: 'order' },
+    { lane: 'cs', who: 'Customer', in: '“Still in stock?”', out: 'Yes, 14 left. Link to checkout sent.', tag: 'order' },
+    { lane: 'ret', who: 'Post-purchase follow-up', in: 'Day 3 after first order', out: 'Question answered. Review left.' },
+  ];
+
+  const root = document.querySelector<HTMLElement>('[data-live]');
+  const feed = root?.querySelector<HTMLOListElement>('[data-feed]');
+  if (root && feed) {
+    const counts = { cs: 0, ret: 0, lead: 0, order: 0 };
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let filter = 'all';
+    let i = 0;
+
+    const render = (e: Ev, animate: boolean) => {
+      const li = document.createElement('li');
+      li.className = `ev ${e.lane}${animate ? ' enter' : ''}`;
+      li.dataset.lane = e.lane;
+      li.hidden = filter !== 'all' && filter !== e.lane;
+      const tag = e.tag ? `<span class="tag ${e.tag}">${{ order: 'Order', you: 'Needs you', upsell: 'Upsell', skip: 'Skipped' }[e.tag]}</span>` : '';
+      li.innerHTML = `<span class="who">${e.who}</span><span class="in">${e.in}</span><span class="out">${e.out}</span>${tag}`;
+      feed.prepend(li);
+      while (feed.children.length > 7) feed.lastElementChild?.remove();
+      return li;
+    };
+
+    const bump = (k: keyof typeof counts) => {
+      counts[k]++;
+      const el = root.querySelector<HTMLElement>(`[data-count="${k}"]`);
+      if (!el) return;
+      el.textContent = String(counts[k]);
+      el.classList.remove('tick');
+      void el.offsetWidth;
+      el.classList.add('tick');
+    };
+
+    const step = () => {
+      const e = EVENTS[i++ % EVENTS.length];
+      render(e, !reduce);
+      if (e.tag !== 'skip') bump(e.lane);
+      if (e.tag === 'order' || e.tag === 'upsell') bump('order');
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[role=tab]').forEach((b) =>
+      b.addEventListener('click', () => {
+        filter = b.dataset.lane || 'all';
+        root.querySelectorAll('[role=tab]').forEach((t) => t.setAttribute('aria-selected', String(t === b)));
+        feed.querySelectorAll<HTMLElement>('.ev').forEach((li) => (li.hidden = filter !== 'all' && li.dataset.lane !== filter));
+      }),
+    );
+
+    // Seed a few, then keep going while the panel is on screen.
+    for (let k = 0; k < 4; k++) step();
+    if (!reduce) {
+      let timer: number | undefined;
+      const io = new IntersectionObserver(([en]) => {
+        if (en.isIntersecting && timer === undefined) timer = window.setInterval(step, 1900);
+        else if (!en.isIntersecting && timer !== undefined) { clearInterval(timer); timer = undefined; }
+      });
+      io.observe(root);
+    }
+  }
+</script>
+
+<style is:global>
+  .live {
+    display: grid;
+    gap: 14px;
+    padding: 18px 20px 16px;
+    background: var(--ink-2);
+    border: 1px solid var(--ink-3);
+    border-top: 5px solid var(--teal);
+    border-radius: 6px 6px var(--radius) var(--radius);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+    font-size: 0.9rem;
+  }
+  .live .top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .live .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 0 0 rgba(13, 115, 119, 0.7);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    70% { box-shadow: 0 0 0 9px rgba(13, 115, 119, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(13, 115, 119, 0); }
+  }
+  .live .title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .live .sim {
+    margin-left: auto;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+  .live .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .live .tabs button {
+    padding: 7px 12px;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    background: transparent;
+    border: 1px solid var(--ink-3);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .live .tabs button[aria-selected='true'] {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
+  }
+  .live .feed {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    min-height: 300px;
+    align-content: start;
+  }
+  .live .ev {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'who in tag' 'out out out';
+    column-gap: 10px;
+    row-gap: 2px;
+    padding: 10px 12px 10px 14px;
+    border-left: 3px solid var(--teal);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px 8px 8px 4px;
+  }
+  .live .ev.ret { border-left-color: #fff; }
+  .live .ev.lead { border-left-color: rgba(255, 255, 255, 0.45); }
+  .live .ev.enter {
+    animation: slide 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes slide {
+    from { opacity: 0; transform: translateY(-10px); }
+  }
+  .live .who {
+    grid-area: who;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+  .live .in {
+    grid-area: in;
+    color: var(--muted-dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .live .out {
+    grid-area: out;
+    color: #fff;
+  }
+  .live .tag {
+    grid-area: tag;
+    align-self: start;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    color: var(--ink);
+    background: #fff;
+  }
+  .live .tag.you { background: var(--teal); color: #fff; }
+  .live .tag.skip { background: var(--ink-3); color: #fff; }
+  .live .tally {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink-3);
+  }
+  .live .tally dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+  }
+  .live .tally dd {
+    margin-top: 2px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .live .tally dd.tick {
+    animation: tick 0.4s ease;
+  }
+  @keyframes tick {
+    30% { transform: translateY(-4px); }
+  }
+  .live .orders dd {
+    color: #fff;
+  }
+  .live .orders {
+    padding-left: 10px;
+    border-left: 3px solid var(--teal);
+  }
+  .live .note {
+    margin: 0;
+    font-size: 0.74rem;
+    color: var(--muted-dark);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live .dot, .live .ev.enter, .live .tally dd.tick { animation: none; }
+  }
+  @media (max-width: 480px) {
+    .live .tally { grid-template-columns: repeat(2, 1fr); }
+    /* Stack the row on phones: label + tag, then the question, then the answer. */
+    .live .ev { grid-template-columns: 1fr auto; grid-template-areas: 'who tag' 'in in' 'out out'; }
+    .live .in { white-space: normal; }
+  }
+</style>
