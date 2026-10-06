@@ -33,8 +33,8 @@ mm.add(
           .from('.hero h1', { yPercent: 18, opacity: 0, duration: 0.9 }, '-=0.2')
           .from('.hero .lede', { y: 18, opacity: 0 }, '-=0.5')
           .from('.hero .actions .btn', { y: 14, opacity: 0, stagger: 0.1 }, '-=0.45')
-          .from('.hero .fineprint', { opacity: 0, duration: 0.5 }, '-=0.4')
-          .from('.live', { y: 28, opacity: 0, duration: 0.9 }, '-=0.9');
+          .from('.hero .facts li', { y: 12, opacity: 0, stagger: 0.08, duration: 0.5 }, '-=0.4')
+          .from('.live', { y: 24, opacity: 0, duration: 0.9 }, 0.15);
       } else {
         tl.from(['.hero > .wrap', '.live'], { opacity: 0, duration: 0.15 });
       }

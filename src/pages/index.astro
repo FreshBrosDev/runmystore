@@ -31,14 +31,18 @@ const who = [
       <p class="eyebrow"><Stripes /> RunMyStore</p>
       <h1>You own the brand. <span class="accent">We run the store.</span></h1>
       <p class="lede">
-        Three systems that run your store while you run your brand. Pick one or all three, $500 a month each, live in
-        14 days.
+        Three systems that run your store while you run your brand. Pick one or all three for $500 a month each,
+        and we have it running in 14 days.
       </p>
       <div class="actions">
         <a class="btn" href="#modules">Start with one <span class="arrow" aria-hidden="true">→</span></a>
         <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
       </div>
-      <p class="fineprint">{guarantee}</p>
+      <ul class="facts" role="list">
+        <li><b>$500</b><span>a month, per module</span></li>
+        <li><b>14 days</b><span>from paying to running</span></li>
+        <li><b>$0</b><span>setup fee, cancel any month</span></li>
+      </ul>
       </div>
       <LiveStore />
     </div>
@@ -130,15 +134,15 @@ const who = [
   }
 
   .hero {
-    padding-block: clamp(56px, 9vw, 120px) clamp(48px, 7vw, 88px);
+    padding-block: clamp(36px, 5vw, 64px) clamp(48px, 7vw, 88px);
     background: radial-gradient(900px 500px at 85% 0%, rgba(13, 115, 119, 0.22), transparent 60%), var(--ink);
   }
   /* Teal on charcoal is 3.1:1: fine for display-size headings, never for body text. */
   .hero-grid {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
-    align-items: center;
-    gap: clamp(40px, 6vw, 88px);
+    align-items: start;
+    gap: clamp(32px, 5vw, 72px);
   }
   @media (max-width: 980px) {
     .hero-grid {
@@ -162,8 +166,30 @@ const who = [
   .hero .actions {
     margin-top: 36px;
   }
-  .hero .fineprint {
-    margin-top: 22px;
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 36px;
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink-3);
+  }
+  .facts li {
+    display: grid;
+    gap: 2px;
+  }
+  .facts b {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-stretch: 112%;
+    font-size: 1.7rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .facts span {
+    font-size: 0.9rem;
+    color: var(--muted-dark);
   }
 
   .who {
