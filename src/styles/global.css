@@ -514,7 +514,7 @@ h3 {
 /* Hidden only once JS has confirmed it can reveal them again (src/scripts/motion.ts). */
 .js .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(26px);
 }
 @media (prefers-reduced-motion: reduce) {
   html {

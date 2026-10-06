@@ -15,9 +15,10 @@ mm.add(
     const reveals = gsap.utils.toArray<HTMLElement>('.reveal');
     if (motionOK) {
       ScrollTrigger.batch(reveals, {
-        start: 'top 88%',
+        start: 'top 85%',
         once: true,
-        onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true }),
+        batchMax: 6,
+        onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'power2.out', stagger: 0.14, overwrite: true }),
       });
     } else {
       ScrollTrigger.batch(reveals, { start: 'top 95%', once: true, onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.15, overwrite: true }) });
@@ -47,7 +48,7 @@ mm.add(
     window.setTimeout(() => {
       const bottom = window.innerHeight * 1.1;
       const stuck = reveals.filter((el) => getComputedStyle(el).opacity === '0' && el.getBoundingClientRect().top < bottom);
-      if (stuck.length) gsap.set(stuck, { opacity: 1, y: 0 });
+      if (stuck.length) gsap.to(stuck, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.08 });
     }, 4000);
 
     // Prices are static on purpose: a counting price reads as the wrong price.
