@@ -92,12 +92,7 @@ const who = [
           ))
         }
       </ol>
-    </div>
-  </section>
-
-  <!-- 6. What you get every month -->
-  <section class="section dark">
-    <div class="wrap monthly reveal">
+      <div class="monthly reveal">
       <div>
         <p class="eyebrow"><Stripes /> What you get every month</p>
         <h2>A short daily summary. Nothing to log into.</h2>
@@ -110,10 +105,11 @@ const who = [
         <a class="textlink yt" href={social.youtube} rel="noopener">Watch how every piece gets built on our YouTube channel.</a>
       </p>
     </div>
+    </div>
   </section>
 
   <!-- 7. FAQ -->
-  <section class="section mist" id="faq">
+  <section class="section dark" id="faq">
     <div class="wrap">
       <div class="head reveal">
         <p class="eyebrow"><Stripes /> Questions</p>
@@ -251,6 +247,9 @@ const who = [
     grid-template-columns: 1fr 1fr;
     align-items: start;
     gap: clamp(28px, 5vw, 72px);
+    margin-top: clamp(48px, 6vw, 80px);
+    padding-top: clamp(40px, 5vw, 64px);
+    border-top: 4px solid var(--ink);
   }
   .monthly h2 {
     margin-top: 20px;

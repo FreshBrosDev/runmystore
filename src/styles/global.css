@@ -481,6 +481,19 @@ h3 {
   color: var(--muted);
   max-width: 70ch;
 }
+.dark .faq details {
+  background: var(--ink-2);
+  border-color: var(--ink-3);
+}
+.dark .faq summary {
+  color: #fff;
+}
+.dark .faq summary::after {
+  color: #fff;
+}
+.dark .faq details p {
+  color: var(--muted-dark);
+}
 
 /* ---------- Page hero (inner pages) ---------- */
 .pagehero {
