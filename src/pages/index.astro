@@ -5,6 +5,7 @@ import PlanCard from '../components/PlanCard.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import LiveStore from '../components/LiveStore.astro';
+import Logo from '../components/Logo.astro';
 import { site, modules, bundle, guarantee, upperTier, howItWorks, faqs2, bookingUrl, social } from '../data/site';
 
 const faqSchema = {
@@ -49,9 +50,12 @@ const who = [
   </section>
 
   <!-- 2. Who it's for -->
-  <section class="section tight mist">
-    <div class="wrap">
-      <p class="eyebrow"><Stripes /> Who it’s for</p>
+  <section class="section mist who-sec">
+    <div class="wrap who-grid">
+      <div class="who-head">
+        <Logo height={44} />
+        <h2>Who it’s for.</h2>
+      </div>
       <ul class="who" role="list">
         {who.map((w) => <li>{w}</li>)}
       </ul>
@@ -82,21 +86,21 @@ const who = [
   <!-- 5. How it works -->
   <section class="section mist" id="how">
     <div class="wrap">
-      <div class="head reveal">
+      <div class="head">
         <p class="eyebrow"><Stripes /> How it works</p>
         <h2>Live in 14 days.</h2>
       </div>
       <ol class="steps" role="list">
         {
           howItWorks.map((s, i) => (
-            <li class="reveal" style={`transition-delay:${i * 80}ms`}>
+            <li>
               <span class="when">{s.when}</span>
               <p>{s.what}</p>
             </li>
           ))
         }
       </ol>
-      <div class="monthly reveal">
+      <div class="monthly">
       <div>
         <p class="eyebrow"><Stripes /> What you get every month</p>
         <h2>A short daily summary. Nothing to log into.</h2>
@@ -192,27 +196,47 @@ const who = [
     color: var(--muted-dark);
   }
 
+  .who-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    align-items: start;
+    gap: clamp(28px, 5vw, 72px);
+  }
+  .who-head {
+    display: grid;
+    gap: 22px;
+    justify-items: start;
+  }
+  .who-head h2 {
+    font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+  }
   .who {
     display: grid;
-    gap: 14px;
-    margin-top: 22px;
-    max-width: 62ch;
-    font-size: 1.1rem;
-    line-height: 1.5;
+    gap: 22px;
+    font-size: clamp(1.25rem, 1.9vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+    letter-spacing: -0.01em;
   }
   .who li {
     position: relative;
-    padding-left: 30px;
+    padding-left: 40px;
   }
   .who li::before {
     content: '';
     position: absolute;
     left: 2px;
-    top: 0.62em;
-    width: 16px;
-    height: 4px;
+    top: 0.6em;
+    width: 22px;
+    height: 5px;
     background: var(--teal);
     transform: skewX(var(--skew));
+  }
+  @media (max-width: 860px) {
+    .who-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .plans {
