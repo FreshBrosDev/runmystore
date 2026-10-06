@@ -108,7 +108,7 @@ const lanes = [
     let paused = reduce;
     const sync = () => {
       const run = visible && !paused;
-      if (run && timer === undefined) timer = window.setInterval(step, 3500);
+      if (run && timer === undefined) timer = window.setInterval(step, 3000);
       if (!run && timer !== undefined) { clearInterval(timer); timer = undefined; }
     };
     new IntersectionObserver(([en]) => { visible = en.isIntersecting; sync(); }).observe(root);
