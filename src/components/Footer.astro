@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { site, contactEmail } from '../data/site';
+import { site, contactEmail, social } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
@@ -13,6 +13,11 @@ const year = new Date().getFullYear();
     <div class="contact">
       <span class="label">Contact</span>
       <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+      <span class="label">Follow</span>
+      <span class="socials">
+        <a href={social.youtube} rel="noopener">YouTube {social.handle}</a>
+        <a href={social.instagram} rel="noopener">Instagram {social.handle}</a>
+      </span>
     </div>
   </div>
   <div class="wrap base">
@@ -59,6 +64,14 @@ const year = new Date().getFullYear();
   }
   .contact a:hover {
     text-decoration: underline;
+  }
+  .contact .label + .label {
+    margin-top: 14px;
+  }
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
   }
   .base {
     display: flex;

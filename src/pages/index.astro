@@ -5,7 +5,7 @@ import PlanCard from '../components/PlanCard.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import LiveStore from '../components/LiveStore.astro';
-import { site, modules, bundle, guarantee, upperTier, howItWorks, faqs2, bookingUrl } from '../data/site';
+import { site, modules, bundle, guarantee, upperTier, howItWorks, faqs2, bookingUrl, playbook, social } from '../data/site';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -39,13 +39,14 @@ const who = [
         <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
       </div>
       <p class="fineprint">{guarantee}</p>
+      <p class="playbook-link"><a class="textlink" href="#playbook">Or get the free playbook.</a></p>
       </div>
       <LiveStore />
     </div>
   </section>
 
   <!-- 2. Who it's for -->
-  <section class="section tight">
+  <section class="section tight mist">
     <div class="wrap">
       <p class="eyebrow"><Stripes /> Who it’s for</p>
       <ul class="who" role="list">
@@ -70,7 +71,7 @@ const who = [
       </div>
       <p class="upper">
         {upperTier.line}
-        <a class="textlink" href={bookingUrl} rel="noopener">{upperTier.cta} →</a>
+        <a class="textlink" href={bookingUrl} rel="noopener">{upperTier.cta}.</a>
       </p>
     </div>
   </section>
@@ -96,7 +97,7 @@ const who = [
   </section>
 
   <!-- 6. What you get every month -->
-  <section class="section">
+  <section class="section mist">
     <div class="wrap monthly reveal">
       <div>
         <p class="eyebrow"><Stripes /> What you get every month</p>
@@ -107,7 +108,26 @@ const who = [
         customers were reached and who came back, which leads came in and why they fit, and anything that needs you,
         like a question the assistant couldn’t answer, a refund to approve, or a lead worth a call. It takes two
         minutes to read and then you get on with your day.
+        <a class="textlink yt" href={social.youtube} rel="noopener">Watch how every piece gets built on our YouTube channel.</a>
       </p>
+    </div>
+  </section>
+
+  <!-- Playbook capture -->
+  <section class="section dark" id="playbook">
+    <div class="wrap pb reveal">
+      <div>
+        <p class="eyebrow"><Stripes /> Free</p>
+        <h2>{playbook.title}</h2>
+        <p class="lede">{playbook.body}</p>
+      </div>
+      <form class="pbform" method="post" action={playbook.action || undefined} data-action={playbook.action} novalidate>
+        <label class="sr-only" for="pb-email">Email</label>
+        <input id="pb-email" name="email" type="email" autocomplete="email" placeholder="you@yourstore.com" required />
+        <button class="btn" type="submit">{playbook.cta} <span class="arrow" aria-hidden="true">→</span></button>
+        <p class="pbdone" hidden>Got it. The playbook is on its way.</p>
+        <p class="pberr" hidden>That didn’t send. Check the address and try again.</p>
+      </form>
     </div>
   </section>
 
@@ -126,7 +146,95 @@ const who = [
   <CtaBand />
 </Base>
 
+<script>
+  const form = document.querySelector<HTMLFormElement>('.pbform');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+    const done = form.querySelector<HTMLElement>('.pbdone')!;
+    const err = form.querySelector<HTMLElement>('.pberr')!;
+    err.hidden = true;
+    if (!form.checkValidity()) return form.reportValidity();
+    try {
+      if (form.dataset.action) {
+        const res = await fetch(form.dataset.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, source: 'runmystore.com/#playbook' }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+      } else {
+        // No endpoint configured yet (PUBLIC_PLAYBOOK_FORM_ACTION): log it so nothing is silently lost.
+        console.log('[playbook] no form endpoint set; email captured locally:', email);
+      }
+      form.querySelectorAll<HTMLElement>('input, button').forEach((el) => (el.hidden = true));
+      done.hidden = false;
+    } catch {
+      err.hidden = false;
+    }
+  });
+</script>
+
 <style>
+  .playbook-link {
+    margin-top: 12px;
+    font-size: 0.95rem;
+  }
+  .yt {
+    display: block;
+    margin-top: 16px;
+  }
+  .pb {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+  }
+  .pb h2 {
+    margin-top: 20px;
+  }
+  .pb .lede {
+    margin-top: 18px;
+  }
+  .pbform {
+    display: grid;
+    gap: 12px;
+  }
+  .pbform input {
+    width: 100%;
+    padding: 16px 18px;
+    font: inherit;
+    font-size: 1rem;
+    color: #fff;
+    background: var(--ink-2);
+    border: 1.5px solid var(--ink-3);
+    border-radius: 10px;
+  }
+  .pbform input:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  .pbform input::placeholder {
+    color: var(--muted-dark);
+  }
+  .pbform .btn {
+    justify-self: start;
+  }
+  .pbdone {
+    font-weight: 600;
+  }
+  .pberr {
+    color: #fff;
+    padding: 12px 14px;
+    background: var(--ink-3);
+    border-radius: 8px;
+  }
+  @media (max-width: 800px) {
+    .pb {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .hero {
     padding-block: clamp(56px, 9vw, 120px) clamp(48px, 7vw, 88px);
     background: radial-gradient(900px 500px at 85% 0%, rgba(13, 115, 119, 0.22), transparent 60%), var(--ink);
