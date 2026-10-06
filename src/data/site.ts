@@ -98,14 +98,6 @@ export const upperTier = {
   cta: 'Book a call',
 };
 
-// Free playbook capture. POSTs the email to PUBLIC_PLAYBOOK_FORM_ACTION; with no endpoint set it logs to the console.
-export const playbook = {
-  title: 'The playbook, free.',
-  body: 'We’re building a store’s entire operating stack on camera, one task a day. The written version is free. Email, and it’s yours.',
-  cta: 'Send me the playbook',
-  action: (import.meta.env.PUBLIC_PLAYBOOK_FORM_ACTION as string | undefined) || '',
-};
-
 export const social = {
   youtube: (import.meta.env.PUBLIC_YOUTUBE_URL as string | undefined) || 'https://www.youtube.com/@LaunchRMS',
   instagram: (import.meta.env.PUBLIC_INSTAGRAM_URL as string | undefined) || 'https://www.instagram.com/LaunchRMS',
