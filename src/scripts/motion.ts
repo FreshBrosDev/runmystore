@@ -50,26 +50,7 @@ mm.add(
       if (stuck.length) gsap.set(stuck, { opacity: 1, y: 0 });
     }, 4000);
 
-    // --- Prices tick up to their value when the cards scroll in.
-    // The real price is in the HTML from the start; the tween only runs once the card is on screen.
-    if (motionOK) {
-      document.querySelectorAll<HTMLElement>('.plan .price b').forEach((el) => {
-        const target = parseInt(el.textContent!.replace(/[^0-9]/g, ''), 10);
-        if (!target) return;
-        ScrollTrigger.create({
-          trigger: el,
-          start: 'top 90%',
-          once: true,
-          onEnter: () => {
-            const obj = { n: 0 };
-            gsap.to(obj, {
-              n: target, duration: 1.1, ease: 'power2.out', snap: { n: 1 },
-              onUpdate: () => (el.textContent = '$' + Math.round(obj.n).toLocaleString('en-US')),
-            });
-          },
-        });
-      });
-    }
+    // Prices are static on purpose: a counting price reads as the wrong price.
 
     // --- Big speed trails in the final CTA sweep in ---
     if (motionOK) {
