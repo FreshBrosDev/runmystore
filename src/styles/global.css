@@ -252,7 +252,11 @@ h3 {
   color: #fff;
   cursor: pointer;
   isolation: isolate;
-  transition: transform 0.2s ease;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.08s;
 }
 .btn::before {
   content: '';
@@ -489,26 +493,17 @@ h3 {
 }
 
 /* ---------- Reveal on scroll ---------- */
-/* Only hidden once JS has confirmed it can reveal them again. */
+/* Hidden only once JS has confirmed it can reveal them again (src/scripts/motion.ts). */
 .js .reveal {
   opacity: 0;
   transform: translateY(18px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-}
-.js .reveal.in {
-  opacity: 1;
-  transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .js .reveal {
-    opacity: 1;
     transform: none;
-    transition: none;
   }
   * {
     animation-duration: 0.01ms !important;

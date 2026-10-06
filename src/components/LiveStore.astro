@@ -14,6 +14,7 @@ const lanes = [
     <span class="dot" aria-hidden="true"></span>
     <span class="title">Your store, running</span>
     <span class="sim">Simulated day</span>
+    <button class="pause" type="button" aria-pressed="false" data-pause>Pause</button>
   </div>
 
   <div class="tabs" role="tablist" aria-label="Filter the feed">
@@ -33,6 +34,7 @@ const lanes = [
 </div>
 
 <script>
+  import gsap from 'gsap';
   type Ev = { lane: 'cs' | 'ret' | 'lead'; who: string; in: string; out: string; tag?: 'order' | 'you' | 'upsell' | 'skip' };
 
   const EVENTS: Ev[] = [
@@ -70,6 +72,7 @@ const lanes = [
       li.innerHTML = `<span class="who">${e.who}</span><span class="in">${e.in}</span><span class="out">${e.out}</span>${tag}`;
       feed.prepend(li);
       while (feed.children.length > 7) feed.lastElementChild?.remove();
+      if (animate) gsap.from(li, { y: -16, opacity: 0, duration: 0.55, ease: 'back.out(1.6)' });
       return li;
     };
 
@@ -98,15 +101,27 @@ const lanes = [
       }),
     );
 
-    // Seed a few, then keep going while the panel is on screen.
+    // Seed a few, then keep going while the panel is on screen and not paused (WCAG 2.2.2).
     for (let k = 0; k < 4; k++) step();
-    if (!reduce) {
-      let timer: number | undefined;
-      const io = new IntersectionObserver(([en]) => {
-        if (en.isIntersecting && timer === undefined) timer = window.setInterval(step, 5000);
-        else if (!en.isIntersecting && timer !== undefined) { clearInterval(timer); timer = undefined; }
+    let timer: number | undefined;
+    let visible = false;
+    let paused = reduce;
+    const sync = () => {
+      const run = visible && !paused;
+      if (run && timer === undefined) timer = window.setInterval(step, 5000);
+      if (!run && timer !== undefined) { clearInterval(timer); timer = undefined; }
+    };
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; sync(); }).observe(root);
+    const pauseBtn = root.querySelector<HTMLButtonElement>('[data-pause]');
+    if (pauseBtn) {
+      pauseBtn.setAttribute('aria-pressed', String(paused));
+      pauseBtn.textContent = paused ? 'Play' : 'Pause';
+      pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        pauseBtn.setAttribute('aria-pressed', String(paused));
+        pauseBtn.textContent = paused ? 'Play' : 'Pause';
+        sync();
       });
-      io.observe(root);
     }
   }
 </script>
@@ -193,11 +208,20 @@ const lanes = [
   }
   .live .ev.ret { border-left-color: #fff; }
   .live .ev.lead { border-left-color: rgba(255, 255, 255, 0.45); }
-  .live .ev.enter {
-    animation: slide 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  .live .pause {
+    padding: 5px 10px;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #fff;
+    background: transparent;
+    border: 1px solid var(--ink-3);
+    border-radius: 999px;
+    cursor: pointer;
   }
-  @keyframes slide {
-    from { opacity: 0; transform: translateY(-10px); }
+  .live .pause[aria-pressed='true'] {
+    background: #fff;
+    color: var(--ink);
   }
   .live .who {
     grid-area: who;
@@ -276,7 +300,7 @@ const lanes = [
     color: var(--muted-dark);
   }
   @media (prefers-reduced-motion: reduce) {
-    .live .dot, .live .ev.enter, .live .tally dd.tick { animation: none; }
+    .live .dot, .live .tally dd.tick { animation: none; }
   }
   @media (max-width: 480px) {
     .live .tally { grid-template-columns: repeat(2, 1fr); }
