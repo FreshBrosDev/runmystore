@@ -14,9 +14,9 @@ const faqSchema = {
 };
 
 const who = [
-  'You’re already selling — roughly $3k to $15k a month — and the orders keep coming.',
-  'You answer every customer email yourself, and repeat buyers slip away because nobody followed up.',
-  'You know there are buyers you haven’t reached, and there’s no time to go find them.',
+  'You’re already selling, somewhere between $3k and $15k a month, and the orders keep coming.',
+  'You answer every customer email yourself, and repeat buyers slip away because nobody followed up with them.',
+  'You know there are buyers out there you haven’t reached, and you never have time to go find them.',
 ];
 ---
 
@@ -31,7 +31,7 @@ const who = [
       <p class="eyebrow"><Stripes /> RunMyStore</p>
       <h1>You own the brand. <span class="accent">We run the store.</span></h1>
       <p class="lede">
-        Three systems that run your store while you run your brand. Pick one or all three. $500 a month each. Live in
+        Three systems that run your store while you run your brand. Pick one or all three, $500 a month each, live in
         14 days.
       </p>
       <div class="actions">
@@ -60,7 +60,7 @@ const who = [
       <div class="head reveal">
         <p class="eyebrow"><Stripes /> The modules</p>
         <h2>Three systems. $500 a month each.</h2>
-        <p class="lede">Month to month. No setup fee. Each one is installed, trained on your business, and run for you.</p>
+        <p class="lede">Month to month with no setup fee. Each one is installed, trained on your business, and run for you.</p>
       </div>
       <div class="grid g3 plans">
         {modules.map((m) => <PlanCard plan={m} />)}
@@ -103,9 +103,10 @@ const who = [
         <h2>A short daily summary. Nothing to log into.</h2>
       </div>
       <p class="lede">
-        Every day you get a short summary: the conversations handled and what was said, the customers reached and who
-        came back, the leads delivered and why they fit, and anything that needs you — a question the assistant
-        couldn’t answer, a refund to approve, a lead worth a call. Read it in two minutes and get on with your day.
+        Every morning you get a short note. It tells you which conversations were handled and what was said, which
+        customers were reached and who came back, which leads came in and why they fit, and anything that needs you,
+        like a question the assistant couldn’t answer, a refund to approve, or a lead worth a call. It takes two
+        minutes to read and then you get on with your day.
       </p>
     </div>
   </section>

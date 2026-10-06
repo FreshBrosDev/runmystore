@@ -7,7 +7,7 @@ export const site = {
   url: 'https://runmystore.com',
   tagline: 'You own the brand. We run the store.',
   description:
-    'RunMyStore builds and runs the whole commerce stack for alternative brands — storefront, traffic, email, wholesale pipeline and fulfillment. Your entire stack built free in 30 days, then a monthly retainer for only what you need.',
+    'Three systems that run your store while you run your brand: customer service, retention and lead generation. $500 a month each, month to month, live in 14 days.',
   whatsapp: 'https://wa.me/18105134257',
   // Where the application form POSTs JSON (a Zapier / Make / serverless hook that
   // creates the lead in Close). Set PUBLIC_LEAD_ENDPOINT in .env. When it is empty
@@ -51,7 +51,7 @@ export const modules: Plan[] = [
     price: '$500',
     cadence: '/mo',
     description:
-      'An assistant trained on your products, policies, and voice answers your customers’ email and chat 24/7, in your name. Anything it can’t answer comes to you with the thread attached.',
+      'An assistant trained on your products, policies, and voice answers your customers’ email and chat around the clock, in your name. Anything it can’t answer lands in your inbox with the whole thread attached.',
     fairUse: 'Built for stores handling up to about 300 customer conversations a month.',
     disclosure:
       'Your customers are answered by an AI assistant trained on your business, with a human escalation path.',
@@ -63,7 +63,7 @@ export const modules: Plan[] = [
     price: '$500',
     cadence: '/mo',
     description:
-      'Your customers hear from you before they drift. Reorder reminders, win-backs by last-order date, post-purchase follow-ups — on your list, in your voice.',
+      'Your customers hear from you before they drift. Reorder reminders, win-backs based on when they last ordered, and follow-ups after a purchase, all sent to your list in your voice.',
     fairUse: 'Runs on the list you already own; we don’t buy or add contacts.',
     startUrl: startUrl(import.meta.env.PUBLIC_START_URL_RETENTION, 'Retention'),
   },
@@ -73,7 +73,7 @@ export const modules: Plan[] = [
     price: '$500',
     cadence: '/mo',
     description:
-      'We find and qualify new buyers in your category and hand them to you ready to contact. Name, business, why they fit, and a first line you can send.',
+      'We find and qualify new buyers in your category and hand them to you ready to contact, with the name, the business, why they fit, and a first line you can send.',
     fairUse: 'Up to 150 qualified leads a month.',
     startUrl: startUrl(import.meta.env.PUBLIC_START_URL_LEAD_ENGINE, 'Lead Engine'),
   },
@@ -85,13 +85,13 @@ export const bundle: Plan = {
   price: '$1,250',
   cadence: '/mo',
   description:
-    'All three working together: new buyers in, every one answered, every one brought back. Each module feeds the next, so the whole runs better than the parts.',
+    'All three working together, so new buyers come in, every one of them gets answered, and every one gets brought back. Each module feeds the next, which is why the bundle works better than any one on its own.',
   fairUse: 'Same fair-use lines as the three modules.',
   startUrl: startUrl(import.meta.env.PUBLIC_START_URL_BUNDLE, 'Run the Store'),
   recommended: true,
 };
 
-export const guarantee = 'No setup fee. Month to month. Cancel any month: the assistant switches off, your customers and your list stay yours.';
+export const guarantee = 'No setup fee and no contract. Cancel any month and the assistant switches off, but your customers and your list stay yours.';
 
 export const upperTier = {
   line: 'Doing more than $15k a month? You’re bigger than these plans.',
@@ -100,35 +100,35 @@ export const upperTier = {
 
 export const howItWorks = [
   { when: 'Day 1', what: 'You pick a module, or all three, and pay for the first month.' },
-  { when: 'Days 2–10', what: 'We connect your store, inbox, and list, and train the assistant on your products, policies, and the way you write.' },
-  { when: 'Day 14', what: 'It’s live. From then on you get a short daily summary of what it did.' },
-  { when: 'Every month', what: 'You keep it or you cancel. No contract, no setup fee.' },
+  { when: 'Days 2 to 10', what: 'We connect your store, your inbox and your list, then train the assistant on your products, your policies and the way you write.' },
+  { when: 'Day 14', what: 'It goes live, and from then on you get a short daily summary of what it did.' },
+  { when: 'Every month', what: 'You keep it or you cancel. There’s no contract and no setup fee.' },
 ];
 
 export const faqs2 = [
   {
     q: 'Is this AI?',
-    a: 'Yes. Customer Service is an AI assistant trained on your products, policies, and voice, with a human escalation path: anything it can’t answer, or anything that needs a decision, is handed to you with the full thread. Retention and Lead Engine use the same assistant to write and sort. You set the voice; we run it.',
+    a: 'Yes. Customer Service is an AI assistant trained on your products, policies and voice, and there is always a person behind it. Anything it can’t answer, or anything that needs a real decision, gets handed to you with the full thread. Retention and Lead Engine use the same assistant to write and sort. You set the voice and we run it.',
   },
   {
     q: 'Who owns my data and my list?',
-    a: 'You do. Your store, inbox, customer list, and every conversation stay in accounts you own. We work through access you grant and can revoke. Cancel and we remove our access. Nothing of yours is used for another customer.',
+    a: 'You do. Your store, your inbox, your customer list and every conversation stay in accounts you own. We work through access you grant and can take back whenever you like. If you cancel, we remove our access, and nothing of yours is ever used for another customer.',
   },
   {
     q: 'What if my customers ask something it can’t answer?',
-    a: 'It says so and hands off. The customer is told a person will follow up, you get the thread with what was asked, and once you’ve answered, the assistant knows for next time.',
+    a: 'It says so and hands the conversation to you. The customer is told a person will follow up, you get the thread with what was asked, and once you’ve answered, the assistant knows what to say next time.',
   },
   {
     q: 'Can I cancel?',
-    a: 'Any month, from your account. No contract, no setup fee. The assistant, the flows, and lead delivery run while you’re subscribed and stop at the end of the month you’ve paid for; then we remove our access. Everything that’s yours stays yours: your customers, your list, every conversation, and anything already sent or published in your own tools.',
+    a: 'Any month, from your account, with no contract and no setup fee. The assistant, the flows and the lead delivery run while you’re subscribed and stop at the end of the month you’ve paid for, and then we remove our access. Everything that’s yours stays yours, including your customers, your list, every conversation, and anything already sent or published in your own tools.',
   },
   {
     q: 'What do you need from me to start?',
-    a: 'About an hour. Access to your store, support inbox, and email list — by invitation, never passwords. Your policies on shipping, returns, and anything you won’t say. And a handful of your own replies so the assistant sounds like you.',
+    a: 'About an hour of your time. We need access to your store, your support inbox and your email list, always by invitation and never by password. We need your policies on shipping and returns and anything you don’t want said. And we need a handful of your own replies so the assistant sounds like you.',
   },
   {
     q: 'I do more than $15k a month. Is this for me?',
-    a: 'Probably not these plans. At that size you’ll need more than 300 conversations and 150 leads a month, and usually a custom setup. Book a call and we’ll scope it.',
+    a: 'Probably not these plans. At that size you’ll need more than 300 conversations and 150 leads a month, and usually a custom setup. Book a call and we’ll figure out what you actually need.',
   },
 ];
 

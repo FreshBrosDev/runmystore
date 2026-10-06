@@ -1,6 +1,6 @@
 ---
 // Hero visual: a simulated day of the three modules running. Events are fictional and
-// generic on purpose (the brief bans client names and case-study numbers) — the panel
+// generic on purpose (the brief bans client names and case-study numbers). The panel
 // says "simulated" and counts actions, never revenue.
 const lanes = [
   { id: 'cs', label: 'Customer Service', short: 'Answers' },
@@ -38,21 +38,21 @@ const lanes = [
   type Ev = { lane: 'cs' | 'ret' | 'lead'; who: string; in: string; out: string; tag?: 'order' | 'you' | 'upsell' | 'skip' };
 
   const EVENTS: Ev[] = [
-    { lane: 'cs', who: 'Customer', in: '“Where’s my order?”', out: 'Shipped Tuesday. Tracking link sent.' },
-    { lane: 'lead', who: 'New lead', in: 'Boutique gym, 3 locations', out: 'Fits: buys in bulk. Ready to contact.' },
-    { lane: 'ret', who: 'Reorder reminder', in: '34 days since last order', out: 'Opened. Ordered again.', tag: 'order' },
-    { lane: 'cs', who: 'Customer', in: '“Do you ship to Canada?”', out: 'Yes — 5 to 8 days, duties included.' },
-    { lane: 'ret', who: 'Post-purchase follow-up', in: 'Day 7 after first order', out: 'Added the bundle.', tag: 'upsell' },
-    { lane: 'lead', who: 'New lead', in: 'Wedding planner', out: 'Fits: repeat gifting. Ready to contact.' },
-    { lane: 'cs', who: 'Customer', in: '“Can I swap the size?”', out: 'Done. Exchange label on its way.' },
-    { lane: 'cs', who: 'Customer', in: '“Refund on a $240 order?”', out: 'Over your limit. Sent to you with the thread.', tag: 'you' },
-    { lane: 'ret', who: 'Win-back', in: '90 days quiet', out: 'Came back. Ordered.', tag: 'order' },
-    { lane: 'lead', who: 'Lead checked', in: 'Reseller marketplace', out: 'Not a fit. Skipped.', tag: 'skip' },
-    { lane: 'cs', who: 'Customer', in: '“Is this one vegan?”', out: 'Yes. Ingredient list attached.' },
-    { lane: 'lead', who: 'New lead', in: 'Corporate gifting buyer', out: 'Fits: 50+ units a quarter. Ready to contact.' },
-    { lane: 'ret', who: 'Reorder reminder', in: '28 days since last order', out: 'Ordered again.', tag: 'order' },
-    { lane: 'cs', who: 'Customer', in: '“Still in stock?”', out: 'Yes, 14 left. Link to checkout sent.', tag: 'order' },
-    { lane: 'ret', who: 'Post-purchase follow-up', in: 'Day 3 after first order', out: 'Question answered. Review left.' },
+    { lane: 'cs', who: 'Customer', in: '“Any update on my order?”', out: 'It shipped Tuesday. Here’s your tracking link.' },
+    { lane: 'lead', who: 'New lead', in: 'Boutique gym with three locations', out: 'They buy in bulk for members. Ready for you to reach out.' },
+    { lane: 'ret', who: 'Reorder reminder', in: 'Last ordered 34 days ago', out: 'Opened the email and ordered again.', tag: 'order' },
+    { lane: 'cs', who: 'Customer', in: '“Do you ship to Canada?”', out: 'We do. It takes 5 to 8 days and duties are included.' },
+    { lane: 'ret', who: 'Follow-up', in: 'A week after their first order', out: 'Took the bundle offer.', tag: 'upsell' },
+    { lane: 'lead', who: 'New lead', in: 'Wedding planner', out: 'Buys gifts for clients all year. Ready for you to reach out.' },
+    { lane: 'cs', who: 'Customer', in: '“Can I swap this for a medium?”', out: 'Of course. Your exchange label is on its way.' },
+    { lane: 'cs', who: 'Customer', in: '“I’d like a refund on my $240 order”', out: 'That one is over your limit, so it’s in your inbox with the whole thread.', tag: 'you' },
+    { lane: 'ret', who: 'Win-back', in: 'Quiet for 90 days', out: 'Came back and placed an order.', tag: 'order' },
+    { lane: 'lead', who: 'Lead checked', in: 'Reseller marketplace', out: 'Not a fit, so we skipped it.', tag: 'skip' },
+    { lane: 'cs', who: 'Customer', in: '“Is this one vegan?”', out: 'Yes it is. The full ingredient list is attached.' },
+    { lane: 'lead', who: 'New lead', in: 'Corporate gifting buyer', out: 'Orders 50 or more units a quarter. Ready for you to reach out.' },
+    { lane: 'ret', who: 'Reorder reminder', in: 'Last ordered 28 days ago', out: 'Ordered again.', tag: 'order' },
+    { lane: 'cs', who: 'Customer', in: '“Is this still in stock?”', out: 'Yes, there are 14 left. Here’s a link straight to checkout.', tag: 'order' },
+    { lane: 'ret', who: 'Follow-up', in: 'Three days after their first order', out: 'Had a question, got an answer, left a review.' },
   ];
 
   const root = document.querySelector<HTMLElement>('[data-live]');
