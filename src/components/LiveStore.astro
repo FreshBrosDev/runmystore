@@ -5,7 +5,6 @@
 const lanes = [
   { id: 'cs', label: 'Customer Service', short: 'Answers' },
   { id: 'ret', label: 'Retention', short: 'Brought back' },
-  { id: 'lead', label: 'Lead Engine', short: 'Leads' },
 ];
 ---
 
@@ -18,7 +17,7 @@ const lanes = [
   </div>
 
   <div class="tabs" role="tablist" aria-label="Filter the feed">
-    <button role="tab" aria-selected="true" data-lane="all">All three</button>
+    <button role="tab" aria-selected="true" data-lane="all">Both</button>
     {lanes.map((l) => <button role="tab" aria-selected="false" data-lane={l.id}>{l.label}</button>)}
   </div>
 
@@ -27,7 +26,6 @@ const lanes = [
   <dl class="tally">
     <div><dt>Answered</dt><dd data-count="cs">0</dd></div>
     <div><dt>Brought back</dt><dd data-count="ret">0</dd></div>
-    <div><dt>Leads delivered</dt><dd data-count="lead">0</dd></div>
     <div class="orders"><dt>Orders from it</dt><dd data-count="order">0</dd></div>
   </dl>
   <p class="note">Fictional activity, to show how the modules work together. Not a customer’s results.</p>
@@ -35,21 +33,17 @@ const lanes = [
 
 <script>
   import gsap from 'gsap';
-  type Ev = { lane: 'cs' | 'ret' | 'lead'; who: string; in: string; out: string; tag?: 'order' | 'you' | 'upsell' | 'skip' };
+  type Ev = { lane: 'cs' | 'ret'; who: string; in: string; out: string; tag?: 'order' | 'you' | 'upsell' };
 
   const EVENTS: Ev[] = [
     { lane: 'cs', who: 'Customer', in: '“Any update on my order?”', out: 'It shipped Tuesday. Here’s your tracking link.' },
-    { lane: 'lead', who: 'New lead', in: 'Boutique gym with three locations', out: 'They buy in bulk for members. Ready for you to reach out.' },
     { lane: 'ret', who: 'Reorder reminder', in: 'Last ordered 34 days ago', out: 'Opened the email and ordered again.', tag: 'order' },
     { lane: 'cs', who: 'Customer', in: '“Do you ship to Canada?”', out: 'We do. It takes 5 to 8 days and duties are included.' },
     { lane: 'ret', who: 'Follow-up', in: 'A week after their first order', out: 'Took the bundle offer.', tag: 'upsell' },
-    { lane: 'lead', who: 'New lead', in: 'Wedding planner', out: 'Buys gifts for clients all year. Ready for you to reach out.' },
     { lane: 'cs', who: 'Customer', in: '“Can I swap this for a medium?”', out: 'Of course. Your exchange label is on its way.' },
     { lane: 'cs', who: 'Customer', in: '“I’d like a refund on my $240 order”', out: 'That one is over your limit, so it’s in your inbox with the whole thread.', tag: 'you' },
     { lane: 'ret', who: 'Win-back', in: 'Quiet for 90 days', out: 'Came back and placed an order.', tag: 'order' },
-    { lane: 'lead', who: 'Lead checked', in: 'Reseller marketplace', out: 'Not a fit, so we skipped it.', tag: 'skip' },
     { lane: 'cs', who: 'Customer', in: '“Is this one vegan?”', out: 'Yes it is. The full ingredient list is attached.' },
-    { lane: 'lead', who: 'New lead', in: 'Corporate gifting buyer', out: 'Orders 50 or more units a quarter. Ready for you to reach out.' },
     { lane: 'ret', who: 'Reorder reminder', in: 'Last ordered 28 days ago', out: 'Ordered again.', tag: 'order' },
     { lane: 'cs', who: 'Customer', in: '“Is this still in stock?”', out: 'Yes, there are 14 left. Here’s a link straight to checkout.', tag: 'order' },
     { lane: 'ret', who: 'Follow-up', in: 'Three days after their first order', out: 'Had a question, got an answer, left a review.' },
@@ -58,7 +52,7 @@ const lanes = [
   const root = document.querySelector<HTMLElement>('[data-live]');
   const feed = root?.querySelector<HTMLOListElement>('[data-feed]');
   if (root && feed) {
-    const counts = { cs: 0, ret: 0, lead: 0, order: 0 };
+    const counts = { cs: 0, ret: 0, order: 0 };
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let filter = 'all';
     let i = 0;
@@ -68,7 +62,7 @@ const lanes = [
       li.className = `ev ${e.lane}${animate ? ' enter' : ''}`;
       li.dataset.lane = e.lane;
       li.hidden = filter !== 'all' && filter !== e.lane;
-      const tag = e.tag ? `<span class="tag ${e.tag}">${{ order: 'Order', you: 'Needs you', upsell: 'Upsell', skip: 'Skipped' }[e.tag]}</span>` : '';
+      const tag = e.tag ? `<span class="tag ${e.tag}">${{ order: 'Order', you: 'Needs you', upsell: 'Upsell' }[e.tag]}</span>` : '';
       li.innerHTML = `<span class="who">${e.who}</span><span class="in">${e.in}</span><span class="out">${e.out}</span>${tag}`;
       feed.prepend(li);
       while (feed.children.length > 7) feed.lastElementChild?.remove();
@@ -89,7 +83,7 @@ const lanes = [
     const step = () => {
       const e = EVENTS[i++ % EVENTS.length];
       render(e, !reduce);
-      if (e.tag !== 'skip') bump(e.lane);
+      bump(e.lane);
       if (e.tag === 'order' || e.tag === 'upsell') bump('order');
     };
 
@@ -207,7 +201,6 @@ const lanes = [
     border-radius: 4px 8px 8px 4px;
   }
   .live .ev.ret { border-left-color: #fff; }
-  .live .ev.lead { border-left-color: rgba(255, 255, 255, 0.45); }
   .live .pause {
     padding: 5px 10px;
     font: inherit;
@@ -257,10 +250,9 @@ const lanes = [
     background: #fff;
   }
   .live .tag.you { background: var(--teal); color: #fff; }
-  .live .tag.skip { background: var(--ink-3); color: #fff; }
   .live .tally {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     margin: 0;
     padding-top: 14px;
@@ -303,7 +295,7 @@ const lanes = [
     .live .dot, .live .tally dd.tick { animation: none; }
   }
   @media (max-width: 480px) {
-    .live .tally { grid-template-columns: repeat(2, 1fr); }
+    .live .tally { grid-template-columns: repeat(3, 1fr); }
     /* Stack the row on phones: label + tag, then the question, then the answer. */
     .live .ev { grid-template-columns: 1fr auto; grid-template-areas: 'who tag' 'in in' 'out out'; }
     .live .in { white-space: normal; }

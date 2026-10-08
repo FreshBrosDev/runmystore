@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { nav, bookingUrl, upperTier } from '../data/site';
+import { nav, bookingUrl } from '../data/site';
 ---
 
 <header class="site-header dark">
@@ -11,7 +11,7 @@ import { nav, bookingUrl, upperTier } from '../data/site';
       {nav.map((n) => <a href={n.href}>{n.label}</a>)}
     </nav>
 
-    <a class="btn cta" href={bookingUrl} rel="noopener">{upperTier.cta}</a>
+    <a class="btn cta" href={bookingUrl} rel="noopener">Book a call</a>
 
     <button class="toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
       <span class="sr-only">Menu</span>
@@ -23,7 +23,7 @@ import { nav, bookingUrl, upperTier } from '../data/site';
     <div class="wrap">
       {nav.map((n) => <a href={n.href}>{n.label}</a>)}
       <a class="btn" href="/#modules">Start with one</a>
-      <a class="btn ghost" href={bookingUrl} rel="noopener">{upperTier.cta}</a>
+      <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
     </div>
   </nav>
 </header>

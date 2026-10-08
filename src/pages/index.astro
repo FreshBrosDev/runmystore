@@ -6,7 +6,7 @@ import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import LiveStore from '../components/LiveStore.astro';
 import Logo from '../components/Logo.astro';
-import { site, modules, bundle, guarantee, upperTier, howItWorks, faqs2, bookingUrl, social } from '../data/site';
+import { modules, pro, customBuild, guarantee, howItWorks, faqs2, bookingUrl, social, whoWeServe } from '../data/site';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -14,11 +14,6 @@ const faqSchema = {
   mainEntity: faqs2.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 
-const who = [
-  'You’re already selling, somewhere between $3k and $15k a month, and the orders keep coming.',
-  'You answer every customer email yourself, and repeat buyers slip away because nobody followed up with them.',
-  'You know there are buyers out there you haven’t reached, and you never have time to go find them.',
-];
 ---
 
 <Base
@@ -32,15 +27,15 @@ const who = [
       <p class="eyebrow"><Stripes /> RunMyStore</p>
       <h1>You own the brand. <span class="accent">We run the store.</span></h1>
       <p class="lede">
-        Three systems that run your store while you run your brand. Pick one or all three for $500 a month each,
-        and we have it running in 14 days.
+        We run customer service, retention, and the back office for brands in categories the big platforms won’t
+        serve. From $500 a month. Live in 14 days.
       </p>
       <div class="actions">
         <a class="btn" href="#modules">Start with one <span class="arrow" aria-hidden="true">→</span></a>
         <a class="btn ghost" href={bookingUrl} rel="noopener">Book a call</a>
       </div>
       <ul class="facts" role="list">
-        <li><b>$500</b><span>a month, per module</span></li>
+        <li><b>$500</b><span>a month to start</span></li>
         <li><b>14 days</b><span>from paying to running</span></li>
         <li><b>$0</b><span>setup fee, cancel any month</span></li>
       </ul>
@@ -49,36 +44,37 @@ const who = [
     </div>
   </section>
 
-  <!-- 2. Who it's for -->
+  <!-- 2. Who we serve -->
   <section class="section mist who-sec">
     <div class="wrap who-grid">
       <div class="who-head">
         <Logo height={44} />
-        <h2>Who it’s for.</h2>
+        <h2>Who we serve.</h2>
       </div>
       <ul class="who" role="list">
-        {who.map((w) => <li>{w}</li>)}
+        {whoWeServe.map((w) => <li>{w}</li>)}
       </ul>
     </div>
   </section>
 
-  <!-- 3. Modules + 4. Bundle -->
+  <!-- 3. Self-serve plans + 4. Pro -->
   <section class="section dark" id="modules">
     <div class="wrap">
       <div class="head reveal">
-        <p class="eyebrow"><Stripes /> The modules</p>
-        <h2>Three systems. $500 a month each.</h2>
-        <p class="lede">Month to month with no setup fee. Each one is installed, trained on your business, and run for you.</p>
+        <p class="eyebrow"><Stripes /> Self-serve</p>
+        <h2>Pick a plan. Live in 14 days.</h2>
+        <p class="lede">Month to month with no setup fee. A dedicated operator is included on every plan.</p>
       </div>
-      <div class="grid g3 plans">
+      <div class="grid g2 plans">
         {modules.map((m) => <PlanCard plan={m} />)}
       </div>
-      <div class="bundle reveal">
-        <PlanCard plan={bundle} wide cta="Start with all three" />
+
+      <div class="pro reveal">
+        <PlanCard plan={pro} wide />
       </div>
-      <p class="upper">
-        {upperTier.line}{' '}
-        <a class="textlink" href={bookingUrl} rel="noopener">{upperTier.cta}.</a>
+      <p class="custom">
+        {customBuild.line}{' '}
+        <a class="textlink" href={bookingUrl} rel="noopener">{customBuild.cta}.</a>
       </p>
     </div>
   </section>
@@ -88,7 +84,7 @@ const who = [
     <div class="wrap">
       <div class="head">
         <p class="eyebrow"><Stripes /> How it works</p>
-        <h2>Live in 14 days.</h2>
+        <h2>From paying to live in 14 days.</h2>
       </div>
       <ol class="steps" role="list">
         {
@@ -107,9 +103,10 @@ const who = [
       </div>
       <p class="lede">
         Every morning you get a short note. It tells you which conversations were handled and what was said, which
-        customers were reached and who came back, which leads came in and why they fit, and anything that needs you,
-        like a question the assistant couldn’t answer, a refund to approve, or a lead worth a call. It takes two
-        minutes to read and then you get on with your day.
+        customers were reached and who came back, and anything that needs you, like a question the assistant
+        couldn’t answer or a refund to approve. It takes two
+        minutes to read and then you get on with your day. On Run the Store Pro you also get your numbers in one
+        email every week.
         <a class="textlink yt" href={social.youtube} rel="noopener">Watch how every piece gets built on our YouTube channel.</a>
       </p>
     </div>
@@ -242,17 +239,14 @@ const who = [
   .plans {
     align-items: stretch;
   }
-  .bundle {
+  .pro {
     margin-top: 36px;
   }
-  .upper {
+  .custom {
     margin-top: 32px;
     padding-top: 24px;
     border-top: 1px solid var(--ink-3);
     color: var(--muted-dark);
-  }
-  .upper .textlink {
-    margin-left: 8px;
   }
 
   .steps {

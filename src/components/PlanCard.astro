@@ -9,17 +9,25 @@ interface Props {
   /** Horizontal layout for the bundle card. */
   wide?: boolean;
 }
-const { plan, cta = 'Start', wide = false } = Astro.props;
+const { plan, cta = plan.cta ?? 'Start', wide = false } = Astro.props;
+const scales = plan.variant === 'scales';
 ---
 
-<article class:list={['plan', { wide, recommended: plan.recommended }]} id={plan.id}>
+<article class:list={['plan', { wide, scales, recommended: plan.recommended }]} id={plan.id}>
   {plan.recommended && <span class="badge">Recommended</span>}
   <div class="head">
     <h3>{plan.name}</h3>
+    {scales && plan.threshold && <p class="threshold">{plan.threshold}</p>}
     <p class="price"><b>{plan.price}</b><span>{plan.cadence}</span></p>
+    {scales && plan.floor && <p class="floor">{plan.floor}</p>}
   </div>
   <div class="body">
     <p class="desc">{plan.description}</p>
+    {plan.includes && (
+      <ul class="includes" role="list">
+        {plan.includes.map((x) => <li>{x}</li>)}
+      </ul>
+    )}
     {plan.disclosure && <p class="disclosure">{plan.disclosure}</p>}
     <p class="fair">{plan.fairUse}</p>
   </div>
@@ -107,6 +115,47 @@ const { plan, cta = 'Start', wide = false } = Astro.props;
   }
   .start {
     justify-self: start;
+  }
+  .threshold {
+    margin-top: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .floor {
+    margin-top: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .scales .price span {
+    display: block;
+    margin-left: 0;
+    margin-top: 4px;
+    font-family: var(--body);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .includes {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.95rem;
+  }
+  .includes li {
+    position: relative;
+    padding-left: 24px;
+  }
+  .includes li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.62em;
+    width: 14px;
+    height: 4px;
+    background: var(--teal);
+    transform: skewX(var(--skew));
   }
   .wide {
     grid-template-columns: 1fr 1.4fr auto;
