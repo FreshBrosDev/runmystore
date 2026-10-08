@@ -153,7 +153,7 @@ export const faqs2 = [
   },
   {
     q: 'My category keeps getting rejected. Can you actually work with it?',
-    a: `Almost certainly. We work with ${categories}. We’ve run a seven-figure store in this space, so we know the processors that work, the carriers that ship, the compliance that holds, and how to answer a customer without creating a legal problem. We can’t promise any platform will approve you, and we won’t pretend to. What we do is set up what works for your category.`,
+    a: `Almost certainly. We work with ${categories}. We’ve run a eight-figure store in this space, so we know the processors that work, the carriers that ship, the compliance that holds, and how to answer a customer without creating a legal problem. We can’t promise any platform will approve you, and we won’t pretend to. What we do is set up what works for your category.`,
   },
 ];
 
@@ -361,7 +361,7 @@ export const faqs = [
   },
   {
     q: 'Can you work in a regulated or high-risk category?',
-    a: 'It’s where we’re strongest. We built a seven-figure operation in hemp under processor instability, ad bans and state-by-state shipping rules. If Amazon won’t list it and Meta won’t advertise it, you’re our kind of brand.',
+    a: 'It’s where we’re strongest. We built a eight-figure operation in hemp under processor instability, ad bans and state-by-state shipping rules. If Amazon won’t list it and Meta won’t advertise it, you’re our kind of brand.',
   },
   {
     q: 'Do we have to leave our current platform?',
