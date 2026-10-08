@@ -91,7 +91,7 @@ export const pro: Plan = {
   description:
     'Doing over $100k a month? We run the whole store. Everything the self-serve plans do, plus the wholesale side, the back office, the search and content that bring buyers in, and a dedicated operator who owns the result. One source of truth, under your brand.',
   // Modeled on the full engagement scope: storefront + checkout, wholesale menu, CRM/inventory/QuickBooks,
-  // assistants on every system, SEO and AI visibility, retention pipes, affiliate shell, lead flow, operator.
+  // assistants on every system, SEO and AI visibility, retention pipes, affiliate shell, operator. Lead sourcing deliberately left out: too variable per niche.
   includes: [
     'Storefront and a checkout path that works for your category',
     'Wholesale menu and ordering at menu.yourbrand.com: live stock, tier pricing, reps quote from it',
@@ -99,7 +99,6 @@ export const pro: Plan = {
     'Customer service and retention, email and SMS, in your voice',
     'Assistants trained on your menu, inventory, pricing and orders, for your team and your customers',
     'SEO and AI-search visibility: authority content and links that bring buyers in',
-    'Lead capture into your CRM, with follow-up that runs on its own',
     'Affiliate program shell and tracking',
     'Fulfillment path, packaging rules and carrier setup for your category',
     'A dedicated operator, a weekly call if you want one, and your numbers in one email every week',
