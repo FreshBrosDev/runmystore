@@ -114,7 +114,7 @@ export const howItWorks = [
 export const faqs2 = [
   {
     q: 'Is this AI?',
-    a: 'Yes. Customer Service is an AI assistant trained on your products, policies and voice, and there is always a person behind it. Anything it can’t answer, or anything that needs a real decision, gets handed to you with the full thread. Retention and Lead Engine use the same assistant to write and sort. You set the voice and we run it.',
+    a: 'Yes. Your customers are answered by an AI assistant trained on your business, with a human escalation path. Customer Service is trained on your products, policies and voice, and there is always a person behind it. Anything it can’t answer, or anything that needs a real decision, gets handed to you with the full thread. Retention and Lead Engine use the same assistant to write and sort. You set the voice and we run it.',
   },
   {
     q: 'Who owns my data and my list?',

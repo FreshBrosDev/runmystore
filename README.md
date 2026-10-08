@@ -40,6 +40,13 @@ Google Drive → Fresh Bros Proof Vault → 05_Ad-Ready Assets). The vault marks
 change `proof` in `src/data/site.ts` and its source notes together. Fresh Bros brand assets live in `public/fb/`
 (palette: green `#143c18`, lime `#61b80e`; fonts Peckham Press / Instrument Sans).
 
+## Security page
+
+`/security/` ("How we handle your data") is plain copy in `src/pages/security.astro`, linked in the footer. It makes
+commitments: access revoked within 24 hours of cancellation, no copies of client data kept, separate workspaces per
+client, MFA on every account, credentials only in a password manager. Keep an offboarding checklist that actually
+does those things. Terms §9 ("Data ownership and access") mirrors the same commitments in contract language.
+
 ## Privacy and Terms
 
 `/privacy/` and `/terms/` read the entity name, contact email, address and governing state from
