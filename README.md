@@ -40,6 +40,13 @@ Google Drive → Fresh Bros Proof Vault → 05_Ad-Ready Assets). The vault marks
 change `proof` in `src/data/site.ts` and its source notes together. Fresh Bros brand assets live in `public/fb/`
 (palette: green `#143c18`, lime `#61b80e`; fonts Peckham Press / Instrument Sans).
 
+## Security page
+
+`/security/` ("How we handle your data") is plain copy in `src/pages/security.astro`, linked in the footer. It makes
+commitments: access revoked within 24 hours of cancellation, no copies of client data kept, separate workspaces per
+client, MFA on every account, credentials only in a password manager. Keep an offboarding checklist that actually
+does those things. Terms §9 ("Data ownership and access") mirrors the same commitments in contract language.
+
 ## Privacy and Terms
 
 `/privacy/` and `/terms/` read the entity name, contact email, address and governing state from
@@ -113,3 +120,32 @@ escalation path") appears on the Customer Service card and in the FAQ.
 **Palette** is locked in `src/styles/global.css`: charcoal `#1A1A1A`, teal `#0D7377`, gray `#5C5C5C`, white. Teal is
 5.6:1 on white (fine for text) but only 3.1:1 on charcoal, so on dark sections teal is used for stripes and rails,
 not body text.
+
+## Offer v3 — modules + Pro
+
+Supersedes "Offer v2". Brief saved verbatim in `docs/OFFER_v3_PROMPT.md`.
+
+**Offer:** two self-serve plans, month to month, no setup fee, dedicated operator included: Customer Service $500/mo
+(300 conversations) and Run the Store $900/mo (Customer Service + Retention; 500 conversations, 5,000 retention
+emails), marked Recommended. Overage is $1.50 per conversation, never a cutoff. **Run the Store Pro** is the main
+product: 2.5% of monthly store revenue, $2,500 floor, stores doing $100k+/mo, Book a call. Custom builds get one
+sentence and Book a call; build pricing is never published. Lead Engine is gone everywhere (cards, live feed,
+privacy, terms).
+
+**Homepage IA** (`src/pages/index.astro`): hero → Who we serve → two self-serve cards + Pro wide card + custom-build
+line → How it works (Day 1 / Day 2 onboarding call / Days 3–10 / Day 14 / monthly) → What you get every month → FAQ
+(7) → final CTA → footer (contact, YouTube/Instagram, Privacy, Terms, Security).
+
+**Pricing variants** — `PlanCard` now takes `plan.variant`: `'fixed'` (default; `price` + `cadence`) or `'scales'`
+(`price` is the percentage, `cadence` the base, plus `floor`, `threshold`, `includes[]`, `cta`). Data lives in
+`src/data/site.ts` as `modules`, `pro`, `customBuild`, `overage`, `categories`, `whoWeServe`, `howItWorks`, `faqs2`.
+
+**Restricted-category positioning rule:** the category list (`categories` in `site.ts`) appears in exactly two
+places, Who we serve and the last FAQ. The hero subhead says "categories the big platforms won't serve" without
+naming them. Never name clients, products or the founder's brand; never make medical, legal or efficacy claims;
+never say "we can get you approved"; say "we set up what works for your category."
+
+**Env:** `PUBLIC_BOOKING_URL`, `PUBLIC_START_URL_CUSTOMER_SERVICE`, `PUBLIC_START_URL_RUN_THE_STORE`,
+`PUBLIC_CONTACT_EMAIL`, plus the social URLs. Pro and custom builds use the booking URL.
+
+**Terms** gained the Pro billing clause (§3) and the read-only access clause for revenue verification (§9).

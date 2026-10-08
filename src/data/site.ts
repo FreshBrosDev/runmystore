@@ -24,8 +24,8 @@ export const nav = [
 ];
 
 // ---------------------------------------------------------------------------
-// Offer v2 — modules. The live offer on the homepage. See README "Offer v2 — modules".
-// URLs come from env (see .env.example); every one has a working fallback.
+// Offer v3 — two self-serve modules + Run the Store Pro (revenue share) + custom builds.
+// See README "Offer v3 — modules + Pro". URLs come from env; every one has a working fallback.
 // ---------------------------------------------------------------------------
 export const contactEmail: string = import.meta.env.PUBLIC_CONTACT_EMAIL || 'hello@runmystore.com';
 export const bookingUrl: string = import.meta.env.PUBLIC_BOOKING_URL || site.whatsapp;
@@ -35,14 +35,24 @@ const startUrl = (env: string | undefined, name: string) =>
 export type Plan = {
   id: string;
   name: string;
+  /** Fixed monthly price ("$500") or, for the scales variant, the percentage ("2.5%"). */
   price: string;
   cadence: string;
   description: string;
   fairUse: string;
   disclosure?: string;
   startUrl: string;
+  cta?: string;
   recommended?: boolean;
+  /** "scales": pricing is a share of revenue with a floor, not a fixed fee. */
+  variant?: 'fixed' | 'scales';
+  floor?: string;
+  threshold?: string;
+  includes?: string[];
 };
+
+// Fair use for the self-serve tier. Caps are soft: overage, never a cutoff.
+export const overage = 'Go over and we keep answering. Overage bills at $1.50 per conversation. Nothing ever shuts off mid-month.';
 
 export const modules: Plan[] = [
   {
@@ -51,62 +61,67 @@ export const modules: Plan[] = [
     price: '$500',
     cadence: '/mo',
     description:
-      'An assistant trained on your products, policies, and voice answers your customers’ email and chat around the clock, in your name. Anything it can’t answer lands in your inbox with the whole thread attached.',
-    fairUse: 'Built for stores handling up to about 300 customer conversations a month.',
+      'A dedicated operator and an assistant trained on your products, policies, and voice answer your customers’ email around the clock, in your name. Up to 300 conversations a month, where a conversation is one customer thread however many replies it takes.',
+    fairUse: overage,
     disclosure:
-      'Your customers are answered by an AI assistant trained on your business, with a human escalation path.',
+      'Your customers are answered by an AI assistant trained on your business, with a human operator on your account and an escalation path.',
     startUrl: startUrl(import.meta.env.PUBLIC_START_URL_CUSTOMER_SERVICE, 'Customer Service'),
   },
   {
-    id: 'retention',
-    name: 'Retention',
-    price: '$500',
+    id: 'run-the-store',
+    name: 'Run the Store',
+    price: '$900',
     cadence: '/mo',
     description:
-      'Your customers hear from you before they drift. Reorder reminders, win-backs based on when they last ordered, and follow-ups after a purchase, all sent to your list in your voice.',
-    fairUse: 'Runs on the list you already own; we don’t buy or add contacts.',
-    startUrl: startUrl(import.meta.env.PUBLIC_START_URL_RETENTION, 'Retention'),
-  },
-  {
-    id: 'lead-engine',
-    name: 'Lead Engine',
-    price: '$500',
-    cadence: '/mo',
-    description:
-      'We find and qualify new buyers in your category and hand them to you ready to contact, with the name, the business, why they fit, and a first line you can send.',
-    fairUse: 'Up to 150 qualified leads a month.',
-    startUrl: startUrl(import.meta.env.PUBLIC_START_URL_LEAD_ENGINE, 'Lead Engine'),
+      'Customer Service plus Retention: reorder reminders, win-backs based on when someone last ordered, and follow-ups after a purchase, sent from you to your list. Up to 500 conversations and 5,000 retention emails a month.',
+    fairUse: overage,
+    startUrl: startUrl(import.meta.env.PUBLIC_START_URL_RUN_THE_STORE, 'Run the Store'),
+    recommended: true,
   },
 ];
 
-export const bundle: Plan = {
-  id: 'run-the-store',
-  name: 'Run the Store',
-  price: '$1,250',
-  cadence: '/mo',
+export const pro: Plan = {
+  id: 'run-the-store-pro',
+  name: 'Run the Store Pro',
+  variant: 'scales',
+  price: '2.5%',
+  cadence: 'of monthly store revenue',
+  floor: '$2,500 a month minimum',
+  threshold: 'For stores doing $100k a month and up',
   description:
-    'All three working together, so new buyers come in, every one of them gets answered, and every one gets brought back. Each module feeds the next, which is why the bundle works better than any one on its own.',
-  fairUse: 'Same fair-use lines as the three modules.',
-  startUrl: startUrl(import.meta.env.PUBLIC_START_URL_BUNDLE, 'Run the Store'),
-  recommended: true,
+    'Doing over $100k a month? We run the whole store. Customer service, retention, the wholesale menu and ordering, orders and inventory flowing into your CRM, processor and carrier setup for your category, a dedicated operator, and your numbers in one email every week.',
+  includes: [
+    'Customer service and retention, with a dedicated operator',
+    'Wholesale menu and ordering',
+    'Orders and inventory into your CRM',
+    'Processor and carrier setup for your category',
+    'Weekly numbers in one email',
+  ],
+  fairUse: 'Requires read access to your store and processor statements, so the number is real on both sides.',
+  startUrl: bookingUrl,
+  cta: 'Book a call',
+};
+
+export const customBuild = {
+  line: 'Starting from scratch? We build the stack first, then run it.',
+  cta: 'Book a call',
 };
 
 export const guarantee = 'No setup fee and no contract. Cancel any month and the assistant switches off, but your customers and your list stay yours.';
 
-export const upperTier = {
-  line: 'Doing more than $15k a month? These plans are too small for you. We build the stack custom, run it, and get paid partly on the sales we bring in.',
-  cta: 'Book a call',
-};
+// Restricted-category positioning. Named here once; used in Who we serve and the FAQ. Never in client terms.
+export const categories = 'hemp-derived products, peptides, supplements and nootropics, nicotine alternatives, adult wellness, and anything that gets rejected by Shopify Payments, Stripe, Amazon, or mainstream support tools';
 
-export const social = {
-  youtube: (import.meta.env.PUBLIC_YOUTUBE_URL as string | undefined) || 'https://www.youtube.com/@LaunchRMS',
-  instagram: (import.meta.env.PUBLIC_INSTAGRAM_URL as string | undefined) || 'https://www.instagram.com/LaunchRMS',
-  handle: '@LaunchRMS',
-};
+export const whoWeServe = [
+  `Brands in restricted and high-risk categories: ${categories}.`,
+  'Founders who’ve been turned away by mainstream tools, answer every customer themselves, and watch repeat buyers slip away because nobody followed up.',
+  'Not for you if you’re pre-revenue, only want someone to run ads, or are looking for a guarantee.',
+];
 
 export const howItWorks = [
-  { when: 'Day 1', what: 'You pick a module, or all three, and pay for the first month.' },
-  { when: 'Days 2 to 10', what: 'We connect your store, your inbox and your list, then train the assistant on your products, your policies and the way you write.' },
+  { when: 'Day 1', what: 'You pick a plan and pay for the first month.' },
+  { when: 'Day 2', what: 'A 20-minute onboarding call, or a voice note if you’d rather, with your operator.' },
+  { when: 'Days 3 to 10', what: 'We connect your store and inbox and train the assistant on your policies and the way you write.' },
   { when: 'Day 14', what: 'It goes live, and from then on you get a short daily summary of what it did.' },
   { when: 'Every month', what: 'You keep it or you cancel. There’s no contract and no setup fee.' },
 ];
@@ -114,29 +129,39 @@ export const howItWorks = [
 export const faqs2 = [
   {
     q: 'Is this AI?',
-    a: 'Yes. Customer Service is an AI assistant trained on your products, policies and voice, and there is always a person behind it. Anything it can’t answer, or anything that needs a real decision, gets handed to you with the full thread. Retention and Lead Engine use the same assistant to write and sort. You set the voice and we run it.',
+    a: 'Yes. Your customers are answered by an AI assistant trained on your business, with a human operator on your account and an escalation path. The assistant is trained on your products, policies and voice. Anything it can’t answer, or anything that needs a real decision, goes to your operator and then to you with the full thread.',
+  },
+  {
+    q: 'Who’s my operator?',
+    a: 'A named person on our team who is on your account from day one. They run your onboarding call, train the assistant on your business, watch the conversations it handles, and are the human your customers reach when something needs one. You’ll know who they are and how to reach them.',
+  },
+  {
+    q: 'What happens if I go over my conversations?',
+    a: 'We keep answering. Customer Service includes 300 conversations a month and Run the Store includes 500, where a conversation is one customer thread however many replies it takes. Past that, each extra conversation bills at $1.50 on your next invoice. Nothing ever shuts off mid-month, and if you’re regularly over we’ll tell you so you can decide whether a bigger plan makes sense.',
   },
   {
     q: 'Who owns my data and my list?',
-    a: 'You do. Your store, your inbox, your customer list and every conversation stay in accounts you own. We work through access you grant and can take back whenever you like. If you cancel, we remove our access, and nothing of yours is ever used for another customer.',
+    a: 'You do. Your store, your inbox, your customer list and every conversation stay in accounts you own. We work through access you grant and can take back whenever you like. If you cancel, we remove our access within 24 hours and keep no copies, and nothing of yours is ever used for another customer.',
   },
   {
-    q: 'What if my customers ask something it can’t answer?',
-    a: 'It says so and hands the conversation to you. The customer is told a person will follow up, you get the thread with what was asked, and once you’ve answered, the assistant knows what to say next time.',
+    q: 'What if the assistant can’t answer?',
+    a: 'It says so and hands the conversation to your operator. The customer is told a person will follow up, your operator either answers it or brings it to you with the thread, and once there’s an answer the assistant knows what to say next time.',
   },
   {
     q: 'Can I cancel?',
-    a: 'Any month, from your account, with no contract and no setup fee. The assistant, the flows and the lead delivery run while you’re subscribed and stop at the end of the month you’ve paid for, and then we remove our access. Everything that’s yours stays yours, including your customers, your list, every conversation, and anything already sent or published in your own tools.',
+    a: 'Any month, from your account, with no contract and no setup fee. The assistant and the automations we run stop at the end of the month you’ve paid for, and we remove our access. Everything that’s yours stays yours, including your customers, your list, every conversation, and anything already sent or published in your own tools.',
   },
   {
-    q: 'What do you need from me to start?',
-    a: 'About an hour of your time. We need access to your store, your support inbox and your email list, always by invitation and never by password. We need your policies on shipping and returns and anything you don’t want said. And we need a handful of your own replies so the assistant sounds like you.',
-  },
-  {
-    q: 'I do more than $15k a month. Is this for me?',
-    a: 'Doing more than $15k a month? These plans are too small for you. We build the stack custom, run it, and get paid partly on the sales we bring in. Book a call.',
+    q: 'My category keeps getting rejected. Can you actually work with it?',
+    a: `Almost certainly. We work with ${categories}. We’ve run a seven-figure store in this space, so we know the processors that work, the carriers that ship, the compliance that holds, and how to answer a customer without creating a legal problem. We can’t promise any platform will approve you, and we won’t pretend to. What we do is set up what works for your category.`,
   },
 ];
+
+export const social = {
+  youtube: (import.meta.env.PUBLIC_YOUTUBE_URL as string | undefined) || 'https://www.youtube.com/@LaunchRMS',
+  instagram: (import.meta.env.PUBLIC_INSTAGRAM_URL as string | undefined) || 'https://www.instagram.com/LaunchRMS',
+  handle: '@LaunchRMS',
+};
 
 // The offer. Terms marked CONFIRM are sensible defaults Adam should sign off on.
 export const offer = {

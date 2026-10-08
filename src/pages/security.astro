@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import Stripes from '../components/Stripes.astro';
+import { contactEmail } from '../data/site';
+
+const sections = [
+  {
+    id: 'where',
+    title: 'Where your data lives',
+    body: [
+      'Everything we run sits on established platforms with their own published security and compliance programs, including your ecommerce platform, your email and CRM tools, and the AI platform behind your assistant. We don’t copy your data onto servers of our own.',
+      'Each client is set up in separate workspaces. No client ever shares an account, a list, or an assistant with another.',
+    ],
+  },
+  {
+    id: 'access',
+    title: 'How we access it',
+    body: [
+      'Access is least-privilege and limited to what each module needs. Credentials are stored in a password manager, never in email or chat. Multi-factor authentication is on for every account we touch.',
+      'Only the people on your account have access, and we keep a record of who that is.',
+    ],
+  },
+  {
+    id: 'assistant',
+    title: 'Your assistant',
+    body: [
+      'Your Customer Service assistant is trained only on your products, policies, and voice. It does not learn from other clients, and other clients’ assistants do not learn from you.',
+      'Customers are answered by an AI assistant trained on your business, with a human escalation path for anything it can’t handle. Conversations are logged in your inbox and CRM, where you can review them any time.',
+    ],
+  },
+  {
+    id: 'leave',
+    title: 'If you leave',
+    body: [
+      'Cancel any time. Within 24 hours of cancellation we revoke our access to every account. Your list, your conversations, and everything already sent or published in your own tools stay with you. We keep no copies of any of it.',
+      'The assistant and the automations we run for you stop at the end of the month you’ve paid for. What is yours stays yours; what we operate switches off.',
+    ],
+  },
+  {
+    id: 'questions',
+    title: 'Questions',
+    body: [
+      `Contact us at ${contactEmail}. If your business has its own security requirements, send them over and we’ll answer them directly.`,
+    ],
+  },
+];
+---
+
+<Base
+  title="How we handle your data"
+  description="Where RunMyStore keeps your data (in your own accounts), how we access it, how your assistant is trained, and what happens when you leave."
+>
+  <section class="dark pagehero">
+    <div class="wrap">
+      <p class="eyebrow"><Stripes /> Security</p>
+      <h1>How we handle your data.</h1>
+      <p class="lede">
+        RunMyStore installs and operates systems inside your own accounts. Your store, your inbox, your customer list,
+        and your assistant’s knowledge base live in platforms you own and can log into without us. We hold access,
+        not ownership.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap body">
+      {
+        sections.map((s) => (
+          <article id={s.id} class="block">
+            <h2>{s.title}</h2>
+            {s.body.map((p) => (
+              <p>{p}</p>
+            ))}
+          </article>
+        ))
+      }
+      <p class="closing">We don’t hold a SOC 2 report. We build on platforms that do, inside accounts you control.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagehero h1 {
+    margin-top: 22px;
+  }
+  .body {
+    max-width: 72ch;
+  }
+  .block + .block {
+    margin-top: clamp(36px, 5vw, 56px);
+    padding-top: clamp(28px, 4vw, 40px);
+    border-top: 1px solid var(--line);
+  }
+  .block h2 {
+    font-style: normal;
+    font-stretch: 105%;
+    font-size: 1.6rem;
+    margin-bottom: 14px;
+  }
+  .block p {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: #2c3637;
+  }
+  .block p + p {
+    margin-top: 14px;
+  }
+  .closing {
+    margin-top: clamp(40px, 6vw, 64px);
+    padding-top: 24px;
+    border-top: 4px solid var(--ink);
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+</style>
