@@ -89,15 +89,21 @@ export const pro: Plan = {
   floor: '$2,500 a month minimum',
   threshold: 'For stores doing $100k a month and up',
   description:
-    'Doing over $100k a month? We run the whole store. Customer service, retention, the wholesale menu and ordering, orders and inventory flowing into your CRM, processor and carrier setup for your category, a dedicated operator, and your numbers in one email every week.',
+    'Doing over $100k a month? We run the whole store. Everything the self-serve plans do, plus the wholesale side, the back office, the search and content that bring buyers in, and a dedicated operator who owns the result. One source of truth, under your brand.',
+  // Modeled on the full engagement scope: storefront + checkout, wholesale menu, CRM/inventory/QuickBooks,
+  // assistants on every system, SEO and AI visibility, retention pipes, affiliate shell, operator. Lead sourcing deliberately left out: too variable per niche.
   includes: [
-    'Customer service and retention, with a dedicated operator',
-    'Wholesale menu and ordering',
-    'Orders and inventory into your CRM',
-    'Processor and carrier setup for your category',
-    'Weekly numbers in one email',
+    'Storefront and a checkout path that works for your category',
+    'Wholesale menu and ordering at menu.yourbrand.com: live stock, tier pricing, reps quote from it',
+    'CRM, inventory and QuickBooks synced, with one pricing sheet as the source of truth',
+    'Customer service and retention, email and SMS, in your voice',
+    'Assistants trained on your menu, inventory, pricing and orders, for your team and your customers',
+    'SEO and AI-search visibility: authority content and links that bring buyers in',
+    'Affiliate program shell and tracking',
+    'Fulfillment path, packaging rules and carrier setup for your category',
+    'A dedicated operator, a weekly call if you want one, and your numbers in one email every week',
   ],
-  fairUse: 'Requires read access to your store and processor statements, so the number is real on both sides.',
+  fairUse: 'Requires read access to your store and processor statements, so the number is real on both sides. We don’t hold your inventory, fund ad spend, take on your regulatory liability, or promise a revenue number.',
   startUrl: bookingUrl,
   cta: 'Book a call',
 };
@@ -112,10 +118,20 @@ export const guarantee = 'No setup fee and no contract. Cancel any month and the
 // Restricted-category positioning. Named here once; used in Who we serve and the FAQ. Never in client terms.
 export const categories = 'hemp-derived products, peptides, supplements and nootropics, nicotine alternatives, adult wellness, and anything that gets rejected by Shopify Payments, Stripe, Amazon, or mainstream support tools';
 
-export const whoWeServe = [
-  `Brands in restricted and high-risk categories: ${categories}.`,
-  'Founders who’ve been turned away by mainstream tools, answer every customer themselves, and watch repeat buyers slip away because nobody followed up.',
-  'Not for you if you’re pre-revenue, only want someone to run ads, or are looking for a guarantee.',
+// Who we serve: one tile per category. `setup` is what we set up, never a claim about the product itself.
+export const categoryTiles = [
+  { name: 'Hemp-derived products', setup: 'Processors that take it, carriers that ship it, and age and state rules built into checkout.' },
+  { name: 'Peptides', setup: 'Support that answers what it can answer and knows exactly where to stop.' },
+  { name: 'Supplements and nootropics', setup: 'Reorder reminders and follow-ups for products people buy every month.' },
+  { name: 'Nicotine alternatives', setup: 'Age gates, carrier rules and shipping limits that actually hold.' },
+  { name: 'Adult wellness', setup: 'Discreet shipping and customer service that stays professional.' },
+  { name: 'Rejected by Shopify Payments, Stripe or Amazon', setup: 'A checkout and support stack that doesn’t depend on any of them.' },
+];
+
+export const pains = [
+  'Turned away by the mainstream tools.',
+  'Answering every customer yourself.',
+  'Repeat buyers slipping away.',
 ];
 
 export const howItWorks = [
@@ -153,7 +169,7 @@ export const faqs2 = [
   },
   {
     q: 'My category keeps getting rejected. Can you actually work with it?',
-    a: `Almost certainly. We work with ${categories}. We’ve run a seven-figure store in this space, so we know the processors that work, the carriers that ship, the compliance that holds, and how to answer a customer without creating a legal problem. We can’t promise any platform will approve you, and we won’t pretend to. What we do is set up what works for your category.`,
+    a: `Almost certainly. We work with ${categories}. We’ve run a eight-figure store in this space, so we know the processors that work, the carriers that ship, the compliance that holds, and how to answer a customer without creating a legal problem. We can’t promise any platform will approve you, and we won’t pretend to. What we do is set up what works for your category.`,
   },
 ];
 
@@ -361,7 +377,7 @@ export const faqs = [
   },
   {
     q: 'Can you work in a regulated or high-risk category?',
-    a: 'It’s where we’re strongest. We built a seven-figure operation in hemp under processor instability, ad bans and state-by-state shipping rules. If Amazon won’t list it and Meta won’t advertise it, you’re our kind of brand.',
+    a: 'It’s where we’re strongest. We built a eight-figure operation in hemp under processor instability, ad bans and state-by-state shipping rules. If Amazon won’t list it and Meta won’t advertise it, you’re our kind of brand.',
   },
   {
     q: 'Do we have to leave our current platform?',
