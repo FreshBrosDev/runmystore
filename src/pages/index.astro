@@ -6,7 +6,7 @@ import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import LiveStore from '../components/LiveStore.astro';
 import Logo from '../components/Logo.astro';
-import { modules, pro, customBuild, guarantee, howItWorks, faqs2, bookingUrl, social, whoWeServe } from '../data/site';
+import { modules, pro, customBuild, guarantee, howItWorks, faqs2, bookingUrl, social, categoryTiles, pains } from '../data/site';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -45,15 +45,32 @@ const faqSchema = {
   </section>
 
   <!-- 2. Who we serve -->
-  <section class="section mist who-sec">
-    <div class="wrap who-grid">
+  <section class="section mist who-sec" id="who">
+    <div class="wrap">
       <div class="who-head">
         <Logo height={44} />
         <h2>Who we serve.</h2>
+        <p class="lede">Brands in the categories the big platforms won’t touch. Tap one to see what we set up for it.</p>
       </div>
-      <ul class="who" role="list">
-        {whoWeServe.map((w) => <li>{w}</li>)}
-      </ul>
+
+      <div class="tiles" data-tiles>
+        {
+          categoryTiles.map((t) => (
+            <button class="tile" type="button" aria-pressed="false">
+              <span class="tile-name">{t.name}</span>
+              <span class="tile-setup">{t.setup}</span>
+              <span class="tile-plus" aria-hidden="true">+</span>
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="pains">
+        <p class="pains-label">Sound familiar?</p>
+        <ul role="list">
+          {pains.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -128,6 +145,12 @@ const faqSchema = {
   <CtaBand />
 </Base>
 
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-tiles] .tile').forEach((b) =>
+    b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))),
+  );
+</script>
+
 <style>
   .yt {
     display: block;
@@ -193,46 +216,155 @@ const faqSchema = {
     color: var(--muted-dark);
   }
 
-  .who-grid {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    align-items: start;
-    gap: clamp(28px, 5vw, 72px);
-  }
   .who-head {
     display: grid;
-    gap: 22px;
+    gap: 18px;
     justify-items: start;
+    max-width: 60ch;
   }
   .who-head h2 {
     font-size: clamp(2.2rem, 4.6vw, 3.6rem);
   }
-  .who {
+  .tiles {
     display: grid;
-    gap: 22px;
-    font-size: clamp(1.25rem, 1.9vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--text);
-    letter-spacing: -0.01em;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 40px;
   }
-  .who li {
+  .tile {
     position: relative;
-    padding-left: 40px;
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-height: 150px;
+    padding: 22px 48px 22px 24px;
+    text-align: left;
+    font: inherit;
+    color: var(--text);
+    background: var(--paper);
+    border: 1px solid transparent;
+    border-left: 5px solid var(--teal);
+    border-radius: 6px var(--radius) var(--radius) 6px;
+    cursor: pointer;
+    transition:
+      transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.2s;
   }
-  .who li::before {
+  .tile:hover,
+  .tile:focus-visible,
+  .tile[aria-pressed='true'] {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 40px -24px rgba(26, 26, 26, 0.4);
+  }
+  .tile[aria-pressed='true'] {
+    background: var(--ink);
+    color: #fff;
+    border-left-color: var(--teal);
+  }
+  .tile-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-stretch: 105%;
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+  .tile-setup {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tile:hover .tile-setup,
+  .tile:focus-visible .tile-setup,
+  .tile[aria-pressed='true'] .tile-setup {
+    opacity: 1;
+    transform: none;
+  }
+  .tile[aria-pressed='true'] .tile-setup {
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .tile-plus {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-weight: 500;
+    color: var(--teal);
+    transition: transform 0.25s ease;
+  }
+  .tile[aria-pressed='true'] .tile-plus {
+    transform: rotate(45deg);
+    color: #fff;
+  }
+  .pains {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px 32px;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid #cfcfcf;
+  }
+  .pains-label {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
+  .pains ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+  .pains li {
+    padding: 10px 16px 10px 36px;
+    position: relative;
+    font-weight: 600;
+    background: var(--paper);
+    border-radius: 999px;
+  }
+  .pains li::before {
     content: '';
     position: absolute;
-    left: 2px;
-    top: 0.6em;
-    width: 22px;
-    height: 5px;
+    left: 14px;
+    top: 50%;
+    width: 14px;
+    height: 4px;
+    margin-top: -2px;
     background: var(--teal);
     transform: skewX(var(--skew));
   }
-  @media (max-width: 860px) {
-    .who-grid {
+  @media (max-width: 900px) {
+    .tiles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .tiles {
       grid-template-columns: 1fr;
+    }
+    .tile {
+      min-height: 0;
+    }
+    .pains {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile,
+    .tile-setup,
+    .tile-plus {
+      transition: none;
+    }
+    .tile:hover {
+      transform: none;
     }
   }
 

@@ -112,10 +112,20 @@ export const guarantee = 'No setup fee and no contract. Cancel any month and the
 // Restricted-category positioning. Named here once; used in Who we serve and the FAQ. Never in client terms.
 export const categories = 'hemp-derived products, peptides, supplements and nootropics, nicotine alternatives, adult wellness, and anything that gets rejected by Shopify Payments, Stripe, Amazon, or mainstream support tools';
 
-export const whoWeServe = [
-  `Brands in restricted and high-risk categories: ${categories}.`,
-  'Founders who’ve been turned away by mainstream tools, answer every customer themselves, and watch repeat buyers slip away because nobody followed up.',
-  'Not for you if you’re pre-revenue, only want someone to run ads, or are looking for a guarantee.',
+// Who we serve: one tile per category. `setup` is what we set up, never a claim about the product itself.
+export const categoryTiles = [
+  { name: 'Hemp-derived products', setup: 'Processors that take it, carriers that ship it, and age and state rules built into checkout.' },
+  { name: 'Peptides', setup: 'Support that answers what it can answer and knows exactly where to stop.' },
+  { name: 'Supplements and nootropics', setup: 'Reorder reminders and follow-ups for products people buy every month.' },
+  { name: 'Nicotine alternatives', setup: 'Age gates, carrier rules and shipping limits that actually hold.' },
+  { name: 'Adult wellness', setup: 'Discreet shipping and customer service that stays professional.' },
+  { name: 'Rejected by Shopify Payments, Stripe or Amazon', setup: 'A checkout and support stack that doesn’t depend on any of them.' },
+];
+
+export const pains = [
+  'Turned away by the mainstream tools.',
+  'Answering every customer yourself.',
+  'Repeat buyers slipping away.',
 ];
 
 export const howItWorks = [
